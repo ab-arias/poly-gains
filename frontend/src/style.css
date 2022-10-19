@@ -1,0 +1,25 @@
+.profile-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+}
+
+.profile-content-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-content-banner {
+    padding: 5px;
+    width: 200px;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+    font-size: 30px;
+}

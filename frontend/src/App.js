@@ -1,9 +1,10 @@
 import React from 'react'
+import Profile from './components/Profile'
 
 export default function App() {
     return ( 
         <div> 
-            <h1>Hello world</h1> 
+            <Profile />
         </div> 
 )
 }
