@@ -11,7 +11,7 @@ export default function Profile() {
     }
 
     return (
-        <div className='profile-main-container'>
+        <div className='profile-main-container' id="home-link">
             <img className='profile-avatar'
                 src='https://www.nicepng.com/png/detail/73-730154_open-default-profile-picture-png.png'
                 alt='Cannot display'
