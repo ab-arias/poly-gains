@@ -1,3 +1,11 @@
+.app {
+    display: flex;
+    flex-direction: column;
+}
+.main-body {
+    display: flex;
+    justify-content: center;
+}
 /*
 Header CSS:
 */
@@ -7,11 +15,7 @@ Header CSS:
     flex-direction: row;
     justify-content: space-between;
   
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+   
   }
   .left-header {
     display: flex;
@@ -22,6 +26,7 @@ Header CSS:
 .middle-header{
   display: flex;
   align-items: center;
+  min-width: 200px;
   justify-content: space-between;
   flex-shrink: 0;
   margin-left: 30px;
