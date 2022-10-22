@@ -1,28 +1,40 @@
 import React from 'react'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Profile from './components/Profile'
+import Stats from './components/Stats'
+import CalPoly from './components/CalPoly'
+import Workouts from './components/Workouts'
+
 
 export default function App() {
     return ( 
-        <html>
-            <div class="header">
-                <div class="left-header">
-                    <p>PolyGains</p>
+        <BrowserRouter>
+            <div className='app'>
+
+                <div class="header">
+                    <div class="left-header">
+                        <Link to="/">PolyGains</Link>
+                    </div>
+                    <div class="middle-header">
+                        <Link to="/calpoly">CalPoly</Link>
+                        <Link to="/stats">Stats</Link>
+                        <Link to="/workouts">Workouts</Link>                       
+                    </div>
+                    <div class="right-header">
+                        <p>Profile</p>
+                    </div>
                 </div>
-                <div class="middle-header">
-                    <a class = "Hlink" href="components/CalPoly.js">CalPoly</a>
-                    <a class = "Hlink" href="components/Profile.js">Home</a>
-                    <a class = "Hlink" href="components/stats.js">Stats</a>
-                </div>
-                <div class="right-header">
-                    <p>Profile</p>
+
+                <div className='main-body'>
+                    <Routes>
+                        <Route path='/' element={<Profile/>}/>
+                        <Route path='/stats' element={<Stats/>}/>
+                        <Route path='/calpoly' element={<CalPoly/>}/>
+                        <Route path='/workouts' element={<Workouts/>}/>
+                    </Routes>
                 </div>
             </div>
-            <body>
-            <div> 
-                <Profile />
-            </div> 
-            </body>
-        </html>
+        </BrowserRouter>
     )
 
     // I am making this change from my branch
