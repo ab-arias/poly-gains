@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import PolyGainsLogo from './assets/img/PolyGainsLogo.png'
 import Profile from './components/Profile'
 import Stats from './components/Stats'
 import CalPoly from './components/CalPoly'
 import Workouts from './components/Workouts'
+import EditProfile from './components/EditProfile'
 
 
 export default function App() {
@@ -15,13 +15,16 @@ export default function App() {
                 <div class="header">
                     <div class="left-header">
                         <Link to="/">
-                            <img style={{height: 60}} src={PolyGainsLogo} alt='PolyGains'/>
+                            <img style={{height: 60}} 
+                                src={require('./assets/img/PolyGainsLogo.png')} 
+                                alt='PolyGains'
+                            />
                         </Link>
                     </div>
                     <div class="middle-header">
-                        <Link to="/calpoly">CalPoly</Link>
-                        <Link to="/stats">Stats</Link>
-                        <Link to="/workouts">Workouts</Link>                       
+                        <Link className='Hlink' to="/calpoly">CalPoly</Link>
+                        <Link className='Hlink' to="/stats">Stats</Link>
+                        <Link className='Hlink' to="/workouts">Workouts</Link>                       
                     </div>
                     <div class="right-header">
                         <p>Profile</p>
@@ -34,6 +37,7 @@ export default function App() {
                         <Route path='/stats' element={<Stats/>}/>
                         <Route path='/calpoly' element={<CalPoly/>}/>
                         <Route path='/workouts' element={<Workouts/>}/>
+                        <Route path='/editprofile' element={<EditProfile />}/>
                     </Routes>
                 </div>
             </div>

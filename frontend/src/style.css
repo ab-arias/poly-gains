@@ -1,6 +1,7 @@
 .app {
     display: flex;
     flex-direction: column;
+    margin-top: 75px;
 }
 .main-body {
     display: flex;
@@ -14,6 +15,11 @@ Header CSS:
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
   .left-header {
     display: flex;
@@ -24,20 +30,18 @@ Header CSS:
 .middle-header{
   display: flex;
   align-items: center;
-  min-width: 200px;
   justify-content: space-between;
   flex-shrink: 0;
   margin-left: 30px;
   margin-right: 30px;
-  
 }
 .right-header {
-    width: 127px;
+    width: 100px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    flex-shrink: 0;
-    margin-right: 25px;
+    flex-shrink: 1;
+    padding-right: 25px;
   }
 .Hlink {
     padding-left: 8px;
@@ -58,7 +62,7 @@ Header CSS:
 Profile CSS:
 */
 .profile-main-container {
-    margin-top: 50px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,7 +71,7 @@ Profile CSS:
 .profile-avatar {
     width: 150px;
     height: 150px;
-    border-radius: 12px;
+    border-radius: 50%;
 }
 
 .profile-content-container {
@@ -75,11 +79,125 @@ Profile CSS:
     flex-direction: row;
 }
 
-.profile-content-banner {
-    padding: 5px;
-    width: 200px;
-    border-style: solid;
-    border-color: black;
+.center-dashboard {
+    width: 100%;
+    min-width: 750px;
+    max-width: 800px;
+    height: 400px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.link-container {
+    color: black;
+    text-decoration: none;
+}
+
+.profile-progress-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-progress-container h2{
+    margin-top: 0;
+    font-size: 40px;
+    border-bottom: 1px solid rgba(143, 127, 127, 0.77);
+    color: rgb(27, 104, 27);
+}
+
+.profile-progress-container table{
+    border: 2px solid forestgreen;
+    border-radius: 10px;
+    width: 500px;
+    height: 200px;
+}
+
+.profile-progress-container th{
+    font-size: 28px;
+}
+
+.profile-progress-container td{
     text-align: center;
-    font-size: 30px;
+    font-size: 28px;
+}
+
+.dashboard-buttons-container {
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 60px;
+}
+
+.update-profile-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid forestgreen;
+    border-radius: 10px;
+}
+
+.update-profile-button h3 {
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.profile-button-avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.calpoly-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid forestgreen;
+    border-radius: 10px;
+}
+
+.calpoly-logo{
+    width: 80px;
+    height: 80px;
+}
+
+.calpoly-button h3{
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.profile-calendar-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 750px;
+    max-width: 800px;
+}
+
+.profile-calendar-container h2{
+    margin-top: 0px;
+    font-size: 40px;
+    border-bottom: 1px solid rgba(143, 127, 127, 0.77);
+    color: rgb(27, 104, 27);
+}
+
+.profile-calendar-container table{
+    border: 2px solid forestgreen;
+    border-radius: 10px;
+    width: 100%;
+    height: 150px;
+}
+
+.profile-calendar-container th{
+    font-size: 20px;
+}
+
+.profile-calendar-container td{
+    text-align: center;
+    font-size: 20px;
 }
