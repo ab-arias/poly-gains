@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import PolyGainsLogo from './assets/img/PolyGainsLogo.png'
 import Profile from './components/Profile'
 import Stats from './components/Stats'
 import CalPoly from './components/CalPoly'
@@ -13,7 +14,9 @@ export default function App() {
 
                 <div class="header">
                     <div class="left-header">
-                        <Link to="/">PolyGains</Link>
+                        <Link to="/">
+                            <img style={{height: 60}} src={PolyGainsLogo} alt='PolyGains'/>
+                        </Link>
                     </div>
                     <div class="middle-header">
                         <Link to="/calpoly">CalPoly</Link>
@@ -36,6 +39,4 @@ export default function App() {
             </div>
         </BrowserRouter>
     )
-
-    // I am making this change from my branch
 }
