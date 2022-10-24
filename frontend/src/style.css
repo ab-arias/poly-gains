@@ -312,10 +312,53 @@ Stats css
 
 .stats-main-conatiner {
   display: flex;
-  flex-direction: column;
-  align-items: left;
+  align-items: flex-end;
+  justify-content: space-evenly;
 }
 
-.stats-diet-table{
-display: flex;
+.stats-container-left {
+  /* width: 40%; */
+  display: flex;
+  flex-direction: column;
+  margin-right: 100px;
+  float: left;
+}
+
+.stats-container-right {
+  /* width: 40%; */
+  display: flex;
+  flex-direction: column;
+  float: right;
+}
+
+.stats-pr-table{
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-diet-table {
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-update-form {
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-bmi-calculator { 
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
 }
