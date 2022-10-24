@@ -157,6 +157,7 @@ Cal Poly CSS
 }
 
 /*
+<<<<<<< HEAD
 Stats css
 */
 
@@ -170,3 +171,36 @@ Stats css
   display: flex;
   
 }
+=======
+Cal Poly CSS
+*/
+
+.CalPolyHeader{
+  font-size: 50px;
+  margin-top: 25px;
+}
+.RecLink{
+  text-decoration: none!important;
+}
+.RecLinkButton{
+  color: black;
+  width: 310px;
+  font-size: 25px;
+  background-color: aqua;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 7px;
+  margin-top: 40px;
+  padding: 5px 5px 5px 5px;
+}
+.RecLinkButton:hover {
+  background-color: rgb(125, 184, 203);
+  transform: scale(1.1);
+  transition: 0.15s;
+  cursor: pointer;
+}
+.RecLinkButton:active {
+  opacity: 0.6;
+}
+>>>>>>> main
