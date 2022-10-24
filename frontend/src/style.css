@@ -6,7 +6,6 @@
     display: flex;
     justify-content: center;
 }
-<<<<<<< HEAD
 .section-header {
     margin-top: 0px;
     font-size: 40px;
@@ -14,8 +13,6 @@
     color: rgb(27, 104, 27);
 }
 
-=======
->>>>>>> main
 /*
 Header CSS:
 */
@@ -125,7 +122,6 @@ Cal Poly CSS
   transition: 0.15s;
   cursor: pointer;
 }
-<<<<<<< HEAD
 
 .workouts-calendar-entry {
     display: flex;
@@ -173,8 +169,4 @@ Stats css
 .stats-diet-table{
   display: flex;
   
-=======
-.RecLinkButton:active {
-  opacity: 0.6;
->>>>>>> main
 }
