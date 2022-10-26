@@ -1,6 +1,25 @@
 import React from 'react'
 
+
+function tableBody() {
+    return(
+        <table>
+            <th>
+                <tr>Bench PR:</tr>
+                <tr>Squat PR:</tr>
+                <tr>Deadlift PR:</tr>
+            </th>
+            <th>
+                <tr>135</tr>
+                <tr>225</tr>
+                <tr>315</tr>
+            </th>
+        </table>
+    );
+}
+
 export default function Stats() {
+
     return (
         <div className = 'stats-main-container'>
             
@@ -9,31 +28,27 @@ export default function Stats() {
             <div className='stats-container-left'>
                 <div className = 'stats-pr-table'>
                     <div>Stats</div>
-                    <table>
-                        <th>
-                            <tr>Bench PR:</tr>
-                            <tr>Squat PR:</tr>
-                            <tr>Deadlift PR:</tr>
-                        </th>
-                        <th>
-                            <tr>135</tr>
-                            <tr>225</tr>
-                            <tr>315</tr>
-                        </th>
-                    </table>
+                    <div>
+                        {tableBody()}
+                    </div>
+                    
                 </div>
 
                 <div className = 'stats-update-form'>
-                    <div>Update Stats</div>
                     <table>
-                        <th>
-                            <tr>Workout:</tr>
-                            <tr>New PR:</tr>
-                        </th>
-                        <th>
-                            <tr>enter workout name</tr>
-                            <tr>enter new pr</tr>
-                        </th>
+                        <div>Update Stats</div>
+                        <div>
+                
+                            <th>
+                                <tr>Workout:</tr>
+                                <tr>New PR:</tr>
+                            </th>
+                            <th>
+                                <tr>enter workout name</tr>
+                                <tr>enter new pr</tr>
+                            </th>
+                        </div>
+                        {/* {tableBody()} */}
                     </table>
                 </div>
             </div>

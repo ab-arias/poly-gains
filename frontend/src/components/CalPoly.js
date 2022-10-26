@@ -7,7 +7,7 @@ export default function CalPoly() {
                 <div class="section-header">
                     Cal Poly Fitness
                 </div>
-                <img class="RecImg" src={require('../assets/img/CalPolyRec.jpeg')} alt="cannot display"></img>
+                {/* <img class="RecImg" src={require('../assets/img/CalPolyRec.jpeg')} alt="cannot display"></img> */}
             </div>
             <div class="CalPolyAbout">
                 <div class="CalPolyInfoSection">
@@ -33,7 +33,7 @@ export default function CalPoly() {
                         href="https://www.asi.calpoly.edu/facilities/recreation-center/"
                         target="_blank"
                         rel="noreferrer">
-                        <img class="RecWebImg" src={require('../assets/img/RecWebsite.png')} alt="cannot display"></img>
+                        {/* <img class="RecWebImg" src={require('../assets/img/RecWebsite.png')} alt="cannot display"></img> */}
                     </a>
                 </div>
             </div>
