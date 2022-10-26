@@ -27,11 +27,12 @@ export default function Stats() {
 
             <div className='stats-container-left'>
                 <div className = 'stats-pr-table'>
-                    <div>Stats</div>
-                    <div>
-                        {tableBody()}
-                    </div>
-                    
+                    <table>
+                        <div>Stats</div>
+                        <div>
+                            {tableBody()}
+                        </div>
+                    </table>
                 </div>
 
                 <div className = 'stats-update-form'>
@@ -48,7 +49,6 @@ export default function Stats() {
                                 <tr>enter new pr</tr>
                             </th>
                         </div>
-                        {/* {tableBody()} */}
                     </table>
                 </div>
             </div>
