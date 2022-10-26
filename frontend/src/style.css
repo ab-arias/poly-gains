@@ -13,6 +13,12 @@
     border-bottom: 1px solid rgba(143, 127, 127, 0.77);
     color: rgb(27, 104, 27);
 }
+.sub-header{
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    color: rgb(27, 104, 27);
+}
 /*
 Header CSS:
 */
@@ -278,33 +284,45 @@ Cal Poly CSS
 */
 
 .CalPolyHeader{
-  font-size: 50px;
-  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.RecImg{
+  margin-top: 20px;
+  width: 600px;
+}
+
+.CalPolyAbout{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 900px;
+  margin-top: 30px;
+}
+.ammenities{
+  font-size:20px;
+}
+.CalPolyActSection{
+  width: 300px;
 }
 .RecLink{
   text-decoration: none!important;
 }
-.RecLinkButton{
-  color: black;
-  width: 310px;
-  font-size: 25px;
-  background-color: aqua;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-  border-radius: 7px;
-  margin-top: 40px;
-  padding: 5px 5px 5px 5px;
-}
-.RecLinkButton:hover {
-  background-color: rgb(125, 184, 203);
-  transform: scale(1.1);
+.RecWebImg:hover {
+  transform: scale(1.2);
   transition: 0.15s;
   cursor: pointer;
 }
-.RecLinkButton:active {
+.RecWebImg:active {
   opacity: 0.6;
 }
+.RecWebImg{
+  margin-top: 30px;
+  width: 90%;
+  transition: 0.15s;
+}
+
 
 /*
 Stats css
