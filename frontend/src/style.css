@@ -13,6 +13,12 @@
     border-bottom: 1px solid rgba(143, 127, 127, 0.77);
     color: rgb(27, 104, 27);
 }
+.sub-header{
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    color: rgb(27, 104, 27);
+}
 /*
 Header CSS:
 */
@@ -271,4 +277,106 @@ Workouts CSS:
     border: 1px solid forestgreen;
     border-radius: 10px;
     background-color: white;
+}
+
+/*
+Cal Poly CSS
+*/
+
+.CalPolyHeader{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.RecImg{
+  margin-top: 20px;
+  width: 600px;
+}
+
+.CalPolyAbout{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 900px;
+  margin-top: 30px;
+}
+.ammenities{
+  font-size:20px;
+}
+.CalPolyActSection{
+  width: 300px;
+}
+.RecLink{
+  text-decoration: none!important;
+}
+.RecWebImg:hover {
+  transform: scale(1.2);
+  transition: 0.15s;
+  cursor: pointer;
+}
+.RecWebImg:active {
+  opacity: 0.6;
+}
+.RecWebImg{
+  margin-top: 30px;
+  width: 90%;
+  transition: 0.15s;
+}
+
+
+/*
+Stats css
+*/
+
+.stats-main-conatiner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+
+.stats-container-left {
+  /* width: 40%; */
+  display: flex;
+  flex-direction: column;
+  margin-right: 100px;
+  float: left;
+}
+
+.stats-container-right {
+  /* width: 40%; */
+  display: flex;
+  flex-direction: column;
+  float: right;
+}
+
+.stats-pr-table{
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-diet-table {
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-update-form {
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-bmi-calculator { 
+  border: 2px solid forestgreen;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
 }
