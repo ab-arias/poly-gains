@@ -7,7 +7,7 @@ export default function CalPoly() {
                 <div class="section-header">
                     Cal Poly Fitness
                 </div>
-                {/* <img class="RecImg" src={require('../assets/img/CalPolyRec.jpeg')} alt="cannot display"></img> */}
+                <img class="RecImg" src={require('../assets/img/CalPolyRec.jpeg')} alt="cannot display"></img>
             </div>
             <div class="CalPolyAbout">
                 <div class="CalPolyInfoSection">
