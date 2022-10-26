@@ -14,6 +14,6 @@ const UserSchema = new mongoose.Schema({
       if (value.length < 2) throw new Error("Invalid job.");
     },
   },
-}, {collection : 'users_list'});
+}, {collection : 'workouts_list'});
 
 module.exports = UserSchema;

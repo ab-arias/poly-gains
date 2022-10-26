@@ -5,7 +5,7 @@ let dbConnection;
 
 function getDbConnection() {
     if (!dbConnection) {
-        dbConnection = mongoose.createConnection("mongodb://localhost:27017/users", {
+        dbConnection = mongoose.createConnection("mongodb://localhost:27017/workouts", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -13,21 +13,15 @@ function getDbConnection() {
     return dbConnection;
   }
 
-async function getUsers(name, job){
+async function getUsers(name){
     const userModel = getDbConnection().model("User", UserSchema);
     let result;
-    if (name === undefined && job === undefined){
+    if (name === undefined){
         result = await userModel.find();
     }
-    else if (name && !job) {
+    else if (name) {
         result = await findUserByName(name);
     }
-    else if (job && !name){
-        result = await findUserByJob(job);
-    }
-    else if (job && name){
-        result = await findUserByNameAndJob(name, job);
-    }   
     return result;  
 }
 
@@ -71,17 +65,6 @@ async function findUserByName(name){
     const userModel = getDbConnection().model("User", UserSchema);
     return await userModel.find({'name':name});
 }
-
-async function findUserByJob(job){
-    const userModel = getDbConnection().model("User", UserSchema);
-    return await userModel.find({'job':job});
-}
-
-async function findUserByNameAndJob(name, job){
-    const userModel = getDbConnection().model("User", UserSchema);
-    return await userModel.find({'job':job, 'name':name});
-}
-
 
 
 
