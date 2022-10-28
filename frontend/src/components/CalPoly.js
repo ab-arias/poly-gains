@@ -37,6 +37,208 @@ export default function CalPoly() {
                     </a>
                 </div>
             </div>
+            <div class="CalPolyCalendar">
+                <h2 class="section-header">Cal Poly Rec Center Calander: November</h2>
+            </div>
+            <div class="workouts-calendar">
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">1</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">2</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p></div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">3</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">4</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">5</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">6</h3>
+                    <div class="mini-workouts-card">
+                        <p>Yoga 8AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">7</h3>
+                    <div class="mini-workouts-card">
+                        <p>Barre</p>
+                    </div>
+                </div>
+            </div>
+            <div class="workouts-calendar">
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">8</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">9</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">10</h3>
+                    <div class="mini-workouts-card">
+                        <p>Barre</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">11</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">12</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">13</h3>
+                    <div class="mini-workouts-card">
+                        <p>Yoga</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">14</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="workouts-calendar">
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">15</h3>
+                    <div class="mini-workouts-card"></div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">16</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">17</h3>
+                    <div class="mini-workouts-card">
+                        <p>Yoga</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">18</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">19</h3>
+                    <div class="mini-workouts-card">
+                        <p>Barre</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">20</h3>
+                    <div class="mini-workouts-card"></div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">21</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="workouts-calendar">
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">22</h3>
+                    <div class="mini-workouts-card">
+                        <p>Spin Class 9AM</p>
+                        <p>Body Pump 1PM</p>
+                        <p>HIIT 11AM</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">23</h3>
+                    <div class="mini-workouts-card">
+                        <p>Barre</p>
+                    </div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">24</h3>
+                    <div class="mini-workouts-card">spin class</div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">25</h3>
+                    <div class="mini-workouts-card"></div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">26</h3>
+                    <div class="mini-workouts-card">spin class</div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">27</h3>
+                    <div class="mini-workouts-card">spin class</div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">28</h3>
+                    <div class="mini-workouts-card">spin class</div>
+                </div>
+            </div>
+            <div class="workouts-calendar">
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">29</h3>
+                    <div class="mini-workouts-card">spin class</div>
+                </div>
+                <div class="workouts-calendar-entry">
+                    <h3 class="workouts-calendar-day">30</h3>
+                    <div class="mini-workouts-card">spin class</div>
+                </div>
+            </div>
         </div>
     )
 }
