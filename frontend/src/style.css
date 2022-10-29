@@ -322,7 +322,9 @@ Cal Poly CSS
   width: 90%;
   transition: 0.15s;
 }
-
+.CalPolyCalendar{
+  margin-top: 50px;
+}
 
 /*
 Stats css
