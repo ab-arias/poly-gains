@@ -13,8 +13,19 @@ app.use(express.json());
 app.get('/workouts', async (req, res) => {
     const name = req.query['name'];
     try {
-        const result = await userServices.getUsers(name);
+        const result = await userServices.getWorkouts(name);
         res.send({workouts_list: result});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('An error ocurred in the server.');
+    }
+});
+
+app.get('/stats', async (req, res) => {
+    const name = req.query['name'];
+    try {
+        const result = await userServices.getStats(name);
+        res.send({stats_list: result});
     } catch (error) {
         console.log(error);
         res.status(500).send('An error ocurred in the server.');
