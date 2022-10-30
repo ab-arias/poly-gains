@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Profile from './components/Profile'
-import Stats from './components/stats'
+import Stats from './components/Stats'
 import CalPoly from './components/CalPoly'
 import Workouts from './components/Workouts'
 import EditProfile from './components/EditProfile'
