@@ -1,25 +1,53 @@
 import React, { useState } from 'react'
+import { v4 as uuid } from 'uuid'
+import WorkoutModal from './WorkoutModal'
 
 export default function Workouts() {
 
-    const [calendar, setCalendar] = useState({ Monday: "Rest", 
-        Tuesday: "Rest", Wednesday: "Rest", Thursday: "Rest",
-        Friday: "Rest", Saturday: "Rest", Sunday: "Rest"}
+    const restCard = {
+        title: 'Rest',
+        exercises: []
+    }
+
+    const [showWorkout, setShowWorkout] = useState(false)
+    const [openWorkout, setOpenWorkout] = useState(null)
+    const [calendar, setCalendar] = useState({ Monday: restCard, 
+        Tuesday: restCard, Wednesday: restCard, Thursday: restCard,
+        Friday: restCard, Saturday: restCard, Sunday: restCard}
     )
+    const [workoutCards, setWorkoutCards] = useState([])
+
+    function toggleShowWorkout(){
+        setShowWorkout(prevStatus => !prevStatus)
+        if(openWorkout) setOpenWorkout(null)
+    }
 
     function addToDay(e, day){
-        let plan = e.dataTransfer.getData('card')
+        let plan = JSON.parse(e.dataTransfer.getData('card'))
+        console.log(plan)
         setCalendar({...calendar, [day]: plan})
     }
 
-    const cardContent = ['card1', 'card2', 'card3', 'card4', 'card5']
+    function updateWorkout(workout){
+        console.log(workout)
+        setWorkoutCards(prev => [workout, ...prev])
+    }
 
-    const cards = cardContent.map(card => 
+    function handleOpenWorkout(workout){
+        setOpenWorkout(workout)
+        setShowWorkout(true)
+    }
+
+    const cards = workoutCards.map(card => 
         <div className='workouts-card' 
             draggable
-            onDragStart={(e) => e.dataTransfer.setData('card', card)}
+            onClick={() => handleOpenWorkout(card)}
+            onDragStart={(e) => {
+                let val = JSON.stringify(card)
+                e.dataTransfer.setData('card', val)
+            }}
         >
-            {card}
+            {card.title}
         </div>
     )
 
@@ -29,13 +57,21 @@ export default function Workouts() {
             onDrop={(e) => addToDay(e, day)}
         >
             <h3 className='workouts-calendar-day'>{day}</h3>
-            <div className='mini-workouts-card'>{plan}</div>
+            <div className='mini-workouts-card'>{plan.title}</div>
         </div>
     )
 
     return (
         <div className='workouts-main-container'>
-
+            
+            { 
+            showWorkout && 
+            <WorkoutModal 
+                toggle={toggleShowWorkout}
+                updateWorkout={updateWorkout}
+                workout={openWorkout}
+            />
+            }
             <div className='workouts-calendar-container'>
                 <h2 className='section-header'>My Workouts</h2>
                 <div className='workouts-calendar'>
@@ -44,7 +80,9 @@ export default function Workouts() {
             </div>
             <div className='workouts-cards-container'>
                 {cards}
-                <div className='workouts-card'>
+                <div className='workouts-card'
+                    onClick={() => toggleShowWorkout()}
+                >
                     Create New Workout
                 </div>
             </div>
