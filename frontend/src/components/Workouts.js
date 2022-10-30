@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
 export default function Workouts() {
 
@@ -12,7 +13,7 @@ export default function Workouts() {
         setCalendar({...calendar, [day]: plan})
     }
 
-    const cardContent = ['card1', 'card2', 'card3', 'card4', 'card5']
+    const cardContent = ['card1', 'card2', 'card3', 'card4', 'Rest']
 
     const cards = cardContent.map(card => 
         <div className='workouts-card' 

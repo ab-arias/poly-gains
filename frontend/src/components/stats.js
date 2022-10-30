@@ -1,77 +1,35 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import StatTables from './StatTables';
+import axios from 'axios';
 
 export default function Stats() {
-    return (
-        <div className = 'stats-main-container'>
-            
-            <h2 className = 'section-header'> Welcome User, Lets Get This Bread </h2>
 
-            <div className='stats-container-left'>
-                <div className = 'stats-pr-table'>
-                    <div>Stats</div>
-                    <table>
-                        <th>
-                            <tr>Bench PR:</tr>
-                            <tr>Squat PR:</tr>
-                            <tr>Deadlift PR:</tr>
-                        </th>
-                        <th>
-                            <tr>135</tr>
-                            <tr>225</tr>
-                            <tr>315</tr>
-                        </th>
-                    </table>
-                </div>
+    const [stats, setStats] = useState([])
 
-                <div className = 'stats-update-form'>
-                    <div>Update Stats</div>
-                    <table>
-                        <th>
-                            <tr>Workout:</tr>
-                            <tr>New PR:</tr>
-                        </th>
-                        <th>
-                            <tr>enter workout name</tr>
-                            <tr>enter new pr</tr>
-                        </th>
-                    </table>
-                </div>
-            </div>
+    async function fetchAll(){
+        try {
+           const response = await axios.get('http://localhost:4000/stats');
+           return response.data.stats_list;
+        }
+        catch (error){
+           //We're not handling errors. Just logging into the console.
+           console.log(error); 
+           return false;
+        }
+     }
 
-            <div className = 'stats-conatiner-right'>
-
-                <div className = 'stats-diet-table'> 
-                    <div>Diet</div>
-                    <table>
-                        <th>
-                            <tr>Weight:</tr>
-                            <tr>Calories:</tr>
-                            <tr>Plan:</tr>
-                        </th>
-                        <th>
-                            <tr>170</tr>
-                            <tr>3000</tr>
-                            <tr>Bulk</tr>
-                        </th>
-                    </table>
-                </div>
-
-                <div className = 'stats-bmi-calculator' >
-                    <div>BMI Calculator</div>
-                    <table>
-                        <th>
-                            <tr>Weight:</tr>
-                            <tr>Height:</tr>
-                        </th>
-                        <th>
-                            <tr>enter weight</tr>
-                            <tr>enter height</tr>
-                        </th>
-                    </table>
-                </div>
-
-            </div>
-
+     useEffect(() => {
+        fetchAll().then(result => {
+           if (result)
+            setStats(result)  
+            });
+      }, [] );
+      
+    
+      return (
+        <div className="container">
+          <StatTables statsData={stats} />
         </div>
-    )
+      );
+    
 }
