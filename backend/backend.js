@@ -33,25 +33,40 @@ app.get('/stats', async (req, res) => {
 });
 
 
+app.post('/stats/:id', async (req, res) => {
+    const id = req.params['id'];
+    const newRec = req.body;
+    const updatedWorkout = await userServices.updateStats(id, newRec);
+    const stats = [updatedWorkout]
+    if (updatedWorkout) {
+        res.status(201).send({stats_list: stats}).end();
+    } else {
+        res.status(404).end();
+    }
+});
+
+
 app.get('/workouts/:id', async (req, res) => {
     const id = req.params['id'];
-    const result = await userServices.findUserById(id);
+    const result = await userServices.findWorkoutById(id);
     if (result === undefined || result.length == 0)
         res.status(404).send('Resource not found.');
     else {
         res.send({workouts_list: result});
-    }
+    };
 });
 
 
 app.post('/workouts', async (req, res) => {
     const workout = req.body;
-    const savedWorkout = await userServices.addUser(workout);
+    const savedWorkout = await userServices.addWorkout(workout);
     if (savedWorkout)
         res.status(201).send(savedWorkout).end();
     else
         res.status(500).end();
 });
+
+
 
 
 
