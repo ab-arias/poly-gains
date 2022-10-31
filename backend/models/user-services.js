@@ -33,8 +33,21 @@ async function getStats(){
     return result = await statsModel.find();  
 }
 
+
+async function updateStats(id, newRec){
+
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
+    try{
+        return await statsModel.findByIdAndUpdate(id, {"records": newRec}, {new: true})
+    }catch(error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
+
 async function findWorkoutById(id){
-    const workModel = getDbConnection().model("Workout", WorkoutSchema);    
+    const workoutModel = getDbConnection().model("Workout", WorkoutSchema);    
     try{
         return await workoutModel.findById(id);
     }catch(error) {
@@ -81,3 +94,4 @@ exports.findWorkoutById = findWorkoutById;
 exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
+exports.updateStats = updateStats;
