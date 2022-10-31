@@ -1,5 +1,5 @@
 import React from 'react';
-
+import StatForm from './StatForm';
 
 function StatsBody(props) {
     const rows = props.statsData.map((row) => {
@@ -32,7 +32,6 @@ function StatsBody(props) {
 
 function DietBody(props) {
     let diet = props.statsData.map((row) => {
-        console.log(row.weight)
         return (
             <div>
                 <th>
@@ -77,16 +76,7 @@ function StatTables(props) {
 
                 <div className = 'stats-update-form'>
                     <div>Update Stats</div>
-                    <table>
-                        <th>
-                            <tr>Workout:</tr>
-                            <tr>New PR:</tr>
-                        </th>
-                        <th>
-                            <tr>enter workout name</tr>
-                            <tr>enter new pr</tr>
-                        </th>
-                    </table>
+                    <StatForm statsData={props.statsData} updateStats={props.updateStats} />
                 </div>
             </div>
 

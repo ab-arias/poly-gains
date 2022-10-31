@@ -25,15 +25,15 @@ export default function Profile({ CalPolyLogo }) {
                             </tr>
                             <tr>
                                 <th>PR</th>
-                                <td>135</td>
-                                <td>225</td>
-                                <td>315</td>
+                                <td>245</td>
+                                <td>295</td>
+                                <td>345</td>
                             </tr>
                             <tr>
                                 <th>Goal</th>
+                                <td>315</td>
                                 <td>405</td>
-                                <td>495</td>
-                                <td>1,000</td>
+                                <td>465</td>
                             </tr>
                         </table>
                     </div>

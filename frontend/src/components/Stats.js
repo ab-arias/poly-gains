@@ -18,17 +18,36 @@ export default function Stats() {
         }
      }
 
+
      useEffect(() => {
         fetchAll().then(result => {
            if (result)
-            setStats(result)  
+            setStats(result);
             });
       }, [] );
+
+
+    async function updateStats(stats){
+        const id = stats[0]
+        const records = stats[1]
+        try {
+           const response = await axios.post('http://localhost:4000/stats/' + id, records);
+           const result = response.data.stats_list;
+           setStats(result);
+        }
+        catch (error){
+           //We're not handling errors. Just logging into the console.
+           console.log(error); 
+           return false;
+        }
+     }
+
       
+
     
       return (
         <div className="container">
-          <StatTables statsData={stats} />
+            <StatTables statsData={stats} updateStats={updateStats}/>
         </div>
       );
     
