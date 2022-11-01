@@ -8,6 +8,7 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
     const [exercises, setExercises] = React.useState(workout ? workout.exercises : [])
     const [currExercise, setCurrExercise] = React.useState(
         {
+            id: "",
             exercise: "",
             sets: "",
             reps: ""
@@ -23,7 +24,7 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
             return
         }
         if(!workout){
-            updateWorkout({title: title, exercises: exercises})
+            updateWorkout({id: uuid(), title: title, exercises: exercises})
         }
         setEditing(false)
     }
@@ -38,18 +39,17 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
             if(Number(value) <= 0) value = ""
             else if(Number(value) > 999) value = "999"
         }
-        setCurrExercise(prev => (
-            {
-                ...prev,
-                [name]: value
-            }
-        ))
+        if(!currExercise.id){
+            setCurrExercise(prev => ({...prev, id: uuid()}))
+        }
+        setCurrExercise(prev => ({...prev, [name]: value}))
     }
 
     function handleExerciseSubmission(){
         setExercises(prev => [...prev, currExercise])
         setCurrExercise(
             {
+                id: "",
                 exercise: "",
                 sets: "",
                 reps: ""
@@ -58,11 +58,13 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
     }
 
     const exerciseCards = exercises.map(card => 
-        <div className='workout-modal-exercise-card'>
-            <div>
+        <div className='workout-modal-exercise-card'
+            key={card.id}
+        >
+            <div className='workout-modal-exercise-header'>
                 {card.exercise}
             </div>
-            <div>
+            <div className='workout-modal-exercise-body'>
                 {card.sets} sets x {card.reps} reps
             </div>
         </div>
@@ -86,7 +88,7 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
                     maxLength={20}
                 />
                 :
-                <h1>{title}</h1>
+                <h1 style={{color: 'white'}}>{title}</h1>
                 }
                 <button className='workout-modal-edit'
                     onClick={handleModeToggle}
@@ -118,7 +120,7 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
                             min="1"
                             max="999"
                         />
-                        <p> X </p>
+                        <span> x </span>
                         <input
                             className='workout-modal-set-rep-input'
                             name='reps'
@@ -132,7 +134,7 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
                     </div>
                 </div>}
                 { editing &&
-                <button 
+                <button style={{marginLeft: 10}}
                     onClick={handleExerciseSubmission}
                 >
                     Add New Exercise
