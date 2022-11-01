@@ -47,7 +47,24 @@ export default function Workouts() {
                 e.dataTransfer.setData('card', val)
             }}
         >
-            {card.title}
+            <div className='workouts-card-header'>
+                {card.title}
+            </div>
+            <div className='workouts-card-body'>
+                {card.exercises.map(exercise => 
+                    <div className='workouts-card-exercise-container'>
+                        <div className='workouts-card-exercise'>
+                            {exercise.exercise}
+                        </div>
+                        <div className='workouts-card-sets-reps'>
+                            {exercise.sets} 
+                            <span> sets x </span>
+                            {exercise.reps}
+                            <span> reps</span>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     )
 
