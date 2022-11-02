@@ -1,63 +1,47 @@
-import React from 'react';
-import StatForm from './StatForm';
+import React from "react";
+import StatForm from "./StatForm";
 
 function StatsBody(props) {
-    const rows = props.statsData.map((row) => {
-        let statrows = []
-        for (const x of row.records){
-            statrows.push(
-                <tr>
-                    <th>
-                        <td>{x.name}:</td>
-                    </th>
-                    <th>
-                        <td>{x.pr} lbs</td>
-                    </th>    
-                </tr>
-            );
-        }
-        return (
-            <div>
-                {statrows}
-            </div>
-        );
-    });
-    return (
-        <table>
-            {rows}
-        </table>
-    );
+  const rows = props.statsData.map((row) => {
+    let statrows = [];
+    for (const x of row.records) {
+      statrows.push(
+        <tr>
+          <th>
+            <td>{x.name}:</td>
+          </th>
+          <th>
+            <td>{x.pr} lbs</td>
+          </th>
+        </tr>
+      );
+    }
+    return <div>{statrows}</div>;
+  });
+  return <table>{rows}</table>;
 }
-
 
 function DietBody(props) {
-    let diet = props.statsData.map((row) => {
-        return (
-            <div>
-                <th>
-                    <tr>Weight: </tr>
-                    <tr>Height:</tr>
-                    <tr>Calories:</tr>
-                    <tr>Plan:</tr>
-                </th>
-                <th>
-                    <tr>{row.weight} lbs</tr>
-                    <tr>{row.height} inches</tr>
-                    <tr>{row.calories}</tr>
-                    <tr>{row.plan}</tr>
-                </th>
-            </div>
-
-        )
-    });
+  let diet = props.statsData.map((row) => {
     return (
-        <table>
-            {diet}
-        </table>
+      <div>
+        <th>
+          <tr>Weight: </tr>
+          <tr>Height:</tr>
+          <tr>Calories:</tr>
+          <tr>Plan:</tr>
+        </th>
+        <th>
+          <tr>{row.weight} lbs</tr>
+          <tr>{row.height} inches</tr>
+          <tr>{row.calories}</tr>
+          <tr>{row.plan}</tr>
+        </th>
+      </div>
     );
-
+  });
+  return <table>{diet}</table>;
 }
-
 
 function StatTables(props) {
 
@@ -74,20 +58,22 @@ function StatTables(props) {
                     </table>
                 </div>
 
-                <div className = 'stats-update-form'>
-                    <div>Update Stats</div>
-                    <StatForm statsData={props.statsData} updateStats={props.updateStats} />
-                </div>
-            </div>
+        <div className="stats-update-form">
+          <div>Update Stats</div>
+          <StatForm
+            statsData={props.statsData}
+            updateStats={props.updateStats}
+          />
+        </div>
+      </div>
 
-            <div className = 'stats-conatiner-right'>
-
-                <div className = 'stats-diet-table'> 
-                    <div>Diet</div>
-                    <table>
-                        <DietBody statsData={props.statsData} />
-                    </table>
-                </div>
+      <div className="stats-conatiner-right">
+        <div className="stats-diet-table">
+          <div>Diet</div>
+          <table>
+            <DietBody statsData={props.statsData} />
+          </table>
+        </div>
 
                 <div className = 'stats-bmi-calculator' >
                     <h3 class="sub-header">BMI Calculator</h3>
