@@ -23,7 +23,7 @@ export default function CalPoly() {
                     <div class="ammenities">-Leisure pool</div>
                     <div class="ammenities">-Sand volleyball courts</div>
                     <div class="ammenities">-ASI Poly Escapes Climbing Park</div>
-                </div>
+                </div>x
                 <div class="CalPolyActSection">
                     <div class="sub-header">Operational Hours:</div>
                     <div class="ammenities">Monday - Friday: 6am - 12am</div>
@@ -33,7 +33,7 @@ export default function CalPoly() {
                         href="https://www.asi.calpoly.edu/facilities/recreation-center/"
                         target="_blank"
                         rel="noreferrer">
-                        {/* <img class="RecWebImg" src={require('../assets/img/RecWebsite.png')} alt="cannot display"></img> */}
+                        <img class="RecWebImg" src={require('../assets/img/RecWebsite.png')} alt="cannot display"></img>
                     </a>
                 </div>
             </div>
