@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import ProgressTable from "./ProgressTable";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function Profile({ CalPolyLogo }) {
+  const [stats, setStats] = useState([]);
+
+
+  async function fetchAll() {
+    try {
+      const response = await axios.get("http://localhost:4000/stats");
+      return response.data.stats_list;
+    } catch (error) {
+      //We're not handling errors. Just logging into the console.
+      console.log(error);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    fetchAll().then((result) => {
+      if (result) setStats(result);
+    });
+  }, []);
+
   return (
     <div className="profile-main-container">
       <img
@@ -13,29 +35,7 @@ export default function Profile({ CalPolyLogo }) {
 
       <div className="center-dashboard">
         <Link className="link-container" to="/stats">
-          <div className="profile-progress-container">
-            <h2>My Progress</h2>
-            <table>
-              <tr>
-                <span></span>
-                <th>Bench</th>
-                <th>Squat</th>
-                <th>Deadlift</th>
-              </tr>
-              <tr>
-                <th>PR</th>
-                <td>245</td>
-                <td>295</td>
-                <td>345</td>
-              </tr>
-              <tr>
-                <th>Goal</th>
-                <td>315</td>
-                <td>405</td>
-                <td>465</td>
-              </tr>
-            </table>
-          </div>
+          <ProgressTable statsData={stats} />
         </Link>
 
         <div className="dashboard-buttons-container">
