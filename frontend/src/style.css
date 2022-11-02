@@ -1,3 +1,6 @@
+* {
+    font-family: 'Oswald', sans-serif;
+}
 .app {
   display: flex;
   flex-direction: column;
@@ -64,18 +67,18 @@ Header CSS:
   padding-right: 25px;
 }
 .Hlink {
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-right: 20px;
-  color: black;
-  text-decoration: solid;
-}
-.Hlink:hover {
-  cursor: pointer;
-  color: rgb(65, 159, 190);
-  transition: 0.4s;
-  transform: scale(1.1);
-}
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-right: 20px;
+    color: black;
+    text-decoration: solid;
+  }
+  .Hlink:hover {
+    cursor: pointer;
+    color: rgb(27, 104, 27) ;
+    transition: 0.4s;
+    transform: scale(1.1);
+  }
 
 /*
 Profile CSS:
@@ -278,12 +281,64 @@ Workouts CSS:
 }
 
 .workouts-card {
-  width: 150px;
-  height: 220px;
-  margin: 10px;
-  border: 1px solid forestgreen;
-  border-radius: 10px;
-  background-color: white;
+    width: 150px;
+    height: 220px;
+    margin: 10px;
+    border: 2px solid forestgreen;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+}
+
+.workouts-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    height: 40px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: rgb(83, 83, 83, 0.5);
+}
+
+.mini-workouts-card .workouts-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: white;
+    height: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: rgb(83, 83, 83, 0.5);
+}
+
+.workouts-card-body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+    height: 180px;
+    text-indent: 5px;
+}
+
+.workouts-card-body::-webkit-scrollbar {
+    display: none;
+}  
+
+.workouts-card-exercise-container {
+    border-top: 2px solid forestgreen;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.workouts-card-body > .workouts-card-exercise-container:last-child {
+    border-bottom: 2px solid forestgreen;
+}
+
+.workouts-card-exercise {
+    font-weight: 600;
 }
 
 .workout-modal-screen {
@@ -328,10 +383,13 @@ Workouts CSS:
 }
 
 .workout-modal-edit {
-  margin-right: 10px;
-  font-size: 20px;
-  width: 50px;
-  height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    font-size: 20px;
+    width: 60px;
+    height: 30px;
 }
 
 .workout-modal-container {
@@ -348,30 +406,47 @@ Workouts CSS:
 }
 
 .workout-modal-exercise-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin: 10px;
-  width: 50%;
-  height: 100px;
-  border: 1px solid forestgreen;
-  border-radius: 10px;
-  background-color: rgba(160, 160, 160, 0.213);
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 50%;
+    height: 100px;
+    border: 1px solid forestgreen;
+    border-radius: 10px;
+    background-color: rgba(160, 160, 160, 0.213);
+}
+
+.workout-modal-exercise-header {
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.workout-modal-exercise-body {
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 18px;
 }
 
 .workout-modal-exercise-input {
-  margin: 5px;
-  width: 200px;
+    margin-left: 15px;
+    margin-top: 15px;
+    width: 200px;
+    font-size: 20px;
 }
 
 .workout-modal-set-rep {
-  display: flex;
+    display: flex;
+    align-items: baseline;
 }
 
 .workout-modal-set-rep-input {
-  text-align: center;
-  width: 55px;
-  margin: 5px;
+    width: 55px;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-right: 15px;
 }
 
 /*
@@ -477,3 +552,48 @@ Stats css
   display: flex;
   flex-direction: column;
 }
+.weight-bmi{
+    margin-left:7px;
+}
+.weight-lbs{
+    width:75px;
+}
+.height-bmi{
+    margin-left:7px;
+}
+.height-ft{
+    width:75px;
+}
+.height-in{
+    width:75px;
+}
+.label-ft{
+    margin-right: 10px;
+}
+.bottom-bmi{
+    margin-left:7px;
+}
+.BMI-submit{
+    width: 200px;
+    margin-top: 10px;
+    margin-left:3px;
+    margin-right:10px;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.BMI-submit:hover{
+    cursor: pointer;
+    background-color:rgba(143, 127, 127, 0.77);
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
+.BMI-submit:active{
+    background-color: white;
+}
+
+
+
+
