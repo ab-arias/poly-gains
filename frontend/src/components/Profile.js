@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import ProgressTable from "./ProgressTable";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import EditProfileModal from "./EditProfileModal";
 
-export default function Profile({ CalPolyLogo }) {
+export default function Profile() {
   const [stats, setStats] = useState([]);
-
+  const [profilePic, setProfilePic] = useState();
+  const [name, setName] = useState("");
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
   async function fetchAll() {
     try {
@@ -24,14 +27,35 @@ export default function Profile({ CalPolyLogo }) {
     });
   }, []);
 
+  function toggleModalView() {
+    setShowEditProfileModal((prev) => !prev);
+  }
+
   return (
     <div className="profile-main-container">
+      {showEditProfileModal && (
+        <EditProfileModal
+          closeModal={toggleModalView}
+          updateProfilePic={setProfilePic}
+          currentPic={
+            profilePic
+              ? profilePic
+              : require("../assets/img/DefaultProfilePic.jpeg")
+          }
+          updateName={setName}
+          currentName={name}
+        />
+      )}
       <img
         className="profile-avatar"
-        src="https://www.nicepng.com/png/detail/73-730154_open-default-profile-picture-png.png"
+        src={
+          profilePic
+            ? profilePic
+            : require("../assets/img/DefaultProfilePic.jpeg")
+        }
         alt="Cannot display"
       />
-      <h2>User's Name</h2>
+      <h2>{name}</h2>
 
       <div className="center-dashboard">
         <Link className="link-container" to="/stats">
@@ -39,16 +63,20 @@ export default function Profile({ CalPolyLogo }) {
         </Link>
 
         <div className="dashboard-buttons-container">
-          <Link className="link-container" to="/editprofile">
+          <div style={{ cursor: "pointer" }} onClick={() => toggleModalView()}>
             <div className="update-profile-button">
               <img
                 className="profile-button-avatar"
-                src="https://www.nicepng.com/png/detail/73-730154_open-default-profile-picture-png.png"
+                src={
+                  profilePic
+                    ? profilePic
+                    : require("../assets/img/DefaultProfilePic.jpeg")
+                }
                 alt="Cannot display"
               />
               <h3>Edit Profile</h3>
             </div>
-          </Link>
+          </div>
           <Link className="link-container" to="/calpoly">
             <div className="calpoly-button">
               <img

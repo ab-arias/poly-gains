@@ -42,35 +42,32 @@ export default function Workouts() {
     setShowWorkout(true);
   }
 
-    const cards = workoutCards.map(card => 
-        <div className='workouts-card' 
-            draggable
-            onClick={() => handleOpenWorkout(card)}
-            onDragStart={(e) => {
-                let val = JSON.stringify(card)
-                e.dataTransfer.setData('card', val)
-            }}
-        >
-            <div className='workouts-card-header'>
-                {card.title}
+  const cards = workoutCards.map((card) => (
+    <div
+      className="workouts-card"
+      draggable
+      onClick={() => handleOpenWorkout(card)}
+      onDragStart={(e) => {
+        let val = JSON.stringify(card);
+        e.dataTransfer.setData("card", val);
+      }}
+    >
+      <div className="workouts-card-header">{card.title}</div>
+      <div className="workouts-card-body">
+        {card.exercises.map((exercise) => (
+          <div className="workouts-card-exercise-container">
+            <div className="workouts-card-exercise">{exercise.exercise}</div>
+            <div className="workouts-card-sets-reps">
+              {exercise.sets}
+              <span> sets x </span>
+              {exercise.reps}
+              <span> reps</span>
             </div>
-            <div className='workouts-card-body'>
-                {card.exercises.map(exercise => 
-                    <div className='workouts-card-exercise-container'>
-                        <div className='workouts-card-exercise'>
-                            {exercise.exercise}
-                        </div>
-                        <div className='workouts-card-sets-reps'>
-                            {exercise.sets} 
-                            <span> sets x </span>
-                            {exercise.reps}
-                            <span> reps</span>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
-    )
+          </div>
+        ))}
+      </div>
+    </div>
+  ));
 
   const content = Object.entries(calendar).map(([day, plan]) => (
     <div
