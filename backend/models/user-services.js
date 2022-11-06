@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const WorkoutSchema = require("./workout");
 const StatsSchema = require("./stats");
 const dotenv = require("dotenv");
+const UserSchema = require("./user");
 dotenv.config();
 
 let dbConnection;
@@ -87,9 +88,30 @@ async function findWorkoutByName(name) {
   return await workoutModel.find({ name: name });
 }
 
+async function getUser() {
+  const userModel = getDbConnection().model("User", UserSchema);
+  return (result = await userModel.find());
+}
+
+async function updateUser(id, newName, newPic) {
+  const userModel = getDbConnection().model("User", UserSchema);
+  try {
+    return await userModel.findByIdAndUpdate(
+      id,
+      { name: newName, avatar: newPic },
+      { new: true }
+    );
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+}
+
 exports.getWorkouts = getWorkouts;
 exports.findWorkoutById = findWorkoutById;
 exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
 exports.updateStats = updateStats;
+exports.getUser = getUser;
+exports.updateUser = updateUser;

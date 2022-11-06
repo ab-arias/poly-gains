@@ -8,6 +8,7 @@ export default function Profile() {
   const [stats, setStats] = useState([]);
   const [profilePic, setProfilePic] = useState();
   const [name, setName] = useState("");
+  const [user, setUser] = useState();
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
   async function fetchAll() {
@@ -24,6 +25,27 @@ export default function Profile() {
   useEffect(() => {
     fetchAll().then((result) => {
       if (result) setStats(result);
+    });
+  }, []);
+
+  async function fetchUser() {
+    try {
+      const response = await axios.get("http://localhost:4000/user");
+      return response.data.user;
+    } catch (error) {
+      //We're not handling errors. Just logging into the console.
+      console.log(error);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    fetchUser().then((result) => {
+      if (result) {
+        setUser(result);
+        setName(result[0].name);
+        setProfilePic(result[0].avatar);
+      }
     });
   }, []);
 
@@ -44,6 +66,7 @@ export default function Profile() {
           }
           updateName={setName}
           currentName={name}
+          user={user}
         />
       )}
       <img
@@ -55,7 +78,7 @@ export default function Profile() {
         }
         alt="Cannot display"
       />
-      <h2>{name}</h2>
+      <h2>{name ? name : "User's Name"}</h2>
 
       <div className="center-dashboard">
         <Link className="link-container" to="/stats">
