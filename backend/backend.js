@@ -30,6 +30,28 @@ app.get("/stats", async (req, res) => {
   }
 });
 
+app.get("/user", async (req, res) => {
+  const name = req.query["name"];
+  try {
+    const result = await userServices.getUser();
+    res.send({ user: result });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error ocurred in the server.");
+  }
+});
+
+app.post("/user/:id", async (req, res) => {
+  const id = req.params["id"];
+  const { name, avatar } = req.body;
+  const updatedUser = await userServices.updateUser(id, name, avatar);
+  if (updatedUser) {
+    res.status(201).send(updatedUser).end();
+  } else {
+    res.status(404).end();
+  }
+});
+
 app.post("/stats/:id", async (req, res) => {
   const id = req.params["id"];
   const newRec = req.body;

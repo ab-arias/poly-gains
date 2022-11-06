@@ -3,10 +3,17 @@ import { FiCamera } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import axios from "axios";
 
 export default function EditProfileModal(props) {
-  const { updateProfilePic, closeModal, currentPic, updateName, currentName } =
-    props;
+  const {
+    updateProfilePic,
+    closeModal,
+    currentPic,
+    updateName,
+    currentName,
+    user,
+  } = props;
   const [srcImg, setSrcImg] = useState();
   const cropperRef = useRef(null);
   const inputFile = useRef(null);
@@ -37,6 +44,24 @@ export default function EditProfileModal(props) {
     updateName(name);
   }
 
+  async function updateUser() {
+    const id = user[0]._id;
+    try {
+      const response = await axios.post("http://localhost:4000/user/" + id, {
+        name: name,
+        avatar: croppedImg,
+      });
+      const result = response.data;
+      console.log(result);
+      updateName(result.name);
+      updateProfilePic(result.avatar);
+    } catch (error) {
+      //We're not handling errors. Just logging into the console.
+      console.log(error);
+      return false;
+    }
+  }
+
   return (
     <div className="modal-screen">
       <div className="edit-profile-modal-header">
@@ -46,7 +71,7 @@ export default function EditProfileModal(props) {
         >
           X
         </button>
-        <button className="edit-profile-modal-save" onClick={handleSubmission}>
+        <button className="edit-profile-modal-save" onClick={updateUser}>
           Save
         </button>
       </div>
