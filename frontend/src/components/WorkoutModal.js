@@ -1,5 +1,5 @@
-import React from 'react'
-import { v4 as uuid } from 'uuid'
+import React from "react";
+import { v4 as uuid } from "uuid";
 
 export default function WorkoutModal({toggle, updateWorkout, workout}) {
 
@@ -29,9 +29,9 @@ export default function WorkoutModal({toggle, updateWorkout, workout}) {
         setEditing(false)
     }
 
-    function handleTitleChange(event){
-        setTitle(event.target.value)
-    }
+  function handleTitleChange(event) {
+    setTitle(event.target.value);
+  }
 
     function handleExerciseChange(event){
         let {name, value} = event.target
