@@ -1,43 +1,37 @@
 const mongoose = require("mongoose");
 
-const StatsSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
     {
         _id: {
             type: mongoose.ObjectId,
             required: true,
         },
-        records: {
-            type: Array,
-            required: true,
-            trim: true,
-        },
-        height: {
-            type: Number,
-            required: true,
-            trim: true,
-        },
-        weight: {
-            type: Number,
-            required: true,
-            trim: true,
-        },
-        mile: {
+        name: {
             type: String,
             required: true,
             trim: true,
         },
-        calories: {
-            type: Number,
-            required: true,
-            trim: true,
-        },
-        plan: {
+        username: {
             type: String,
             required: true,
             trim: true,
         },
-    },
-    { collection: "stats" }
+        email: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        password: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        avatar: {
+            data: Buffer,
+            contentType: String,
+        },
+    }
+    //{ collection: "user" }
 );
 
-module.exports = StatsSchema;
+module.exports = UserSchema;

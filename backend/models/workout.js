@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
 const WorkoutSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        exercise_list: {
+            type: Array,
+            required: true,
+            trim: true,
+        },
     },
-    exercise_list: {
-      type: Array,
-      required: true,
-      trim: true,
-    },
-  },
-  { collection: "workouts" }
+    { collection: "workouts" }
 );
 
 module.exports = WorkoutSchema;
