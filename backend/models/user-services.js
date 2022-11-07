@@ -6,6 +6,11 @@ dotenv.config();
 
 let dbConnection;
 
+function setConnection(newConn){
+  dbConnection = newConn;
+  return dbConnection;
+}
+
 function getDbConnection() {
   if (!dbConnection) {
     dbConnection = mongoose.createConnection(process.env.MONGODB_URI, {
@@ -93,3 +98,4 @@ exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
 exports.updateStats = updateStats;
+exports.setConnection = setConnection;
