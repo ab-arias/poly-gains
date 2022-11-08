@@ -60,7 +60,7 @@ function StatTables(props) {
                 </div>
 
                 <div className="stats-update-form">
-                    <div>Update Stats</div>
+                    <h3 class="sub-header">Update Stats</h3>
                     <StatForm
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -80,7 +80,7 @@ function StatTables(props) {
                     <h3 class="sub-header">BMI Calculator</h3>
                     <div class="BMI calculator">
                         <div class="weight-bmi">
-                            <p>weight:</p>
+                            <div class="bold-header">Weight:</div>
                             <input
                                 id="weight-input-id"
                                 type="text"
@@ -89,7 +89,7 @@ function StatTables(props) {
                             <label for="weight-input-id">lbs</label>
                         </div>
                         <div class="height-bmi">
-                            <p>height:</p>
+                            <div class="bold-header">Height:</div>
                             <input
                                 id="height-input-ft"
                                 type="text"
@@ -106,8 +106,8 @@ function StatTables(props) {
                             <label for="height-input-in">in</label>
                         </div>
                         <div class="bottom-bmi">
-                            <p>BMI:</p>
-                            <input id="BMI-result"></input>
+                            <div class="bold-header">BMI:</div>
+                            <input class="BMI-result" id="BMI-result"></input>
                             <label
                                 id="BMI-health-label"
                                 for="BMIresult"
@@ -124,23 +124,23 @@ function StatTables(props) {
 }
 
 function calculateBMI() {
-    const bmi =
+    const bmi = 
         (Number(document.getElementById("weight-input-id").value) /
             (Number(document.getElementById("height-input-ft").value * 12) +
                 Number(document.getElementById("height-input-in").value)) **
                 2) *
         703;
-    document.getElementById("BMI-result").value = bmi;
+    document.getElementById("BMI-result").value = (Math.round(bmi * 100) / 100);
     if (bmi < 18.5) {
-        document.getElementById("BMI-health-label").textContent = "underweight";
+        document.getElementById("BMI-health-label").textContent = "Underweight";
     } else if (bmi > 18.5 && bmi < 24.99999) {
-        document.getElementById("BMI-health-label").textContent = "healthy";
+        document.getElementById("BMI-health-label").textContent = "Healthy";
     } else if (bmi > 25.0 && bmi < 29.99999) {
-        document.getElementById("BMI-health-label").textContent = "overweight";
+        document.getElementById("BMI-health-label").textContent = "Overweight";
     } else if (bmi > 30) {
         document.getElementById("BMI-health-label").textContent = "Obese";
     } else {
-        document.getElementById("BMI-health-label").textContent = "error";
+        document.getElementById("BMI-health-label").textContent = "Error";
     }
 }
 

@@ -8,8 +8,10 @@ const userServices = require("./models/user-services");
 const validateRegisterInput = require("./validation/register.js");
 const validateLoginInput = require("./validation/login.js");
 
-app.use(cors());
-app.use(express.json());
+
+app.use(passport.initialize());
+require("./passport.js")(passport);
+app.use("./routes/users", users);
 
 app.use(passport.initialize());
 require("./passport.js")(passport);
