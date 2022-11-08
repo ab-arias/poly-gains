@@ -124,13 +124,13 @@ function StatTables(props) {
 }
 
 function calculateBMI() {
-    const bmi = 
+    const bmi =
         (Number(document.getElementById("weight-input-id").value) /
             (Number(document.getElementById("height-input-ft").value * 12) +
                 Number(document.getElementById("height-input-in").value)) **
                 2) *
         703;
-    document.getElementById("BMI-result").value = (Math.round(bmi * 100) / 100);
+    document.getElementById("BMI-result").value = Math.round(bmi * 100) / 100;
     if (bmi < 18.5) {
         document.getElementById("BMI-health-label").textContent = "Underweight";
     } else if (bmi > 18.5 && bmi < 24.99999) {
