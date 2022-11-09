@@ -18,7 +18,11 @@ function StatsBody(props) {
         }
         return <div>{statrows}</div>;
     });
-    return <table>{rows}</table>;
+    return (
+        <div>
+            <table>{rows}</table>
+        </div>
+    );
 }
 
 function DietBody(props) {
@@ -55,7 +59,10 @@ function StatTables(props) {
                 <div className="stats-pr-table">
                     <div>Stats</div>
                     <table>
-                        <StatsBody statsData={props.statsData} />
+                        <StatsBody
+                            statsData={props.statsData}
+                            // updateStats = {props.updateStats}
+                        />
                     </table>
                 </div>
 

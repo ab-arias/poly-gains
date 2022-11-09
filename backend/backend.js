@@ -15,6 +15,7 @@ app.use(passport.initialize());
 require("./passport.js")(passport);
 app.use("./routes/users", users);
 
+
 app.get("/workouts", async (req, res) => {
     const name = req.query["name"];
     try {
@@ -110,6 +111,7 @@ app.get("/user/:id", async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 app.post("/user/:id", async (req, res) => {
     const id = req.params["id"];
     const { name, avatar } = req.body;
@@ -123,4 +125,12 @@ app.post("/user/:id", async (req, res) => {
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
+=======
+app.listen(process.env.PORT || port, () => {
+    console.log("REST API is listening.");
+>>>>>>> main
 });
+
+// app.listen(port, () => {
+//     console.log(`Example app listening at http://localhost:${port}`);
+// });
