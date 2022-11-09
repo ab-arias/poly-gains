@@ -9,9 +9,9 @@ dotenv.config();
 
 let dbConnection;
 
-function setConnection(newConn){
-  dbConnection = newConn;
-  return dbConnection;
+function setConnection(newConn) {
+    dbConnection = newConn;
+    return dbConnection;
 }
 
 function getDbConnection() {
@@ -179,3 +179,4 @@ exports.updateStats = updateStats;
 exports.registerNewUser = registerNewUser;
 exports.loginUser = loginUser;
 exports.getUserById = getUserById;
+exports.setConnection = setConnection;
