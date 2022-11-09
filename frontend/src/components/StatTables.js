@@ -18,7 +18,7 @@ function StatsBody(props) {
         }
         return <div>{statrows}</div>;
     });
-    return <table>{rows}</table>;
+    return <div><table>{rows}</table> <input type="button" value="Edit" onClick={editPRTable} /></div>;
 }
 
 function DietBody(props) {
@@ -55,7 +55,10 @@ function StatTables(props) {
                 <div className="stats-pr-table">
                     <div>Stats</div>
                     <table>
-                        <StatsBody statsData={props.statsData} />
+                        <StatsBody 
+                            statsData={props.statsData} 
+                            // updateStats = {props.updateStats}
+                        />
                     </table>
                 </div>
 
@@ -124,13 +127,13 @@ function StatTables(props) {
 }
 
 function calculateBMI() {
-    const bmi = 
+    const bmi =
         (Number(document.getElementById("weight-input-id").value) /
             (Number(document.getElementById("height-input-ft").value * 12) +
                 Number(document.getElementById("height-input-in").value)) **
                 2) *
         703;
-    document.getElementById("BMI-result").value = (Math.round(bmi * 100) / 100);
+    document.getElementById("BMI-result").value = Math.round(bmi * 100) / 100;
     if (bmi < 18.5) {
         document.getElementById("BMI-health-label").textContent = "Underweight";
     } else if (bmi > 18.5 && bmi < 24.99999) {
@@ -142,6 +145,10 @@ function calculateBMI() {
     } else {
         document.getElementById("BMI-health-label").textContent = "Error";
     }
+}
+
+function editPRTable () {
+
 }
 
 export default StatTables;

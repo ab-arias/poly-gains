@@ -1,4 +1,9 @@
 {
+    "scripts": {
+        "test": "prettier --check .",
+        "dev": "nodemon backend.js",
+        "start": "node backend.js"
+    },
     "devDependencies": {
         "prettier": "2.7.1"
     }

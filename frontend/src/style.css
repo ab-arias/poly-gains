@@ -27,7 +27,6 @@
     font-weight: bold;
     margin-bottom: 12px;
     margin-top: 5px;
-
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -59,7 +58,7 @@ Header CSS:
     border-style: solid;
     border-width: 1px;
     border-radius: 20px;
-    border-color:rgb(22, 85, 22);
+    border-color: rgb(22, 85, 22);
     transition: 0.2s;
 }
 .left-header:hover {
