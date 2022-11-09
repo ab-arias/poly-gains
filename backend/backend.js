@@ -15,7 +15,6 @@ app.use(passport.initialize());
 require("./passport.js")(passport);
 app.use("./routes/users", users);
 
-
 app.get("/workouts", async (req, res) => {
     const name = req.query["name"];
     try {
