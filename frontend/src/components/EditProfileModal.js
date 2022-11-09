@@ -45,7 +45,8 @@ export default function EditProfileModal(props) {
     }
 
     async function updateUser() {
-        const id = user[0]._id;
+        console.log(user);
+        const id = user._id;
         try {
             const response = await axios.post(
                 "http://localhost:4000/user/" + id,
