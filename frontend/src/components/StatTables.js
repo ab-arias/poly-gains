@@ -18,7 +18,7 @@ function StatsBody(props) {
         }
         return <div>{statrows}</div>;
     });
-    return <div><table>{rows}</table> <input type="button" value="Edit" onClick={editPRTable} /></div>;
+    return <div><table>{rows}</table></div>;
 }
 
 function DietBody(props) {
@@ -145,10 +145,6 @@ function calculateBMI() {
     } else {
         document.getElementById("BMI-health-label").textContent = "Error";
     }
-}
-
-function editPRTable () {
-
 }
 
 export default StatTables;

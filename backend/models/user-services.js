@@ -179,3 +179,4 @@ exports.updateStats = updateStats;
 exports.registerNewUser = registerNewUser;
 exports.loginUser = loginUser;
 exports.getUserById = getUserById;
+exports.setConnection = setConnection;
