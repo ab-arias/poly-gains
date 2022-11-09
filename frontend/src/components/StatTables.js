@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import StatForm from "./StatForm";
 
 function StatsBody(props) {
@@ -13,6 +14,12 @@ function StatsBody(props) {
                     <th>
                         <td>{x.pr} lbs</td>
                     </th>
+                    <th>
+                        <button class="delete-stat-button"
+                                onClick={makeDeleteStatCall(x)}>
+                            Delete
+                        </button>
+                    </th>
                 </tr>
             );
         }
@@ -21,9 +28,36 @@ function StatsBody(props) {
     return (
         <div>
             <table>{rows}</table>
+            <button ClassName="edit-stats-button"
+                    onClick={deleteShow}>
+                Edit</button>
         </div>
     );
 }
+
+function deleteShow(){
+    var b = document.getElementsByClassName("delete-stat-button");
+    for(let i = 0; i < 8; i++) {
+        let element = b[i];
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+    };
+    
+}
+
+async function makeDeleteStatCall(id){
+    try {
+       const response = await axios.delete('http://localhost:4000/users/' + id);
+       return response;
+    }
+    catch (error) {
+       console.log(error);
+       return false;
+    }
+  }
 
 function DietBody(props) {
     let diet = props.statsData.map((row) => {
@@ -59,10 +93,7 @@ function StatTables(props) {
                 <div className="stats-pr-table">
                     <div>Stats</div>
                     <table>
-                        <StatsBody
-                            statsData={props.statsData}
-                            // updateStats = {props.updateStats}
-                        />
+                        <StatsBody statsData={props.statsData} />
                     </table>
                 </div>
 
@@ -129,6 +160,8 @@ function StatTables(props) {
         </div>
     );
 }
+
+
 
 function calculateBMI() {
     const bmi =
