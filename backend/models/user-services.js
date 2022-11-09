@@ -156,19 +156,19 @@ async function getUserById(id) {
     return result;
 }
 
-// async function updateUser(id, newName, newPic) {
-//     const userModel = getDbConnection().model("User", UserSchema);
-//     try {
-//         return await userModel.findByIdAndUpdate(
-//             id,
-//             { name: newName, avatar: newPic },
-//             { new: true }
-//         );
-//     } catch (error) {
-//         console.log(error);
-//         return undefined;
-//     }
-// }
+async function updateUser(id, newName, newPic) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        return await userModel.findByIdAndUpdate(
+            id,
+            { name: newName, avatar: newPic },
+            { new: true }
+        );
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
 
 exports.getWorkouts = getWorkouts;
 exports.findWorkoutById = findWorkoutById;
@@ -179,4 +179,5 @@ exports.updateStats = updateStats;
 exports.registerNewUser = registerNewUser;
 exports.loginUser = loginUser;
 exports.getUserById = getUserById;
+exports.updateUser = updateUser;
 exports.setConnection = setConnection;
