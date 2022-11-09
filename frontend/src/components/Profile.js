@@ -47,7 +47,7 @@ export default function Profile({ userToken }) {
                 setUser(result);
             }
         });
-    }, []);
+    }, [profilePic, name]);
 
     function toggleModalView() {
         setShowEditProfileModal((prev) => !prev);
@@ -94,8 +94,8 @@ export default function Profile({ userToken }) {
                             <img
                                 className="profile-button-avatar"
                                 src={
-                                    profilePic
-                                        ? profilePic
+                                    user?.avatar
+                                        ? user.avatar
                                         : require("../assets/img/DefaultProfilePic.jpeg")
                                 }
                                 alt="Cannot display"

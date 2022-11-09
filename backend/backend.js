@@ -15,6 +15,7 @@ app.use(passport.initialize());
 require("./passport.js")(passport);
 app.use("./routes/users", users);
 
+
 app.get("/workouts", async (req, res) => {
     const name = req.query["name"];
     try {
@@ -34,17 +35,6 @@ app.get("/stats", async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send("An error ocurred in the server.");
-    }
-});
-
-app.post("/user/:id", async (req, res) => {
-    const id = req.params["id"];
-    const { name, avatar } = req.body;
-    const updatedUser = await userServices.updateUser(id, name, avatar);
-    if (updatedUser) {
-        res.status(201).send(updatedUser).end();
-    } else {
-        res.status(404).end();
     }
 });
 
@@ -121,6 +111,21 @@ app.get("/user/:id", async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+app.post("/user/:id", async (req, res) => {
+    const id = req.params["id"];
+    const { name, avatar } = req.body;
+    const updatedUser = await userServices.updateUser(id, name, avatar);
+    if (updatedUser) {
+        res.status(201).send(updatedUser).end();
+    } else {
+        res.status(404).end();
+    }
 });
+
+app.listen(process.env.PORT || port, () => {
+    console.log("REST API is listening.");
+});
+
+// app.listen(port, () => {
+//     console.log(`Example app listening at http://localhost:${port}`);
+// });
