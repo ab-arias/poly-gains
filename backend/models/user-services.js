@@ -54,6 +54,25 @@ async function updateStats(id, newRec) {
     }
 }
 
+async function deleteStat(id, name) {
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
+
+    try {
+        const deleteRow = await statsModel.updateOne(
+            { _id: id },
+            {
+                $pull: {
+                    records: { name: name },
+                },
+            }
+        );
+        return deleteRow;
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
 async function findWorkoutById(id) {
     const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
     try {
@@ -181,3 +200,4 @@ exports.loginUser = loginUser;
 exports.getUserById = getUserById;
 exports.updateUser = updateUser;
 exports.setConnection = setConnection;
+exports.deleteStat = deleteStat;
