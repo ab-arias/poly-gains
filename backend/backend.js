@@ -49,6 +49,18 @@ app.post("/stats/:id", async (req, res) => {
     }
 });
 
+app.delete("/stats/:id", async (req, res) => {
+    const id = req.params["id"];
+    const delRec = req.body["thisName"];
+    const deleteStat = await userServices.deleteStat(id, delRec);
+
+    if (deleteStat) {
+        res.status(204).end();
+    } else {
+        res.status(404).end();
+    }
+});
+
 app.get("/workouts/:id", async (req, res) => {
     const id = req.params["id"];
     const result = await userServices.findWorkoutById(id);

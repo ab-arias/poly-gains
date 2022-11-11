@@ -7,20 +7,28 @@ function StatsBody(props) {
         let statrows = [];
         for (const x of row.records) {
             statrows.push(
-                <tr>
-                    <th>
-                        <td>{x.name}:</td>
-                    </th>
-                    <th>
-                        <td>{x.pr} lbs</td>
-                    </th>
-                    <th>
-                        <button class="delete-stat-button"
-                                onClick={makeDeleteStatCall(x)}>
-                            Delete
-                        </button>
-                    </th>
-                </tr>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>
+                                <td>{x.name}:</td>
+                            </th>
+                            <th>
+                                <td>{x.pr} lbs</td>
+                            </th>
+                            <th>
+                                <button
+                                    class="delete-stat-button"
+                                    onClick={() =>
+                                        makeDeleteStatCall(row._id, x.name)
+                                    }
+                                >
+                                    Delete
+                                </button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
             );
         }
         return <div>{statrows}</div>;
@@ -28,53 +36,59 @@ function StatsBody(props) {
     return (
         <div>
             <table>{rows}</table>
-            <button ClassName="edit-stats-button"
-                    onClick={deleteShow}>
-                Edit</button>
+            <button ClassName="edit-stats-button" onClick={deleteShow}>
+                Edit
+            </button>
         </div>
     );
 }
 
-function deleteShow(){
+function deleteShow() {
     var b = document.getElementsByClassName("delete-stat-button");
-    for(let i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
         let element = b[i];
         if (element.style.display === "none") {
             element.style.display = "block";
         } else {
             element.style.display = "none";
         }
-    };
-    
+    }
 }
 
-async function makeDeleteStatCall(id){
+async function makeDeleteStatCall(id, name) {
     try {
-       const response = await axios.delete('http://localhost:4000/users/' + id);
-       return response;
+        const response = await axios.delete(
+            "http://localhost:4000/stats/" + id,
+            { data: { thisName: name } }
+        );
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return false;
     }
-    catch (error) {
-       console.log(error);
-       return false;
-    }
-  }
+}
 
 function DietBody(props) {
     let diet = props.statsData.map((row) => {
         return (
             <div>
-                <th>
-                    <tr>Weight: </tr>
-                    <tr>Height:</tr>
-                    <tr>Calories:</tr>
-                    <tr>Plan:</tr>
-                </th>
-                <th>
-                    <tr>{row.weight} lbs</tr>
-                    <tr>{row.height} inches</tr>
-                    <tr>{row.calories}</tr>
-                    <tr>{row.plan}</tr>
-                </th>
+                <table>
+                    <thead>
+                        <th>
+                            <tr>Weight: </tr>
+                            <tr>Height:</tr>
+                            <tr>Calories:</tr>
+                            <tr>Plan:</tr>
+                        </th>
+                        <th>
+                            <tr>{row.weight} lbs</tr>
+                            <tr>{row.height} inches</tr>
+                            <tr>{row.calories}</tr>
+                            <tr>{row.plan}</tr>
+                        </th>
+                    </thead>
+                </table>
             </div>
         );
     });
@@ -160,8 +174,6 @@ function StatTables(props) {
         </div>
     );
 }
-
-
 
 function calculateBMI() {
     const bmi =
