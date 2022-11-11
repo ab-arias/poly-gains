@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import axios from "axios";
 import Profile from "./components/Profile";
 import Stats from "./components/Stats";
 import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
 import EditProfile from "./components/EditProfile";
 import Auth from "./components/Auth";
+import OtherProfile from "./components/OtherProfile";
 
 export default function App() {
     const [userToken, setUserToken] = useState();
+    const [searchBarInput, setSearchBarInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
@@ -28,19 +32,64 @@ export default function App() {
         localStorage.clear();
     }
 
+    async function fetchSearchResults() {
+        try {
+            const response = await axios.get(
+                "http://localhost:4000/search/" + searchBarInput
+            );
+            return response.data;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        !searchBarInput
+            ? setSearchResults([])
+            : fetchSearchResults().then((result) => {
+                  setSearchResults(result);
+              });
+    }, [searchBarInput]);
+
+    function handlePageSwitch() {
+        setSearchBarInput("");
+        setSearchResults([]);
+    }
+
+    const userList =
+        searchResults &&
+        searchResults.map((result, i) => (
+            <Link
+                className="search-results-row"
+                style={
+                    i === searchResults.length - 1
+                        ? { borderBottomWidth: "0" }
+                        : null
+                }
+                onClick={handlePageSwitch}
+                to={"/profile/" + result.username}
+            >
+                {result.username}
+            </Link>
+        ));
+
     return (
         <BrowserRouter>
             {userToken ? (
                 <div className="app">
                     <div class="header">
                         <div class="left-header">
-                            <Link to="/">
-                                <img
-                                    style={{ height: 60 }}
-                                    src={require("./assets/img/PolyGainsLogo.png")}
-                                    alt="PolyGains"
-                                />
-                            </Link>
+                            <div className="left-header-button">
+                                <Link to="/">
+                                    <img
+                                        style={{ height: 60 }}
+                                        src={require("./assets/img/PolyGainsLogo.png")}
+                                        alt="PolyGains"
+                                    />
+                                </Link>
+                            </div>
                         </div>
                         <div class="middle-header">
                             <Link className="Hlink" to="/calpoly">
@@ -54,7 +103,25 @@ export default function App() {
                             </Link>
                         </div>
                         <div class="right-header">
-                            <div onClick={handleLogOut}>Log Out</div>
+                            <div className="search-block">
+                                <input
+                                    className="search-bar"
+                                    name="usersearch"
+                                    value={searchBarInput}
+                                    onChange={(e) =>
+                                        setSearchBarInput(e.target.value)
+                                    }
+                                    placeholder="Search by username"
+                                />
+                                {userList.length !== 0 && (
+                                    <div className="search-results">
+                                        {userList}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="log-out" onClick={handleLogOut}>
+                                Log Out
+                            </div>
                         </div>
                     </div>
 
@@ -79,6 +146,10 @@ export default function App() {
                             <Route
                                 path="/editprofile"
                                 element={<EditProfile userToken={userToken} />}
+                            />
+                            <Route
+                                path={"/profile/:username"}
+                                element={<OtherProfile />}
                             />
                         </Routes>
                     </div>

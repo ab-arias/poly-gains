@@ -189,6 +189,40 @@ async function updateUser(id, newName, newPic) {
     }
 }
 
+async function searchUsers(username) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        let res = await userModel.aggregate([
+            {
+                $search: {
+                    index: "userSearch",
+                    autocomplete: {
+                        query: username,
+                        path: "username",
+                        fuzzy: {
+                            maxEdits: 2,
+                            prefixLength: 0,
+                        },
+                    },
+                },
+            },
+            {
+                $project: {
+                    name: 0,
+                    email: 0,
+                    password: 0,
+                    avatar: 0,
+                    __v: 0,
+                },
+            },
+        ]);
+        return res;
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
 exports.getWorkouts = getWorkouts;
 exports.findWorkoutById = findWorkoutById;
 exports.addWorkout = addWorkout;
@@ -201,3 +235,4 @@ exports.getUserById = getUserById;
 exports.updateUser = updateUser;
 exports.setConnection = setConnection;
 exports.deleteStat = deleteStat;
+exports.searchUsers = searchUsers;
