@@ -2,18 +2,12 @@ const express = require("express");
 const app = express();
 const port = 4000;
 const cors = require("cors");
-const passport = require("passport");
-const users = require("./routes/users.js");
 const userServices = require("./models/user-services");
 const validateRegisterInput = require("./validation/register.js");
 const validateLoginInput = require("./validation/login.js");
 
 app.use(cors());
 app.use(express.json());
-
-app.use(passport.initialize());
-require("./passport.js")(passport);
-app.use("./routes/users", users);
 
 app.get("/workouts", async (req, res) => {
     const name = req.query["name"];
@@ -130,6 +124,16 @@ app.post("/user/:id", async (req, res) => {
         res.status(201).send(updatedUser).end();
     } else {
         res.status(404).end();
+    }
+});
+
+app.get("/search/:username", async (req, res) => {
+    const username = req.params["username"];
+    try {
+        let result = await userServices.searchUsers(username);
+        res.send(result);
+    } catch (e) {
+        res.status(500).end();
     }
 });
 
