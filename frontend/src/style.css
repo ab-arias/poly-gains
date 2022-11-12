@@ -86,10 +86,11 @@ Header CSS:
 }
 .search-block {
     position: relative;
+    height: fit-content;
     top: 20px;
 }
 .search-bar {
-    width: 150px;
+    width: 200px;
 }
 .search-results {
     border: 2px solid forestgreen;
@@ -101,7 +102,9 @@ Header CSS:
     overflow: hidden;
 }
 .search-results-row {
-    padding: 2px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
     border-bottom: 2px solid forestgreen;
     background-color: white;
     color: black;
@@ -111,10 +114,17 @@ Header CSS:
     cursor: pointer;
     color: rgb(27, 104, 27);
 }
+.search-results-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding-right: 7px;
+}
 .log-out {
+    height: fit-content;
     position: relative;
     top: 20px;
-    padding-left: 10px;
+    margin-left: 15px;
 }
 .Hlink {
     padding-left: 8px;
@@ -340,6 +350,7 @@ Workouts CSS:
     border: 2px solid forestgreen;
     border-radius: 10px;
     background-color: rgba(221, 217, 217, 0.77);
+    overflow: hidden;
 }
 
 .workouts-calendar-day {

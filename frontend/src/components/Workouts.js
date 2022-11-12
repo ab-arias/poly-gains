@@ -74,6 +74,11 @@ export default function Workouts() {
     const content = Object.entries(calendar).map(([day, plan]) => (
         <div
             className="workouts-calendar-entry"
+            style={
+                day === "Sunday"
+                    ? { borderRightWidth: "0" }
+                    : null
+            }
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => addToDay(e, day)}
         >

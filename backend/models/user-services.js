@@ -175,6 +175,12 @@ async function getUserById(id) {
     return result;
 }
 
+async function getUserByUsername(username) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    const result = await userModel.findOne({ username: username});
+    return result;
+}
+
 async function updateUser(id, newName, newPic) {
     const userModel = getDbConnection().model("User", UserSchema);
     try {
@@ -211,7 +217,6 @@ async function searchUsers(username) {
                     name: 0,
                     email: 0,
                     password: 0,
-                    avatar: 0,
                     __v: 0,
                 },
             },
@@ -232,6 +237,7 @@ exports.updateStats = updateStats;
 exports.registerNewUser = registerNewUser;
 exports.loginUser = loginUser;
 exports.getUserById = getUserById;
+exports.getUserByUsername = getUserByUsername;
 exports.updateUser = updateUser;
 exports.setConnection = setConnection;
 exports.deleteStat = deleteStat;
