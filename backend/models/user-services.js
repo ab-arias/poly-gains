@@ -206,7 +206,7 @@ async function searchUsers(username) {
                         query: username,
                         path: "username",
                         fuzzy: {
-                            maxEdits: 2,
+                            maxEdits: 1,
                             prefixLength: 0,
                         },
                     },

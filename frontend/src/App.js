@@ -84,7 +84,7 @@ export default function App() {
     }
 
     const userList =
-        searchResults &&
+        searchBarInput &&
         searchResults.map((result, i) => (
             <Link
                 className="search-results-row"
@@ -94,7 +94,11 @@ export default function App() {
                         : null
                 }
                 onClick={handleClearSearch}
-                to={"/profile/" + result.username}
+                to={
+                    userToken.username === result.username
+                        ? "/"
+                        : "/profile/" + result.username
+                }
             >
                 <img
                     className="search-results-avatar"
@@ -108,6 +112,19 @@ export default function App() {
                 @{result.username}
             </Link>
         ));
+
+    function renderSearchResults() {
+        if (userList.length !== 0 && searchBarInput.length > 1) {
+            return <div className="search-results">{userList}</div>;
+        } else if (searchOpen && searchBarInput.length > 1) {
+            return (
+                <div className="search-results search-results-row">
+                    No Users Found
+                </div>
+            );
+        }
+        return <div></div>;
+    }
 
     return (
         <BrowserRouter>
@@ -152,7 +169,15 @@ export default function App() {
                                     <IconContext.Provider
                                         value={{ size: "20px" }}
                                     >
-                                        <div style={{ paddingTop: 3 }}>
+                                        <div
+                                            className="Hlink"
+                                            style={{
+                                                paddingTop: 3,
+                                                cursor: "pointer",
+                                                marginRight: 0,
+                                                paddingRight: 0,
+                                            }}
+                                        >
                                             <RiUserSearchLine
                                                 onClick={() =>
                                                     setSearchOpen(true)
@@ -161,13 +186,12 @@ export default function App() {
                                         </div>
                                     </IconContext.Provider>
                                 )}
-                                {userList.length !== 0 && (
-                                    <div className="search-results">
-                                        {userList}
-                                    </div>
-                                )}
+                                {renderSearchResults()}
                             </div>
-                            <div className="log-out" onClick={handleLogOut}>
+                            <div
+                                className="log-out Hlink"
+                                onClick={handleLogOut}
+                            >
                                 Log Out
                             </div>
                         </div>

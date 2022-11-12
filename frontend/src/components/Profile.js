@@ -3,6 +3,7 @@ import ProgressTable from "./ProgressTable";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
+import WorkoutCalendar from "./WorkoutCalendar";
 
 export default function Profile({ userToken }) {
     const [stats, setStats] = useState([]);
@@ -10,19 +11,6 @@ export default function Profile({ userToken }) {
     const [name, setName] = useState("");
     const [user, setUser] = useState();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
-    const restCard = {
-        title: "Rest",
-        exercises: [],
-    };
-    const calendar = {
-        Monday: restCard,
-        Tuesday: restCard,
-        Wednesday: restCard,
-        Thursday: restCard,
-        Friday: restCard,
-        Saturday: restCard,
-        Sunday: restCard,
-    };
 
     async function fetchAll() {
         try {
@@ -66,102 +54,74 @@ export default function Profile({ userToken }) {
         setShowEditProfileModal((prev) => !prev);
     }
 
-    const content = Object.entries(calendar).map(([day, plan]) => (
-        <div
-            className="workouts-calendar-entry"
-            style={day === "Sunday" ? { borderRightWidth: "0" } : null}
-        >
-            <h3 className="workouts-calendar-day">{day}</h3>
-            <div className="mini-workouts-card">
-                <div className="workouts-card-header">{plan.title}</div>
-                <div className="workouts-card-body">
-                    {plan.exercises.map((exercise) => (
-                        <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                {exercise.exercise}
-                            </div>
-                            <div className="workouts-card-sets-reps">
-                                {exercise.sets}
-                                <span> sets x </span>
-                                {exercise.reps}
-                                <span> reps</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    ));
-
     return (
-        <div className="profile-main-container">
-            {showEditProfileModal && (
-                <EditProfileModal
-                    closeModal={toggleModalView}
-                    updateProfilePic={setProfilePic}
-                    currentPic={
+        user && (
+            <div className="profile-main-container">
+                {showEditProfileModal && (
+                    <EditProfileModal
+                        closeModal={toggleModalView}
+                        updateProfilePic={setProfilePic}
+                        currentPic={
+                            user?.avatar
+                                ? user.avatar
+                                : require("../assets/img/DefaultProfilePic.jpeg")
+                        }
+                        updateName={setName}
+                        currentName={user.name}
+                        user={user}
+                    />
+                )}
+                <img
+                    className="profile-avatar"
+                    src={
                         user?.avatar
                             ? user.avatar
                             : require("../assets/img/DefaultProfilePic.jpeg")
                     }
-                    updateName={setName}
-                    currentName={user.name}
-                    user={user}
+                    alt="Cannot display"
                 />
-            )}
-            <img
-                className="profile-avatar"
-                src={
-                    user?.avatar
-                        ? user.avatar
-                        : require("../assets/img/DefaultProfilePic.jpeg")
-                }
-                alt="Cannot display"
-            />
-            <h2>{user?.name ? user.name : "User's Name"}</h2>
+                <h2>{user?.name ? user.name : ""}</h2>
 
-            <div className="center-dashboard">
-                <Link className="link-container" to="/stats">
-                    <ProgressTable statsData={stats} />
-                </Link>
-
-                <div className="dashboard-buttons-container">
-                    <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => toggleModalView()}
-                    >
-                        <div className="update-profile-button">
-                            <img
-                                className="profile-button-avatar"
-                                src={
-                                    user?.avatar
-                                        ? user.avatar
-                                        : require("../assets/img/DefaultProfilePic.jpeg")
-                                }
-                                alt="Cannot display"
-                            />
-                            <h3>Edit Profile</h3>
-                        </div>
-                    </div>
-                    <Link className="link-container" to="/calpoly">
-                        <div className="calpoly-button">
-                            <img
-                                className="calpoly-logo"
-                                src={require("../assets/img/CalPolyLogo.png")}
-                                alt="Cannot display"
-                            />
-                            <h3>Cal Poly Resources</h3>
-                        </div>
+                <div className="center-dashboard">
+                    <Link className="link-container" to="/stats">
+                        <ProgressTable statsData={stats} />
                     </Link>
-                </div>
-            </div>
 
-            <Link className="link-container" to="/workouts">
-                <div className="workouts-calendar-container">
-                    <h2 className="section-header">My Workouts</h2>
-                    <div className="workouts-calendar">{content}</div>
+                    <div className="dashboard-buttons-container">
+                        <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() => toggleModalView()}
+                        >
+                            <div className="update-profile-button">
+                                <img
+                                    className="profile-button-avatar"
+                                    src={
+                                        user?.avatar
+                                            ? user.avatar
+                                            : require("../assets/img/DefaultProfilePic.jpeg")
+                                    }
+                                    alt="Cannot display"
+                                />
+                                <h3>Edit Profile</h3>
+                            </div>
+                        </div>
+                        <Link className="link-container" to="/calpoly">
+                            <div className="calpoly-button">
+                                <img
+                                    className="calpoly-logo"
+                                    src={require("../assets/img/CalPolyLogo.png")}
+                                    alt="Cannot display"
+                                />
+                                <h3>Cal Poly Resources</h3>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
-            </Link>
-        </div>
+
+                <Link className="link-container" to="/workouts">
+                    <WorkoutCalendar preview={true} />
+                </Link>
+            </div>
+        )
     );
 }
