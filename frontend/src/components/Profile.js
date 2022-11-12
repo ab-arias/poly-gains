@@ -10,6 +10,19 @@ export default function Profile({ userToken }) {
     const [name, setName] = useState("");
     const [user, setUser] = useState();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+    const restCard = {
+        title: "Rest",
+        exercises: [],
+    };
+    const calendar = {
+        Monday: restCard,
+        Tuesday: restCard,
+        Wednesday: restCard,
+        Thursday: restCard,
+        Friday: restCard,
+        Saturday: restCard,
+        Sunday: restCard,
+    }
 
     async function fetchAll() {
         try {
@@ -53,6 +66,21 @@ export default function Profile({ userToken }) {
         setShowEditProfileModal((prev) => !prev);
     }
 
+    const content = Object.entries(calendar).map(([day, plan]) => (
+        <div
+            className="workouts-calendar-entry"
+            style={
+                day === "Sunday"
+                    ? { borderRightWidth: "0" }
+                    : null
+            }
+        >
+            <h3 className="workouts-calendar-day">{day}</h3>
+            <div className="mini-workouts-card">{plan.title}</div>
+        </div>
+    ));
+
+
     return (
         <div className="profile-main-container">
             {showEditProfileModal && (
@@ -60,8 +88,8 @@ export default function Profile({ userToken }) {
                     closeModal={toggleModalView}
                     updateProfilePic={setProfilePic}
                     currentPic={
-                        profilePic
-                            ? profilePic
+                        user?.avatar
+                            ? user.avatar
                             : require("../assets/img/DefaultProfilePic.jpeg")
                     }
                     updateName={setName}
@@ -117,28 +145,9 @@ export default function Profile({ userToken }) {
             </div>
 
             <Link className="link-container" to="/workouts">
-                <div className="profile-calendar-container">
-                    <h2>My Workouts</h2>
-                    <table>
-                        <tr>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
-                            <th>Saturday</th>
-                            <th>Sunday</th>
-                        </tr>
-                        <tr>
-                            <td>Workout Card</td>
-                            <td>Workout Card</td>
-                            <td>Workout Card</td>
-                            <td>Workout Card</td>
-                            <td>Workout Card</td>
-                            <td>Workout Card</td>
-                            <td>Workout Card</td>
-                        </tr>
-                    </table>
+                <div className="workouts-calendar-container">
+                    <h2 className="section-header">My Workouts</h2>
+                    <div className="workouts-calendar">{content}</div>
                 </div>
             </Link>
         </div>

@@ -20,7 +20,7 @@ export default function EditProfileModal(props) {
     const [croppedImg, setCroppedImg] = useState("");
     const [showFileSelector, setShowFileSelector] = useState(false);
     const [name, setName] = useState(currentName);
-
+    
     const onCrop = () => {
         const imageElement = cropperRef?.current;
         const cropper = imageElement?.cropper;
