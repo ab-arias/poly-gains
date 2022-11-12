@@ -1,34 +1,15 @@
 import React, { useState } from "react";
+import WorkoutCalendar from "./WorkoutCalendar";
 import WorkoutModal from "./WorkoutModal";
 
 export default function Workouts() {
-    const restCard = {
-        title: "Rest",
-        exercises: [],
-    };
-
     const [showWorkout, setShowWorkout] = useState(false);
     const [openWorkout, setOpenWorkout] = useState(null);
-    const [calendar, setCalendar] = useState({
-        Monday: restCard,
-        Tuesday: restCard,
-        Wednesday: restCard,
-        Thursday: restCard,
-        Friday: restCard,
-        Saturday: restCard,
-        Sunday: restCard,
-    });
     const [workoutCards, setWorkoutCards] = useState([]);
 
     function toggleShowWorkout() {
         setShowWorkout((prevStatus) => !prevStatus);
         if (openWorkout) setOpenWorkout(null);
-    }
-
-    function addToDay(e, day) {
-        let plan = JSON.parse(e.dataTransfer.getData("card"));
-        console.log(plan);
-        setCalendar({ ...calendar, [day]: plan });
     }
 
     function updateWorkout(workout) {
@@ -70,38 +51,6 @@ export default function Workouts() {
         </div>
     ));
 
-    const content = Object.entries(calendar).map(([day, plan]) => (
-        <div
-            className="workouts-calendar-entry"
-            style={day === "Sunday" ? { borderRightWidth: "0" } : null}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => addToDay(e, day)}
-        >
-            <h3 className="workouts-calendar-day">{day}</h3>
-            <div
-                className="mini-workouts-card"
-                onClick={() => handleOpenWorkout(plan)}
-            >
-                <div className="workouts-card-header">{plan.title}</div>
-                <div className="workouts-card-body">
-                    {plan.exercises.map((exercise) => (
-                        <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                {exercise.exercise}
-                            </div>
-                            <div className="workouts-card-sets-reps">
-                                {exercise.sets}
-                                <span> sets x </span>
-                                {exercise.reps}
-                                <span> reps</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    ));
-
     return (
         <div className="workouts-main-container">
             {showWorkout && (
@@ -111,10 +60,10 @@ export default function Workouts() {
                     workout={openWorkout}
                 />
             )}
-            <div className="workouts-calendar-container">
-                <h2 className="section-header">My Workouts</h2>
-                <div className="workouts-calendar">{content}</div>
-            </div>
+            <WorkoutCalendar
+                handleOpenWorkout={handleOpenWorkout}
+                preview={false}
+            />
             <div className="workouts-cards-container">
                 {cards}
                 <div

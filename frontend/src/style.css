@@ -345,6 +345,15 @@ Workouts CSS:
     flex-direction: column;
 }
 
+.calendar-month {
+    align-self: center;
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 50px;
+    letter-spacing: 3px;
+    color: rgb(27, 104, 27);
+}
+
 .workouts-calendar {
     display: flex;
     border: 2px solid forestgreen;
@@ -353,13 +362,22 @@ Workouts CSS:
     overflow: hidden;
 }
 
-.workouts-calendar-day {
+.workouts-calendar-date {
     margin: 0;
-    padding-top: 5px;
     text-align: center;
     color: white;
     width: 100%;
-    height: 40px;
+    font-size: 24px;
+    background-color: rgb(22, 85, 22);
+}
+
+.workouts-calendar-day {
+    margin: 0;
+    padding-bottom: 5px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    letter-spacing: 1px;
     background-color: rgb(22, 85, 22);
 }
 
@@ -368,6 +386,10 @@ Workouts CSS:
     flex-direction: column;
     align-items: center;
     border-right: 1px solid forestgreen;
+}
+
+.workouts-calendar-current-day {
+    background-color: rgba(73, 245, 73, 0.171);
 }
 
 .mini-workouts-card {
@@ -577,23 +599,14 @@ ProfilePicModal CSS:
 
 .edit-profile-modal-close {
     display: flex;
-    justify-content: center;
-    align-items: center;
     margin-left: 10px;
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
+    cursor: pointer;
 }
 
 .edit-profile-modal-save {
     display: flex;
-    justify-content: center;
-    align-items: center;
     margin-right: 10px;
-    font-size: 15px;
-    width: 60px;
-    height: 30px;
+    cursor: pointer;
 }
 
 .edit-profile-modal-container {
