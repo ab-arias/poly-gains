@@ -177,7 +177,7 @@ async function getUserById(id) {
 
 async function getUserByUsername(username) {
     const userModel = getDbConnection().model("User", UserSchema);
-    const result = await userModel.findOne({ username: username});
+    const result = await userModel.findOne({ username: username });
     return result;
 }
 

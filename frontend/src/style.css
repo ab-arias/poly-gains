@@ -372,11 +372,18 @@ Workouts CSS:
 
 .mini-workouts-card {
     width: 120px;
-    height: 120px;
+    height: 160px;
     margin: 10px;
+    font-size: 14px;
     border: 1px solid forestgreen;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     background-color: white;
+    overflow: hidden;
+}
+
+.mini-workouts-card .workouts-card-sets-reps {
+    font-size: 12px;
 }
 
 .workouts-cards-container {
@@ -411,15 +418,8 @@ Workouts CSS:
 }
 
 .mini-workouts-card .workouts-card-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
-    color: white;
-    height: 20px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    background-color: rgb(83, 83, 83, 0.5);
+    font-size: 16px;
+    height: 30px;
 }
 
 .workouts-card-body {
@@ -440,8 +440,12 @@ Workouts CSS:
     padding-bottom: 5px;
 }
 
-.workouts-card-body > .workouts-card-exercise-container:last-child {
-    border-bottom: 2px solid forestgreen;
+.mini-workouts-card .workouts-card-exercise-container {
+    border-top: 1px solid forestgreen;
+}
+
+.workouts-card-body > .workouts-card-exercise-container:first-child {
+    border-top: none;
 }
 
 .workouts-card-exercise {

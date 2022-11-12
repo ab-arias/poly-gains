@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function OtherProfile() {
-    const params = useParams()
+    const params = useParams();
     const [stats, setStats] = useState([]);
     const [user, setUser] = useState();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
@@ -21,7 +21,7 @@ export default function OtherProfile() {
         Friday: restCard,
         Saturday: restCard,
         Sunday: restCard,
-    }
+    };
 
     async function fetchAll() {
         try {
@@ -45,7 +45,7 @@ export default function OtherProfile() {
             const response = await axios.get(
                 "http://localhost:4000/profile/" + params.username
             );
-            return response.data.user
+            return response.data.user;
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -64,17 +64,12 @@ export default function OtherProfile() {
     const content = Object.entries(calendar).map(([day, plan]) => (
         <div
             className="workouts-calendar-entry"
-            style={
-                day === "Sunday"
-                    ? { borderRightWidth: "0" }
-                    : null
-            }
+            style={day === "Sunday" ? { borderRightWidth: "0" } : null}
         >
             <h3 className="workouts-calendar-day">{day}</h3>
             <div className="mini-workouts-card">{plan.title}</div>
         </div>
     ));
-
 
     return (
         <div className="profile-main-container">

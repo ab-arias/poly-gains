@@ -22,7 +22,7 @@ export default function Profile({ userToken }) {
         Friday: restCard,
         Saturday: restCard,
         Sunday: restCard,
-    }
+    };
 
     async function fetchAll() {
         try {
@@ -69,17 +69,29 @@ export default function Profile({ userToken }) {
     const content = Object.entries(calendar).map(([day, plan]) => (
         <div
             className="workouts-calendar-entry"
-            style={
-                day === "Sunday"
-                    ? { borderRightWidth: "0" }
-                    : null
-            }
+            style={day === "Sunday" ? { borderRightWidth: "0" } : null}
         >
             <h3 className="workouts-calendar-day">{day}</h3>
-            <div className="mini-workouts-card">{plan.title}</div>
+            <div className="mini-workouts-card">
+                <div className="workouts-card-header">{plan.title}</div>
+                <div className="workouts-card-body">
+                    {plan.exercises.map((exercise) => (
+                        <div className="workouts-card-exercise-container">
+                            <div className="workouts-card-exercise">
+                                {exercise.exercise}
+                            </div>
+                            <div className="workouts-card-sets-reps">
+                                {exercise.sets}
+                                <span> sets x </span>
+                                {exercise.reps}
+                                <span> reps</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     ));
-
 
     return (
         <div className="profile-main-container">
