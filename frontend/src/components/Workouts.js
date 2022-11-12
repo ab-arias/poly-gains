@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { v4 as uuid } from "uuid";
 import WorkoutModal from "./WorkoutModal";
 
 export default function Workouts() {
@@ -74,16 +73,32 @@ export default function Workouts() {
     const content = Object.entries(calendar).map(([day, plan]) => (
         <div
             className="workouts-calendar-entry"
-            style={
-                day === "Sunday"
-                    ? { borderRightWidth: "0" }
-                    : null
-            }
+            style={day === "Sunday" ? { borderRightWidth: "0" } : null}
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => addToDay(e, day)}
         >
             <h3 className="workouts-calendar-day">{day}</h3>
-            <div className="mini-workouts-card">{plan.title}</div>
+            <div
+                className="mini-workouts-card"
+                onClick={() => handleOpenWorkout(plan)}
+            >
+                <div className="workouts-card-header">{plan.title}</div>
+                <div className="workouts-card-body">
+                    {plan.exercises.map((exercise) => (
+                        <div className="workouts-card-exercise-container">
+                            <div className="workouts-card-exercise">
+                                {exercise.exercise}
+                            </div>
+                            <div className="workouts-card-sets-reps">
+                                {exercise.sets}
+                                <span> sets x </span>
+                                {exercise.reps}
+                                <span> reps</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     ));
 

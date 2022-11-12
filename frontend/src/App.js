@@ -15,28 +15,28 @@ export default function App() {
     const [userToken, setUserToken] = useState();
     const [searchBarInput, setSearchBarInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [searchOpen, setSearchOpen] = useState(false)
-    const closeSearchRef = useRef()
+    const [searchOpen, setSearchOpen] = useState(false);
+    const closeSearchRef = useRef();
 
     const useOutsideClick = (ref, callback) => {
-        const handleClick = e => {
-          if (ref.current && !ref.current.contains(e.target)) {
-            callback();
-          }
+        const handleClick = (e) => {
+            if (ref.current && !ref.current.contains(e.target)) {
+                callback();
+            }
         };
-      
+
         useEffect(() => {
-          document.addEventListener("click", handleClick);
-      
-          return () => {
-            document.removeEventListener("click", handleClick);
-          };
+            document.addEventListener("click", handleClick);
+
+            return () => {
+                document.removeEventListener("click", handleClick);
+            };
         });
-      };
-      
+    };
+
     useOutsideClick(closeSearchRef, () => {
-        if(searchOpen) handleClearSearch()
-    })
+        if (searchOpen) handleClearSearch();
+    });
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
@@ -80,7 +80,7 @@ export default function App() {
     function handleClearSearch() {
         setSearchBarInput("");
         setSearchResults([]);
-        setSearchOpen(false)
+        setSearchOpen(false);
     }
 
     const userList =
@@ -138,26 +138,29 @@ export default function App() {
                         </div>
                         <div class="right-header">
                             <div ref={closeSearchRef} className="search-block">
-                                { searchOpen ?
-                                <input
-                                    className="search-bar"
-                                    name="usersearch"
-                                    value={searchBarInput}
-                                    onChange={(e) =>
-                                        setSearchBarInput(e.target.value)
-                                    }
-                                    placeholder="Search by username"
-                                /> :
-                                <IconContext.Provider
-                                    value={{ size: "20px" }}
-                                >
-                                    <div style={{ paddingTop: 3 }}>
-                                        <RiUserSearchLine
-                                            onClick={() => setSearchOpen(true)}
-                                        />
-                                    </div>
-                                </IconContext.Provider>
-                                }
+                                {searchOpen ? (
+                                    <input
+                                        className="search-bar"
+                                        name="usersearch"
+                                        value={searchBarInput}
+                                        onChange={(e) =>
+                                            setSearchBarInput(e.target.value)
+                                        }
+                                        placeholder="Search by username"
+                                    />
+                                ) : (
+                                    <IconContext.Provider
+                                        value={{ size: "20px" }}
+                                    >
+                                        <div style={{ paddingTop: 3 }}>
+                                            <RiUserSearchLine
+                                                onClick={() =>
+                                                    setSearchOpen(true)
+                                                }
+                                            />
+                                        </div>
+                                    </IconContext.Provider>
+                                )}
                                 {userList.length !== 0 && (
                                     <div className="search-results">
                                         {userList}
