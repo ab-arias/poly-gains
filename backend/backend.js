@@ -40,8 +40,8 @@ app.get("/stats", async (req, res) => {
 
 app.post("/user/:id", async (req, res) => {
     const id = req.params["id"];
-    const { name, avatar } = req.body;
-    const updatedUser = await userServices.updateUser(id, name, avatar);
+    const { name, avatar, activeWorkouts, workouts } = req.body;
+    const updatedUser = await userServices.updateUser(id, name, avatar, activeWorkouts, workouts);
     if (updatedUser) {
         res.status(201).send(updatedUser).end();
     } else {
@@ -52,8 +52,8 @@ app.post("/user/:id", async (req, res) => {
 app.post("/stats/:id", async (req, res) => {
     const id = req.params["id"];
     const newRec = req.body;
-    const updatedWorkout = await userServices.updateStats(id, newRec);
-    const stats = [updatedWorkout];
+    const updatedStat = await userServices.updateStats(id, newRec);
+    const stats = [updatedStat];
     if (updatedWorkout) {
         res.status(201).send({ stats_list: stats }).end();
     } else {
@@ -71,10 +71,22 @@ app.get("/workouts/:id", async (req, res) => {
     }
 });
 
+
+app.post("/workouts/:id", async (req, res) => {
+  const id = req.params["id"];
+  const newWorkout = req.body;
+  const updatedWorkout = await userServices.updateWorkout(id, newWorkout);
+  if (updatedWorkout) {
+      res.status(201).send({ workout: updatedWorkout }).end();
+  } else {
+      res.status(404).end();
+  }
+});
+
 app.post("/workouts", async (req, res) => {
     const workout = req.body;
     const savedWorkout = await userServices.addWorkout(workout);
-    if (savedWorkout) res.status(201).send(savedWorkout).end();
+    if (savedWorkout) res.status(201).send({ workout: savedWorkout }).end();
     else res.status(500).end();
 });
 

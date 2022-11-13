@@ -54,6 +54,21 @@ async function updateStats(id, newRec) {
     }
 }
 
+async function updateWorkout(id, newWorkout) {
+  const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
+  try {
+      const res = await workoutModel.findByIdAndUpdate(
+          id,
+          newWorkout,
+          { new: true }
+      );
+      return res
+  } catch (error) {
+      console.log(error);
+      return undefined;
+  }
+}
+
 async function findWorkoutById(id) {
     const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
     try {
@@ -117,6 +132,17 @@ async function registerNewUser(req) {
         req.body._id = mongoose.Types.ObjectId();
         const newUser = new userModel(req.body);
         newUser.password = hashedPassword;
+        newUser.workouts.push("637012e5c8e5bba98b4d3903");
+        newUser.activeWorkouts = [{
+          Monday: "637012e5c8e5bba98b4d3903",
+          Tuesday: "637012e5c8e5bba98b4d3903",
+          Wednesday: "637012e5c8e5bba98b4d3903",
+          Thursday: "637012e5c8e5bba98b4d3903",
+          Friday: "637012e5c8e5bba98b4d3903",
+          Saturday: "637012e5c8e5bba98b4d3903",
+          Sunday: "637012e5c8e5bba98b4d3903",
+        }]
+        newUser.avatar = "";
         const res = await newUser.save();
         return { result: res, success: true };
     }
@@ -156,19 +182,19 @@ async function getUserById(id) {
     return result;
 }
 
-// async function updateUser(id, newName, newPic) {
-//     const userModel = getDbConnection().model("User", UserSchema);
-//     try {
-//         return await userModel.findByIdAndUpdate(
-//             id,
-//             { name: newName, avatar: newPic },
-//             { new: true }
-//         );
-//     } catch (error) {
-//         console.log(error);
-//         return undefined;
-//     }
-// }
+async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        return await userModel.findByIdAndUpdate(
+            id,
+            { name: newName, avatar: newPic, activeWorkouts: newActWorkouts, workouts: newWorkouts },
+            { new: true }
+        );
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
 
 exports.getWorkouts = getWorkouts;
 exports.findWorkoutById = findWorkoutById;
@@ -176,6 +202,8 @@ exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
 exports.updateStats = updateStats;
+exports.updateUser = updateUser;
+exports.updateWorkout = updateWorkout;
 exports.registerNewUser = registerNewUser;
 exports.loginUser = loginUser;
 exports.getUserById = getUserById;
