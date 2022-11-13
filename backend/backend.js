@@ -103,13 +103,14 @@ app.post("/users/register", async (req, res) => {
 app.post("/users/login", async (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid) {
-        return res.status(400).json(errors);
+        console.log(errors);
+        return res.status(400).send(errors);
     }
     const result = await userServices.loginUser(req);
-    if (result) {
-        res.status(201).send(result).end();
+    if (result.success) {
+        res.status(201).send(result.result).end();
     } else {
-        res.status(404).end();
+        res.status(400).send(result.error).end();
     }
 });
 

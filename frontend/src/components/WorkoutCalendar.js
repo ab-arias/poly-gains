@@ -36,15 +36,19 @@ export default function WorkoutCalendar({ handleOpenWorkout, preview }) {
                 style={day === "Saturday" ? { borderRightWidth: "0" } : null}
                 onDragOver={!preview ? (e) => e.preventDefault() : null}
                 onDrop={!preview ? (e) => addToDay(e, day) : null}
+                key={i}
             >
-                <h3 className="workouts-calendar-date">
-                    {dayOfWeek.getDate()}
-                </h3>
-                <h3 className="workouts-calendar-day">{day}</h3>
+                <div className="workouts-calendar-header">
+                    <h3 className="workouts-calendar-date">
+                        {dayOfWeek.getDate()}
+                    </h3>
+                    <h3 className="workouts-calendar-day">{day}</h3>
+                </div>
                 <div
                     className={
-                        currentDate.getDay() === dayOfWeek.getDay() &&
-                        "workouts-calendar-current-day"
+                        currentDate.getDay() === dayOfWeek.getDay()
+                            ? "workouts-calendar-current-day"
+                            : undefined
                     }
                 >
                     <div

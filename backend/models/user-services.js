@@ -147,7 +147,7 @@ async function loginUser(req) {
     const password = req.body.password;
     const existingUser = await userModel.findOne({ email });
     if (!existingUser) {
-        return { result: "Email not found", success: false };
+        return { error: { email: "Email does not exist" }, success: false };
     }
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
     if (passwordMatch) {
@@ -165,7 +165,10 @@ async function loginUser(req) {
             success: true,
         };
     } else {
-        return { result: "Password not correct", success: false };
+        return {
+            error: { password: "Password does not match" },
+            success: false,
+        };
     }
 }
 
