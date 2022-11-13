@@ -64,20 +64,18 @@ export default function EditProfileModal(props) {
 
     return (
         <div className="modal-screen">
-            <div className="edit-profile-modal-header">
-                <IconContext.Provider value={{ color: "white", size: "30px" }}>
+            <div className="modal-header">
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
                     <div
-                        className="edit-profile-modal-close"
+                        className="modal-left-button"
                         onClick={() => closeModal()}
                     >
                         <AiOutlineCloseCircle />
                     </div>
                 </IconContext.Provider>
-                <IconContext.Provider value={{ color: "white", size: "30px" }}>
-                    <div
-                        className="edit-profile-modal-save"
-                        onClick={updateUser}
-                    >
+                <div className="modal-center-title">Edit Profile</div>
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div className="modal-right-button" onClick={updateUser}>
                         <AiOutlineCheckCircle />
                     </div>
                 </IconContext.Provider>
