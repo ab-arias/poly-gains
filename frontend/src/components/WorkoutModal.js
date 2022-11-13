@@ -1,4 +1,10 @@
 import React from "react";
+import {
+    AiOutlineCloseCircle,
+    AiOutlineCheckCircle,
+    AiOutlineEdit,
+} from "react-icons/ai";
+import { IconContext } from "react-icons";
 import { v4 as uuid } from "uuid";
 
 export default function WorkoutModal({ toggle, updateWorkout, workout, setWorkout }) {
@@ -70,13 +76,12 @@ export default function WorkoutModal({ toggle, updateWorkout, workout, setWorkou
 
     return (
         <div className="modal-screen">
-            <div className="workout-modal-header">
-                <button
-                    className="workout-modal-close"
-                    onClick={() => toggle()}
-                >
-                    x
-                </button>
+            <div className="modal-header">
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div className="modal-left-button" onClick={() => toggle()}>
+                        <AiOutlineCloseCircle />
+                    </div>
+                </IconContext.Provider>
                 {editing ? (
                     <input
                         className="workout-modal-name-input"
@@ -87,14 +92,16 @@ export default function WorkoutModal({ toggle, updateWorkout, workout, setWorkou
                         maxLength={20}
                     />
                 ) : (
-                    <h1 style={{ color: "white" }}>{name}</h1>
+                    <div className="modal-center-title">{name}</div>
                 )}
-                <button
-                    className="workout-modal-edit"
-                    onClick={handleModeToggle}
-                >
-                    {editing ? "Save" : "Edit"}
-                </button>
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div
+                        className="modal-right-button"
+                        onClick={handleModeToggle}
+                    >
+                        {editing ? <AiOutlineCheckCircle /> : <AiOutlineEdit />}
+                    </div>
+                </IconContext.Provider>
             </div>
             <div className="workout-modal-container">
                 {exerciseCards}

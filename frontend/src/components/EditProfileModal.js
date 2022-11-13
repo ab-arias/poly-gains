@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FiCamera } from "react-icons/fi";
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -39,13 +40,10 @@ export default function EditProfileModal(props) {
         setName(event.target.value);
     }
 
-    function handleSubmission() {
-        updateProfilePic(croppedImg);
-        updateName(name);
-    }
-
     async function updateUser() {
-        const id = user[0]._id;
+        console.log(user);
+        const id = user._id;
+        const image = croppedImg ? croppedImg : currentPic;
         try {
             const response = await axios.post(
                 "http://localhost:4000/user/" + id,
@@ -56,7 +54,6 @@ export default function EditProfileModal(props) {
                 }
             );
             const result = response.data;
-            console.log(result);
             updateName(result.name);
             updateProfilePic(result.avatar);
         } catch (error) {
@@ -68,29 +65,28 @@ export default function EditProfileModal(props) {
 
     return (
         <div className="modal-screen">
-            <div className="edit-profile-modal-header">
-                <button
-                    className="edit-profile-modal-close"
-                    onClick={() => closeModal()}
-                >
-                    X
-                </button>
-                <button
-                    className="edit-profile-modal-save"
-                    onClick={updateUser}
-                >
-                    Save
-                </button>
+            <div className="modal-header">
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div
+                        className="modal-left-button"
+                        onClick={() => closeModal()}
+                    >
+                        <AiOutlineCloseCircle />
+                    </div>
+                </IconContext.Provider>
+                <div className="modal-center-title">Edit Profile</div>
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div className="modal-right-button" onClick={updateUser}>
+                        <AiOutlineCheckCircle />
+                    </div>
+                </IconContext.Provider>
             </div>
             <div className="edit-profile-modal-container">
-                <div
-                    className="edit-profile-modal-preview"
-                    onMouseEnter={() => setShowFileSelector(true)}
-                    onMouseLeave={() => setShowFileSelector(false)}
-                >
+                <div className="edit-profile-modal-preview">
                     <img
                         className="profile-avatar"
                         src={croppedImg ? croppedImg : currentPic}
+                        onMouseEnter={() => setShowFileSelector(true)}
                     />
                     <input
                         className="edit-profile-name"
@@ -100,20 +96,24 @@ export default function EditProfileModal(props) {
                         placeholder="Name"
                         maxLength={20}
                     />
-                    {showFileSelector && (
-                        <div
-                            className="edit-profile-modal-overlay"
-                            onClick={() => openFileSelector()}
+                    <div
+                        className="edit-profile-modal-overlay"
+                        style={
+                            showFileSelector
+                                ? { visibility: "visible" }
+                                : { visibility: "hidden" }
+                        }
+                        onMouseLeave={() => setShowFileSelector(false)}
+                        onClick={() => openFileSelector()}
+                    >
+                        <IconContext.Provider
+                            value={{ color: "white", size: "30px" }}
                         >
-                            <IconContext.Provider
-                                value={{ color: "white", size: "30px" }}
-                            >
-                                <div style={{ padding: 5 }}>
-                                    <FiCamera />
-                                </div>
-                            </IconContext.Provider>
-                        </div>
-                    )}
+                            <div style={{ padding: 5 }}>
+                                <FiCamera />
+                            </div>
+                        </IconContext.Provider>
+                    </div>
                     <input
                         type="file"
                         accept="image/*"

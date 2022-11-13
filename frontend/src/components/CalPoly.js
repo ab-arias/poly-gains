@@ -53,7 +53,7 @@ export default function CalPoly() {
             </div>
             <div class="CalPolyCalendar">
                 <h2 class="section-header">
-                    Cal Poly Rec Center Calander: November
+                    Cal Poly Rec Center Calendar: November
                 </h2>
             </div>
             <div class="workouts-calendar">

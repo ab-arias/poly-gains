@@ -51,7 +51,7 @@ function GoalBody(props) {
 function ProgressTable(props) {
     return (
         <div className="profile-progress-container">
-            <h2>My Progress</h2>
+            <h2 className="section-header">My Progress</h2>
             <table>
                 <tbody>
                     <ProgressHeader statsData={props.statsData} />
