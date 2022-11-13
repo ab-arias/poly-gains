@@ -2,25 +2,28 @@ import React, { useState } from "react";
 //import { v4 as uuid } from "uuid";
 import WorkoutModal from "./WorkoutModal";
 
-
-
-export default function WorkoutCards ({userToken, user, setUser, 
-    workouts, setWorkouts, calendar, setCalendar, addActiveWorkout, addWorkout}) {
-
+export default function WorkoutCards({
+    userToken,
+    user,
+    setUser,
+    workouts,
+    setWorkouts,
+    calendar,
+    setCalendar,
+    addActiveWorkout,
+    addWorkout,
+}) {
     const [showWorkout, setShowWorkout] = useState(false);
     const [openWorkout, setOpenWorkout] = useState(null);
     const [cards, setCards] = useState([]);
-   
-
 
     function toggleShowWorkout() {
-        console.log(cards)
+        console.log(cards);
         setShowWorkout((prevStatus) => !prevStatus);
         if (openWorkout) setOpenWorkout(null);
-        console.log(cards)
+        console.log(cards);
         return;
     }
-
 
     function getUserWorkouts() {
         for (const x of user.workouts) {
@@ -38,33 +41,32 @@ export default function WorkoutCards ({userToken, user, setUser,
         return;
     }
 
-
     function addToDay(e, day) {
         let plan = JSON.parse(e.dataTransfer.getData("card"));
-        calendar[day] = plan._id
+        calendar[day] = plan._id;
         addActiveWorkout();
         return;
     }
 
     async function updateWorkout(workout) {
-        console.log(workout)
+        console.log(workout);
         const backendWorkout = await addWorkout(workout);
         const found = cards.find((elem) => elem._id === backendWorkout._id);
         console.log(backendWorkout);
-        console.log(workout)
+        console.log(workout);
         if (!found) {
             workouts.push(backendWorkout);
             setCards((prev) => [backendWorkout, ...prev]);
             addActiveWorkout(backendWorkout._id);
             setShowWorkout((prevStatus) => !prevStatus);
-            setOpenWorkout(backendWorkout)
+            setOpenWorkout(backendWorkout);
             setShowWorkout((prevStatus) => !prevStatus);
             return;
         } else {
             const idx = workouts.indexOf(found);
             workouts[idx] = backendWorkout;
             setShowWorkout((prevStatus) => !prevStatus);
-            setOpenWorkout(backendWorkout)
+            setOpenWorkout(backendWorkout);
             setShowWorkout((prevStatus) => !prevStatus);
             return;
         }
@@ -77,7 +79,6 @@ export default function WorkoutCards ({userToken, user, setUser,
     }
 
     getUserWorkouts();
-
 
     const displayCards = cards.map((card) => (
         <div
@@ -108,8 +109,6 @@ export default function WorkoutCards ({userToken, user, setUser,
         </div>
     ));
 
-
-
     function getActiveWorkout(id) {
         const plan = cards.find((elem) => elem._id === id);
         if (plan) {
@@ -118,20 +117,16 @@ export default function WorkoutCards ({userToken, user, setUser,
         return;
     }
 
-
     const content = Object.entries(calendar).map(([day, planId]) => (
         <div
             className="workouts-calendar-entry"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => addToDay(e, day)}
         >
-            
             <h3 className="workouts-calendar-day">{day}</h3>
             <div className="mini-workouts-card">{getActiveWorkout(planId)}</div>
         </div>
     ));
-    
-
 
     return (
         <div>
@@ -157,5 +152,5 @@ export default function WorkoutCards ({userToken, user, setUser,
                 </div>
             </div>
         </div>
-    );  
+    );
 }

@@ -27,7 +27,6 @@ export default function Workouts(props) {
         }
     }
 
-
     useEffect(() => {
         fetchAll().then((result) => {
             if (result) {
@@ -35,7 +34,6 @@ export default function Workouts(props) {
             }
         });
     }, []);
-
 
     async function fetchUser() {
         try {
@@ -48,10 +46,7 @@ export default function Workouts(props) {
             console.log(error);
             return false;
         }
-    }        
-
-
-
+    }
 
     useEffect(() => {
         fetchUser().then((result) => {
@@ -60,12 +55,9 @@ export default function Workouts(props) {
                 setCalendar(result.activeWorkouts[0]);
             }
             setReady(true);
-            
         });
         // eslint-disable-next-line
     }, []);
-
-
 
     async function addActiveWorkout(workoutId) {
         user.workouts.push(workoutId);
@@ -76,7 +68,7 @@ export default function Workouts(props) {
                     name: user.name,
                     avatar: user.avatar,
                     activeWorkouts: calendar,
-                    workouts: user.workouts
+                    workouts: user.workouts,
                 }
             );
             setUser(response.data);
@@ -88,17 +80,15 @@ export default function Workouts(props) {
         }
     }
 
-
-
     async function addWorkout(workout) {
-        console.log(workout)
+        console.log(workout);
         const found = workouts.find((elem) => elem._id === workout._id);
         if (found) {
-            console.log("change")
+            console.log("change");
             try {
                 const response = await axios.post(
                     "http://localhost:4000/workouts/" + workout._id,
-                        workout
+                    workout
                 );
                 const result = response.data.workout;
                 return result;
@@ -108,10 +98,11 @@ export default function Workouts(props) {
                 return false;
             }
         } else {
-            console.log("new")
+            console.log("new");
             try {
                 const response = await axios.post(
-                    "http://localhost:4000/workouts", workout
+                    "http://localhost:4000/workouts",
+                    workout
                 );
                 const result = response.data.workout;
                 return result;
@@ -123,20 +114,23 @@ export default function Workouts(props) {
         }
     }
 
-
-
-
     if (ready) {
-    return (
-        <div className="container">
-            <WorkoutCards userToken={props.userToken} user={user} 
-            setUser={setUser} workouts={workouts} setWorkouts={setWorkouts}
-            calendar={calendar} setCalendar={setCalendar} addActiveWorkout={addActiveWorkout}
-            addWorkout={addWorkout} />
-        </div>
-    );
+        return (
+            <div className="container">
+                <WorkoutCards
+                    userToken={props.userToken}
+                    user={user}
+                    setUser={setUser}
+                    workouts={workouts}
+                    setWorkouts={setWorkouts}
+                    calendar={calendar}
+                    setCalendar={setCalendar}
+                    addActiveWorkout={addActiveWorkout}
+                    addWorkout={addWorkout}
+                />
+            </div>
+        );
     } else {
-        return null
+        return null;
     }
 }
-

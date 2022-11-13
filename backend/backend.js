@@ -42,7 +42,13 @@ app.get("/stats", async (req, res) => {
 app.post("/user/:id", async (req, res) => {
     const id = req.params["id"];
     const { name, avatar, activeWorkouts, workouts } = req.body;
-    const updatedUser = await userServices.updateUser(id, name, avatar, activeWorkouts, workouts);
+    const updatedUser = await userServices.updateUser(
+        id,
+        name,
+        avatar,
+        activeWorkouts,
+        workouts
+    );
     if (updatedUser) {
         res.status(201).send(updatedUser).end();
     } else {
@@ -84,16 +90,15 @@ app.get("/workouts/:id", async (req, res) => {
     }
 });
 
-
 app.post("/workouts/:id", async (req, res) => {
-  const id = req.params["id"];
-  const newWorkout = req.body;
-  const updatedWorkout = await userServices.updateWorkout(id, newWorkout);
-  if (updatedWorkout) {
-      res.status(201).send({ workout: updatedWorkout }).end();
-  } else {
-      res.status(404).end();
-  }
+    const id = req.params["id"];
+    const newWorkout = req.body;
+    const updatedWorkout = await userServices.updateWorkout(id, newWorkout);
+    if (updatedWorkout) {
+        res.status(201).send({ workout: updatedWorkout }).end();
+    } else {
+        res.status(404).end();
+    }
 });
 
 app.post("/workouts", async (req, res) => {

@@ -50,7 +50,7 @@ export default function EditProfileModal(props) {
                 {
                     name: name,
                     avatar: croppedImg,
-                    activeWorkouts: user[0].activeWorkouts
+                    activeWorkouts: user[0].activeWorkouts,
                 }
             );
             const result = response.data;

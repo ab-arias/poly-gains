@@ -30,15 +30,17 @@ const UserSchema = new mongoose.Schema(
             data: Buffer,
             contentType: String,
         },
-        workouts: [{ 
-            type: mongoose.ObjectId,
-            ref: 'Workout'
-        }],
-        activeWorkouts : { 
+        workouts: [
+            {
+                type: mongoose.ObjectId,
+                ref: "Workout",
+            },
+        ],
+        activeWorkouts: {
             type: Array,
             required: true,
             trim: true,
-        }
+        },
     }
     //{ collection: "user" }
 );

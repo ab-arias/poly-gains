@@ -7,9 +7,14 @@ import {
 import { IconContext } from "react-icons";
 import { v4 as uuid } from "uuid";
 
-export default function WorkoutModal({ toggle, updateWorkout, workout, setWorkout }) {
+export default function WorkoutModal({
+    toggle,
+    updateWorkout,
+    workout,
+    setWorkout,
+}) {
     const [editing, setEditing] = React.useState(workout ? false : true);
-    const [id] = React.useState(workout ? workout._id : ""); 
+    const [id] = React.useState(workout ? workout._id : "");
     const [name, setName] = React.useState(workout ? workout.name : "");
     const [exercise_list, setExercise_list] = React.useState(
         workout ? workout.exercise_list : []
@@ -22,7 +27,11 @@ export default function WorkoutModal({ toggle, updateWorkout, workout, setWorkou
 
     function handleModeToggle() {
         if (editing && workout) {
-            updateWorkout({ _id: id, name: name, exercise_list: exercise_list });
+            updateWorkout({
+                _id: id,
+                name: name,
+                exercise_list: exercise_list,
+            });
             setEditing(false);
             return;
         }
@@ -64,7 +73,7 @@ export default function WorkoutModal({ toggle, updateWorkout, workout, setWorkou
             reps: "",
         });
     }
-    console.log(exercise_list)
+    console.log(exercise_list);
     const exerciseCards = exercise_list.map((card) => (
         <div className="workout-modal-exercise-card" key={card.id}>
             <div className="workout-modal-exercise-header">{card.exercise}</div>
