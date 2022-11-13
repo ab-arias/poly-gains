@@ -118,19 +118,16 @@ async function registerNewUser(req) {
     const userModel = getDbConnection().model("users", UserSchema);
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const existingUser = await userModel.findOne({
-        $or: [
-            { email: req.body.email },
-            { username: req.body.username },
-            { password: hashedPassword },
-        ],
+        $or: [{ email: req.body.email }, { username: req.body.username }],
     });
     if (existingUser) {
         if (existingUser.email === req.body.email) {
-            return { result: "Email already exists", success: false };
+            return { error: { email: "Email already exists" }, success: false };
         } else if (existingUser.username === req.body.username) {
-            return { result: "Username already exists", success: false };
-        } else if (existingUser.password === hashedPassword) {
-            return { result: "Password already exists", success: false };
+            return {
+                error: { username: "Username already exists" },
+                success: false,
+            };
         }
     } else {
         req.body._id = mongoose.Types.ObjectId();

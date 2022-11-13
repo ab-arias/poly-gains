@@ -93,17 +93,19 @@ app.delete("/workouts/:id", async (req, res) => {
 app.post("/users/register", async (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
-        return res.status(400).json(errors);
+        return res.status(400).send(errors);
+    }
+    const result = await userServices.registerNewUser(req);
+    if (result.success) {
+        res.status(201).send(result.result).end();
     } else {
-        const result = await userServices.registerNewUser(req);
-        console.log(result);
+        res.status(400).send(result.error).end();
     }
 });
 
 app.post("/users/login", async (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid) {
-        console.log(errors);
         return res.status(400).send(errors);
     }
     const result = await userServices.loginUser(req);

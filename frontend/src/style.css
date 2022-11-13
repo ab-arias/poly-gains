@@ -238,6 +238,17 @@ Auth CSS:
     border: none;
 }
 
+.submit-form-button.hidden {
+    background-color: rgba(10, 163, 10, 0.322);
+    cursor: default;
+}
+
+.reg-success {
+    padding-top: 5px;
+    text-align: center;
+    color: rgb(10, 163, 10);
+}
+
 /*
 Modal CSS:
 */
@@ -499,7 +510,7 @@ Workouts CSS:
 }
 
 .workouts-calendar-current-day {
-    background-color: rgba(73, 245, 73, 0.171);
+    background-color: rgba(73, 245, 73, 0.362);
 }
 
 .mini-workouts-card {
