@@ -220,19 +220,6 @@ async function getUserByUsername(username) {
     return result;
 }
 
-async function updateUser(id, newName, newPic) {
-    const userModel = getDbConnection().model("User", UserSchema);
-    try {
-        return await userModel.findByIdAndUpdate(
-            id,
-            { name: newName, avatar: newPic },
-            { new: true }
-        );
-    } catch (error) {
-        console.log(error);
-        return undefined;
-    }
-}
 
 async function searchUsers(username) {
     const userModel = getDbConnection().model("User", UserSchema);
