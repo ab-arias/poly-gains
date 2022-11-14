@@ -61,7 +61,7 @@ app.post("/stats/:id", async (req, res) => {
     const newRec = req.body;
     const updatedStat = await userServices.updateStats(id, newRec);
     const stats = [updatedStat];
-    if (updatedWorkout) {
+    if (updatedStat) {
         res.status(201).send({ stats_list: stats }).end();
     } else {
         res.status(404).end();
