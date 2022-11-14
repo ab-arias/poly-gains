@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StatForm from "./StatForm";
 
@@ -20,7 +20,12 @@ function StatsBody(props) {
                                 <button
                                     class="delete-stat-button"
                                     onClick={() =>
-                                        makeDeleteStatCall(row._id, x.name)
+                                        props.updateStats([
+                                            row._id,
+                                            row.records.filter(
+                                                (current) => x !== current
+                                            ),
+                                        ])
                                     }
                                 >
                                     Delete
@@ -52,20 +57,6 @@ function deleteShow() {
         } else {
             element.style.display = "none";
         }
-    }
-}
-
-async function makeDeleteStatCall(id, name) {
-    try {
-        const response = await axios.delete(
-            "http://localhost:4000/stats/" + id,
-            { data: { thisName: name } }
-        );
-        console.log(response);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return false;
     }
 }
 
@@ -107,7 +98,10 @@ function StatTables(props) {
                 <div className="stats-pr-table">
                     <div>Stats</div>
                     <table>
-                        <StatsBody statsData={props.statsData} />
+                        <StatsBody
+                            statsData={props.statsData}
+                            updateStats={props.updateStats}
+                        />
                     </table>
                 </div>
 
