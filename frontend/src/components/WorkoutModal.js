@@ -11,7 +11,6 @@ export default function WorkoutModal({
     toggle,
     updateWorkout,
     workout,
-    setWorkout,
 }) {
     const [editing, setEditing] = React.useState(workout ? false : true);
     const [id] = React.useState(workout ? workout._id : "");

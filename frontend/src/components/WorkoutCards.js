@@ -3,13 +3,9 @@ import React, { useState } from "react";
 import WorkoutModal from "./WorkoutModal";
 
 export default function WorkoutCards({
-    userToken,
     user,
-    setUser,
     workouts,
-    setWorkouts,
     calendar,
-    setCalendar,
     addActiveWorkout,
     addWorkout,
 }) {
@@ -140,7 +136,8 @@ export default function WorkoutCards({
             )}
             <div className="workouts-calendar-container">
                 <h2 className="section-header">My Workouts</h2>
-                <div className="workouts-calendar">{content}</div>
+                <div className="workouts-calendar">
+                    {content}</div>
             </div>
             <div className="workouts-cards-container">
                 {displayCards}

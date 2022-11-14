@@ -60,7 +60,9 @@ export default function Workouts(props) {
     }, []);
 
     async function addActiveWorkout(workoutId) {
-        user.workouts.push(workoutId);
+        if (workoutId) {
+            user.workouts.push(workoutId);
+        }
         try {
             const response = await axios.post(
                 "http://localhost:4000/user/" + user._id,
