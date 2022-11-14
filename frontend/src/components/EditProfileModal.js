@@ -49,8 +49,8 @@ export default function EditProfileModal(props) {
                 "http://localhost:4000/user/" + id,
                 {
                     name: name,
-                    avatar: croppedImg,
-                    activeWorkouts: user[0].activeWorkouts,
+                    avatar: image,
+                    activeWorkouts: user.activeWorkouts,
                 }
             );
             const result = response.data;

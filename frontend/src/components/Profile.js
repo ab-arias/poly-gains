@@ -153,10 +153,12 @@ export default function Profile({ userToken }) {
                     </div>
 
                     <Link className="link-container" to="/workouts">
-                        <WorkoutCalendar preview={true} 
-                        workouts={workouts} 
-                        calendar={calendar}
-                        user={user}/>
+                        <WorkoutCalendar
+                            preview={true}
+                            workouts={workouts}
+                            calendar={calendar}
+                            user={user}
+                        />
                     </Link>
                 </div>
             )

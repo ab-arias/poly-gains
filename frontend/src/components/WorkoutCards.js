@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import { v4 as uuid } from "uuid";
+import WorkoutCalendar from "./WorkoutCalendar";
 import WorkoutModal from "./WorkoutModal";
 
 export default function WorkoutCards({
@@ -105,25 +105,6 @@ export default function WorkoutCards({
         </div>
     ));
 
-    function getActiveWorkout(id) {
-        const plan = cards.find((elem) => elem._id === id);
-        if (plan) {
-            return plan.name;
-        }
-        return;
-    }
-
-    const content = Object.entries(calendar).map(([day, planId]) => (
-        <div
-            className="workouts-calendar-entry"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => addToDay(e, day)}
-        >
-            <h3 className="workouts-calendar-day">{day}</h3>
-            <div className="mini-workouts-card">{getActiveWorkout(planId)}</div>
-        </div>
-    ));
-
     return (
         <div>
             {showWorkout && (
@@ -134,11 +115,13 @@ export default function WorkoutCards({
                     setWorkout={setOpenWorkout}
                 />
             )}
-            <div className="workouts-calendar-container">
-                <h2 className="section-header">My Workouts</h2>
-                <div className="workouts-calendar">
-                    {content}</div>
-            </div>
+            <WorkoutCalendar
+                calendar={calendar}
+                addToDay={addToDay}
+                workouts={workouts}
+                preview={false}
+                handleOpenWorkout={handleOpenWorkout}
+            />
             <div className="workouts-cards-container">
                 {displayCards}
                 <div
