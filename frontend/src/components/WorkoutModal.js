@@ -7,11 +7,7 @@ import {
 import { IconContext } from "react-icons";
 import { v4 as uuid } from "uuid";
 
-export default function WorkoutModal({
-    toggle,
-    updateWorkout,
-    workout,
-}) {
+export default function WorkoutModal({ toggle, updateWorkout, workout }) {
     const [editing, setEditing] = React.useState(workout ? false : true);
     const [id] = React.useState(workout ? workout._id : "");
     const [name, setName] = React.useState(workout ? workout.name : "");
@@ -92,7 +88,7 @@ export default function WorkoutModal({
                 </IconContext.Provider>
                 {editing ? (
                     <input
-                        className="workout-modal-name-input"
+                        className="workout-modal-title-input"
                         name="name"
                         value={name}
                         onChange={handleNameChange}

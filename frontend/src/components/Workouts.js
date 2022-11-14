@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { v4 as uuid } from "uuid";
 import WorkoutCards from "./WorkoutCards";
 import axios from "axios";
 
@@ -118,7 +117,7 @@ export default function Workouts(props) {
 
     if (ready) {
         return (
-            <div className="container">
+            <div className="workouts-main-container">
                 <WorkoutCards
                     userToken={props.userToken}
                     user={user}
