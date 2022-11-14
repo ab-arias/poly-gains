@@ -3,6 +3,8 @@ import axios from "axios";
 import StatForm from "./StatForm";
 
 function StatsBody(props) {
+    const [editing, setEditing] = useState(false)
+
     const rows = props.statsData.map((row) => {
         let statrows = [];
         for (const x of row.records) {
@@ -17,7 +19,7 @@ function StatsBody(props) {
                                 <td>{x.pr} lbs</td>
                             </th>
                             <th>
-                                <button
+                                {editing && <button
                                     class="delete-stat-button"
                                     onClick={() =>
                                         props.updateStats([
@@ -29,7 +31,7 @@ function StatsBody(props) {
                                     }
                                 >
                                     Delete
-                                </button>
+                                </button>}
                             </th>
                         </tr>
                     </tbody>
@@ -41,23 +43,11 @@ function StatsBody(props) {
     return (
         <div>
             <table>{rows}</table>
-            <button ClassName="edit-stats-button" onClick={deleteShow}>
+            <button ClassName="edit-stats-button" onClick={() => setEditing(prev => !prev)}>
                 Edit
             </button>
         </div>
     );
-}
-
-function deleteShow() {
-    var b = document.getElementsByClassName("delete-stat-button");
-    for (let i = 0; i < 8; i++) {
-        let element = b[i];
-        if (element.style.display === "none") {
-            element.style.display = "block";
-        } else {
-            element.style.display = "none";
-        }
-    }
 }
 
 function DietBody(props) {
