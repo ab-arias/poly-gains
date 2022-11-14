@@ -106,7 +106,7 @@ export default function WorkoutCards({
     ));
 
     return (
-        <div>
+        <div className="workouts-main-container">
             {showWorkout && (
                 <WorkoutModal
                     toggle={toggleShowWorkout}

@@ -117,7 +117,7 @@ export default function Workouts(props) {
 
     if (ready) {
         return (
-            <div className="workouts-main-container">
+            <div>
                 <WorkoutCards
                     userToken={props.userToken}
                     user={user}
