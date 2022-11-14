@@ -1,58 +1,146 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from "react";
+import ProgressTable from "./ProgressTable";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import EditProfileModal from "./EditProfileModal";
 
-export default function Profile() {
+export default function Profile({ userToken }) {
+    const [stats, setStats] = useState([]);
+    const [profilePic, setProfilePic] = useState();
+    const [name, setName] = useState("");
+    const [user, setUser] = useState();
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
-    const [currentBanner, setCurrentBanner] = useState('workouts')
-
-    function changeBannerPreview(banner){
-        if (banner !== currentBanner){
-            setCurrentBanner(banner)
+    async function fetchAll() {
+        try {
+            const response = await axios.get("http://localhost:4000/stats");
+            return response.data.stats_list;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
         }
     }
 
+    useEffect(() => {
+        fetchAll().then((result) => {
+            if (result) setStats(result);
+        });
+    }, []);
+
+    async function fetchUser() {
+        try {
+            const response = await axios.get(
+                "http://localhost:4000/user/" + userToken.id
+            );
+            return response.data.user;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        fetchUser().then((result) => {
+            if (result) {
+                setUser(result);
+            }
+        });
+    }, []);
+
+    function toggleModalView() {
+        setShowEditProfileModal((prev) => !prev);
+    }
+
     return (
-        <div className='profile-main-container' id="home-link">
-            <img className='profile-avatar'
-                src='https://www.nicepng.com/png/detail/73-730154_open-default-profile-picture-png.png'
-                alt='Cannot display'
+        <div className="profile-main-container">
+            {showEditProfileModal && (
+                <EditProfileModal
+                    closeModal={toggleModalView}
+                    updateProfilePic={setProfilePic}
+                    currentPic={
+                        profilePic
+                            ? profilePic
+                            : require("../assets/img/DefaultProfilePic.jpeg")
+                    }
+                    updateName={setName}
+                    currentName={user.name}
+                    user={user}
+                />
+            )}
+            <img
+                className="profile-avatar"
+                src={
+                    user?.avatar
+                        ? user.avatar
+                        : require("../assets/img/DefaultProfilePic.jpeg")
+                }
+                alt="Cannot display"
             />
-            <h2>User's Name</h2>
-            <p>User bio</p>
-            <div className='profile-content-container'>
-                <div className='profile-content-banner'
-                    onMouseOver={() => changeBannerPreview('stats')}
-                >
-                    Stats
-                </div>
+            <h2>{user?.name ? user.name : "User's Name"}</h2>
 
-                <div className='profile-content-banner'
-                    onMouseOver={() => changeBannerPreview('workouts')}
-                >
-                    Workouts
-                </div>
+            <div className="center-dashboard">
+                <Link className="link-container" to="/stats">
+                    <ProgressTable statsData={stats} />
+                </Link>
 
-                <div className='profile-content-banner'
-                    onMouseOver={() => changeBannerPreview('progress')}
-                >
-                    Progress
+                <div className="dashboard-buttons-container">
+                    <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() => toggleModalView()}
+                    >
+                        <div className="update-profile-button">
+                            <img
+                                className="profile-button-avatar"
+                                src={
+                                    profilePic
+                                        ? profilePic
+                                        : require("../assets/img/DefaultProfilePic.jpeg")
+                                }
+                                alt="Cannot display"
+                            />
+                            <h3>Edit Profile</h3>
+                        </div>
+                    </div>
+                    <Link className="link-container" to="/calpoly">
+                        <div className="calpoly-button">
+                            <img
+                                className="calpoly-logo"
+                                src={require("../assets/img/CalPolyLogo.png")}
+                                alt="Cannot display"
+                            />
+                            <h3>Cal Poly Resources</h3>
+                        </div>
+                    </Link>
                 </div>
             </div>
 
-            {currentBanner === 'stats' && 
-            <div className='profile-stats-preview'>
-                Stats Content
-            </div>}
-
-            {currentBanner === 'workouts' && 
-            <div className='profile-workouts-preview'>
-                Workout Content
-            </div>}
-
-            {currentBanner === 'progress' && 
-            <div className='profile-progress-preview'>
-                Progress Content
-            </div>}
-
+            <Link className="link-container" to="/workouts">
+                <div className="profile-calendar-container">
+                    <h2>My Workouts</h2>
+                    <table>
+                        <tr>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                        <tr>
+                            <td>Workout Card</td>
+                            <td>Workout Card</td>
+                            <td>Workout Card</td>
+                            <td>Workout Card</td>
+                            <td>Workout Card</td>
+                            <td>Workout Card</td>
+                            <td>Workout Card</td>
+                        </tr>
+                    </table>
+                </div>
+            </Link>
         </div>
-    )
+    );
 }
