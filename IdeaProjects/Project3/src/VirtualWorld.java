@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
 import processing.core.*;
 
@@ -16,10 +15,14 @@ public final class VirtualWorld
 {
    public static final int TIMER_ACTION_PERIOD = 100;
 
-   public static final int VIEW_WIDTH = 640;
-   public static final int VIEW_HEIGHT = 480;
+   public static final int VIEW_WIDTH = 1280;
+   public static final int VIEW_HEIGHT = 960;
    public static final int TILE_WIDTH = 32;
    public static final int TILE_HEIGHT = 32;
+//   public static final int VIEW_WIDTH = 640;
+//   public static final int VIEW_HEIGHT = 480;
+//   public static final int TILE_WIDTH = 32;
+//   public static final int TILE_HEIGHT = 32;
    public static final int WORLD_WIDTH_SCALE = 2;
    public static final int WORLD_HEIGHT_SCALE = 2;
 
@@ -40,8 +43,11 @@ public final class VirtualWorld
    public static final double FAST_SCALE = 0.5;
    public static final double FASTER_SCALE = 0.25;
    public static final double FASTEST_SCALE = 0.10;
-
    public static double timeScale = 1.0;
+   public static int injectionCount = 1;
+   public static int count = 0;
+   public static boolean nextPressed;
+   public static int timePressed;
 
    private ImageStore imageStore;
    private WorldModel world;
@@ -74,6 +80,8 @@ public final class VirtualWorld
       scheduleActions(world, scheduler, imageStore);
 
       next_time = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
+      nextPressed = false;
+      timePressed = millis() + 100;
    }
 
    public void draw()
@@ -84,34 +92,67 @@ public final class VirtualWorld
          this.scheduler.updateOnTime(time);
          next_time = time + TIMER_ACTION_PERIOD;
       }
-
+      if (millis() > timePressed){
+         nextPressed = !nextPressed;
+         timePressed = millis() + 500;
+      }
       view.drawViewport();
+   }
+
+   public void mousePressed(){
+         count++;
+         System.out.println(count);
+         Injection injection = new Injection(new Point(mouseX/TILE_WIDTH, mouseY/TILE_HEIGHT), imageStore.getImageList(Functions.INJECTION_KEY));
+         //injection.executeActivity(world, imageStore, scheduler);
+         world.addEntity(injection);
+         injection.scheduleActions(scheduler, world, imageStore);
    }
 
    public void keyPressed()
    {
-      if (key == CODED)
-      {
-         int dx = 0;
-         int dy = 0;
-
-         switch (keyCode)
-         {
-            case UP:
-               dy = -1;
-               break;
-            case DOWN:
-               dy = 1;
-               break;
-            case LEFT:
-               dx = -1;
-               break;
-            case RIGHT:
-               dx = 1;
-               break;
-         }
-         view.shiftView(dx, dy);
+      if(nextPressed){
+         return;
       }
+         if (key == CODED) {
+//         int dx = 0;
+//         int dy = 0;
+
+            switch (keyCode) {
+               case UP:
+//               dy = -1;
+                  for (Entity e : world.getEntities()) {
+                     if (e instanceof Hero) {
+                        e.setPosition(new Point(e.position.x, e.position.y - 1));
+                     }
+                  }
+                  break;
+               case DOWN:
+//               dy = 1;
+                  for (Entity e : world.getEntities()) {
+                     if (e instanceof Hero) {
+                        e.setPosition(new Point(e.position.x, e.position.y + 1));
+                     }
+                  }
+                  break;
+               case LEFT:
+//               dx = -1;
+                  for (Entity e : world.getEntities()) {
+                     if (e instanceof Hero) {
+                        e.setPosition(new Point(e.position.x - 1, e.position.y));
+                     }
+                  }
+                  break;
+               case RIGHT:
+//               dx = 1;
+                  for (Entity e : world.getEntities()) {
+                     if (e instanceof Hero) {
+                        e.setPosition(new Point(e.position.x + 1, e.position.y));
+                     }
+                  }
+                  break;
+            }
+//         view.shiftView(dx, dy);
+         }
    }
 
    private Background createDefaultBackground(ImageStore imageStore)

@@ -10,6 +10,10 @@ public class Stationary extends AnimationEntity{
         this.repeatCount = repeatCount;
     }
 
+    public int getRepeatCount() {
+        return repeatCount;
+    }
+
     protected void executeActivity(WorldModel world,
                                    ImageStore imageStore, EventScheduler scheduler)
     {

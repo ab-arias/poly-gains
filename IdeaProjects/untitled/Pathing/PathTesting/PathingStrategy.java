@@ -1,9 +1,8 @@
-
-import java.util.function.Predicate;
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
-import java.util.List;
 
 interface PathingStrategy
 {

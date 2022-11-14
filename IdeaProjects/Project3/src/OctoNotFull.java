@@ -13,7 +13,7 @@ public class OctoNotFull extends Octo{
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
     {
         Optional<Entity> notFullTarget = world.findNearest(this.position,
-                Fish.class);
+                Crab.class);
 
         if (!notFullTarget.isPresent() ||
                 !this.moveTo(world, notFullTarget.get(), scheduler) ||
@@ -38,20 +38,20 @@ public class OctoNotFull extends Octo{
     private boolean transformNotFull(WorldModel world,
                                        EventScheduler scheduler, ImageStore imageStore)
     {
-        if (this.getResourceCount() >= this.getResourceLimit())
-        {
-            OctoFull octo = new OctoFull(this.getId(), this.getResourceLimit(),
-                    this.position, this.getActionPeriod(), this.getAnimationPeriod(),
-                    this.getImages());
-
-            world.removeEntity(this);
-            scheduler.unscheduleAllEvents(this);
-
-            world.addEntity(octo);
-            octo.scheduleActions(scheduler, world, imageStore);
-
-            return true;
-        }
+//        if (this.getResourceCount() >= this.getResourceLimit())
+//        {
+//            OctoFull octo = new OctoFull(this.getId(), this.getResourceLimit(),
+//                    this.position, this.getActionPeriod(), this.getAnimationPeriod(),
+//                    this.getImages());
+//
+//            world.removeEntity(this);
+//            scheduler.unscheduleAllEvents(this);
+//
+//            world.addEntity(octo);
+//            octo.scheduleActions(scheduler, world, imageStore);
+//
+//            return true;
+//        }
 
         return false;
     }

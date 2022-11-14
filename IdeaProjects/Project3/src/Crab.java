@@ -1,20 +1,22 @@
 import processing.core.PImage;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Crab extends Movable{
-
-
+    private PathingStrategy strategy;
     public Crab(String id, Point position,
                       int actionPeriod, int animationPeriod, List<PImage> images){
         super(id, position, images, actionPeriod, animationPeriod);
+        strategy = new AStarPathingStrategy();
     }
 
     public void executeActivity(WorldModel world,
                                     ImageStore imageStore, EventScheduler scheduler)
     {
         Optional<Entity> crabTarget = world.findNearest(
-                this.position, Sgrass.class);
+                this.position, Hero.class);
         long nextPeriod = this.getActionPeriod();
 
         if (crabTarget.isPresent())
@@ -72,26 +74,33 @@ public class Crab extends Movable{
     protected Point nextPosition(WorldModel world,
                                    Point destPos)
     {
-        int horiz = Integer.signum(destPos.x - this.position.x);
-        Point newPos = new Point(this.position.x + horiz,
-                this.position.y);
-
-        Optional<Entity> occupant = world.getOccupant(newPos);
-
-        if (horiz == 0 ||
-                (occupant.isPresent() && !(occupant.get() instanceof Fish)))
-        {
-            int vert = Integer.signum(destPos.y - this.position.y);
-            newPos = new Point(this.position.x, this.position.y + vert);
-            occupant = world.getOccupant(newPos);
-
-            if (vert == 0 ||
-                    (occupant.isPresent() && !(occupant.get() instanceof Fish)))
-            {
-                newPos = this.position;
-            }
-        }
-
-        return newPos;
+        List<Point> path = new ArrayList<>();
+        path = strategy.computePath(this.position, destPos,
+                p -> PathingStrategy.withinBounds(p, world) && ((!(world.getOccupant(p).isPresent())) || !(world.getOccupant(p).get() instanceof Obstacle)),
+                (p1, p2) -> p1.adjacent(p2),
+                PathingStrategy.CARDINAL_NEIGHBORS);
+        if (path.isEmpty()) { return this.position;}
+        else { return path.get(0);}
+//        int horiz = Integer.signum(destPos.x - this.position.x);
+//        Point newPos = new Point(this.position.x + horiz,
+//                this.position.y);
+//
+//        Optional<Entity> occupant = world.getOccupant(newPos);
+//
+//        if (horiz == 0 ||
+//                (occupant.isPresent() && !(occupant.get() instanceof Fish)))
+//        {
+//            int vert = Integer.signum(destPos.y - this.position.y);
+//            newPos = new Point(this.position.x, this.position.y + vert);
+//            occupant = world.getOccupant(newPos);
+//
+//            if (vert == 0 ||
+//                    (occupant.isPresent() && !(occupant.get() instanceof Fish)))
+//            {
+//                newPos = this.position;
+//            }
+//        }
+//
+//        return newPos;
     }
 }

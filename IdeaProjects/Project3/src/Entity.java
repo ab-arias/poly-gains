@@ -54,6 +54,14 @@ public abstract class Entity
    protected abstract int getAnimationPeriod();
 
    protected abstract int getActionPeriod();
+
+   public Point getPosition() {
+      return position;
+   }
+
+   public void setPosition(Point position) {
+      this.position = position;
+   }
    /*{
       return actionPeriod;
    }*/

@@ -231,6 +231,10 @@ final class WorldModel
                return parseAtlantis(properties, imageStore);
             case Functions.SGRASS_KEY:
                return parseSgrass(properties, imageStore);
+            case Functions.HERO_KEY:
+               return parseHero(properties, imageStore);
+            case Functions.INJECTION_KEY:
+               return parseInjection(properties, imageStore);
          }
       }
 
@@ -301,6 +305,35 @@ final class WorldModel
       }
 
       return properties.length == Functions.FISH_NUM_PROPERTIES;
+   }
+
+   private boolean parseHero(String [] properties,
+                             ImageStore imageStore)
+   {
+      if (properties.length == Functions.HERO_NUM_PROPERTIES)
+      {
+         Point pt = new Point(Integer.parseInt(properties[Functions.HERO_COL]),
+                 Integer.parseInt(properties[Functions.HERO_ROW]));
+         Hero entity = new Hero(properties[Functions.HERO_ID],
+                 pt, imageStore.getImageList(Functions.HERO_KEY), Integer.parseInt(properties[Functions.HERO_ACTION_PERIOD]), Integer.parseInt(properties[Functions.HERO_ANIMATION_PERIOD]));
+         this.tryAddEntity(entity);
+      }
+
+      return properties.length == Functions.HERO_NUM_PROPERTIES;
+   }
+
+   private boolean parseInjection(String [] properties,
+                             ImageStore imageStore)
+   {
+      if (properties.length == Functions.INJECTION_NUM_PROPERTIES)
+      {
+         Point pt = new Point(Integer.parseInt(properties[Functions.INJECTION_COL]),
+                 Integer.parseInt(properties[Functions.INJECTION_ROW]));
+         Injection injection = new Injection(pt, imageStore.getImageList(Functions.INJECTION_KEY));
+         this.tryAddEntity(injection);
+      }
+
+      return properties.length == Functions.INJECTION_NUM_PROPERTIES;
    }
 
    private boolean parseAtlantis(String [] properties,

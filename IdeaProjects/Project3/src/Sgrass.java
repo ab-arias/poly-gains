@@ -13,22 +13,20 @@ public class Sgrass extends ActionEntity{
     public void executeActivity(WorldModel world,
                                       ImageStore imageStore, EventScheduler scheduler)
     {
-        Optional<Point> openPt = world.findOpenAround(this.position);
+        Point pos = this.position;  // store current position before removing
 
-        if (openPt.isPresent())
-        {
-            Fish fish = new Fish(Functions.FISH_ID_PREFIX + this.getId(),
-                    openPt.get(), Functions.FISH_CORRUPT_MIN +
-                            Functions.rand.nextInt(Functions.FISH_CORRUPT_MAX - Functions.FISH_CORRUPT_MIN),
-                    imageStore.getImageList(Functions.FISH_KEY));
-            world.addEntity(fish);
-            fish.scheduleActions(scheduler, world, imageStore);
-        }
+        world.removeEntity(this);
+        scheduler.unscheduleAllEvents(this);
 
-        scheduler.scheduleEvent(this,
-                new Activity(this, world, imageStore),
-                this.getActionPeriod());
-    }
+        Crab crab = new Crab(this.getId() + Functions.CRAB_ID_SUFFIX,
+                pos, this.getActionPeriod() / Functions.CRAB_PERIOD_SCALE,
+                Functions.CRAB_ANIMATION_MIN +
+                        Functions.rand.nextInt(Functions.CRAB_ANIMATION_MAX - Functions.CRAB_ANIMATION_MIN),
+                imageStore.getImageList(Functions.CRAB_KEY));
+
+        world.addEntity(crab);
+        crab.scheduleActions(scheduler, world, imageStore);
+   }
 
     protected int getAnimationPeriod() {
         throw new UnsupportedOperationException(

@@ -18,7 +18,6 @@ class AStarPathingStrategy
                                    Function<Point, Stream<Point>> potentialNeighbors)
     {
         List<Point> path = new ArrayList<>();
-        //List<Point> closed = new ArrayList<>();
         Map<Point, Double> gVals = new HashMap<>();
         Map<Point, Double> fVals = new HashMap<>();
         Map<Point, Point> parents = new HashMap<>();
@@ -29,36 +28,44 @@ class AStarPathingStrategy
         fVals.put(start, getH(start, start, start));
         parents.put(start, start);
         Point node = start;
-        while (!(open.isEmpty()) && (!(node.equals(end)))) {
+        while (!(open.isEmpty())/* && (!(node.equals(end)))*/) {
+            if (withinReach.test(node, end)){
+                return getPath(node, start, parents, path);
+            }
             node = open.peek();
             open.remove(node);
-            //closed.add(node);
             List<Point> points = potentialNeighbors.apply(node).filter(canPassThrough).collect(Collectors.toList());
             for (Point p : points) {
-                if (withinReach.test(node, p)) {
-                    double g = gVals.get(node) + 1.0;
-                    if (gVals.get(p) != null) {
-                        if (gVals.get(p) > g) {
-                            gVals.replace(p, g);
-                            fVals.replace(p, g + getH(p, start, end));
-                        }
-                    } else {
-                        if (!(inOpen(p, open))) {
-                            gVals.put(p, g);
-                            fVals.put(p, g + getH(p, start, end));
-                            parents.put(p, node);
-                            open.add(p);
-                        }
+                double g = gVals.get(node) + 1.0;
+                if (gVals.get(p) != null) {
+                    if (gVals.get(p) > g) {
+                        gVals.replace(p, g);
+                        fVals.replace(p, g + getH(p, start, end));
+                    }
+                } else {
+                    if (!(inOpen(p, open))) {
+                        gVals.put(p, g);
+                        fVals.put(p, g + getH(p, start, end));
+                        parents.put(p, node);
+                        open.add(p);
                     }
                 }
             }
         }
-        if (node.equals(end)){
+        /*if (node.equals(end)) {
             node = parents.get(node);
             while (!(node.equals(start))) {
                 path.add(0, node);
                 node = parents.get(node);
             }
+        }*/
+        return path;
+    }
+
+    public List<Point> getPath(Point node, Point start, Map<Point, Point> parents, List<Point> path){
+        while (!(node.equals(start))) {
+            path.add(0, node);
+            node = parents.get(node);
         }
         return path;
     }

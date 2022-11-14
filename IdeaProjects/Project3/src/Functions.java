@@ -24,6 +24,15 @@ final class Functions
    public static final int OCTO_ACTION_PERIOD = 5;
    public static final int OCTO_ANIMATION_PERIOD = 6;
 
+   public static final String HERO_KEY = "hero";
+   public static final int HERO_NUM_PROPERTIES = 6;
+   public static final int HERO_ID = 1;
+   public static final int HERO_COL = 2;
+   public static final int HERO_ROW = 3;
+   //public static final int HERO_LIMIT = 4;
+   public static final int HERO_ACTION_PERIOD = 4;
+   public static final int HERO_ANIMATION_PERIOD = 5;
+
    public static final String OBSTACLE_KEY = "obstacle";
    public static final int OBSTACLE_NUM_PROPERTIES = 4;
    public static final int OBSTACLE_ID = 1;
@@ -63,6 +72,15 @@ final class Functions
    public static final int QUAKE_ACTION_PERIOD = 1100;
    public static final int QUAKE_ANIMATION_PERIOD = 100;
    public static final int QUAKE_ANIMATION_REPEAT_COUNT = 10;
+
+   public static final String INJECTION_KEY = "injection";
+   public static final String INJECTION_ID = "injection";
+   public static final int INJECTION_NUM_PROPERTIES = 6;
+   public static final int INJECTION_COL = 1;
+   public static final int INJECTION_ROW = 2;
+   public static final int INJECTION_ACTION_PERIOD = 3;
+   public static final int INJECTION_ANIMATION_PERIOD = 4;
+   public static final int INJECTION_ANIMATION_REPEAT_COUNT = 5;
 
    
    public static final String FISH_ID_PREFIX = "fish -- ";
