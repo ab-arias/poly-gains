@@ -54,6 +54,38 @@ async function updateStats(id, newRec) {
     }
 }
 
+async function updateWorkout(id, newWorkout) {
+    const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
+    try {
+        const res = await workoutModel.findByIdAndUpdate(id, newWorkout, {
+            new: true,
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
+async function deleteStat(id, name) {
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
+
+    try {
+        const deleteRow = await statsModel.updateOne(
+            { _id: id },
+            {
+                $pull: {
+                    records: { name: name },
+                },
+            }
+        );
+        return deleteRow;
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
 async function findWorkoutById(id) {
     const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
     try {
@@ -99,24 +131,34 @@ async function registerNewUser(req) {
     const userModel = getDbConnection().model("users", UserSchema);
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const existingUser = await userModel.findOne({
-        $or: [
-            { email: req.body.email },
-            { username: req.body.username },
-            { password: hashedPassword },
-        ],
+        $or: [{ email: req.body.email }, { username: req.body.username }],
     });
     if (existingUser) {
         if (existingUser.email === req.body.email) {
-            return { result: "Email already exists", success: false };
+            return { error: { email: "Email already exists" }, success: false };
         } else if (existingUser.username === req.body.username) {
-            return { result: "Username already exists", success: false };
-        } else if (existingUser.password === hashedPassword) {
-            return { result: "Password already exists", success: false };
+            return {
+                error: { username: "Username already exists" },
+                success: false,
+            };
         }
     } else {
         req.body._id = mongoose.Types.ObjectId();
         const newUser = new userModel(req.body);
         newUser.password = hashedPassword;
+        newUser.workouts.push("637012e5c8e5bba98b4d3903");
+        newUser.activeWorkouts = [
+            {
+                Monday: "637012e5c8e5bba98b4d3903",
+                Tuesday: "637012e5c8e5bba98b4d3903",
+                Wednesday: "637012e5c8e5bba98b4d3903",
+                Thursday: "637012e5c8e5bba98b4d3903",
+                Friday: "637012e5c8e5bba98b4d3903",
+                Saturday: "637012e5c8e5bba98b4d3903",
+                Sunday: "637012e5c8e5bba98b4d3903",
+            },
+        ];
+        newUser.avatar = "";
         const res = await newUser.save();
         return { result: res, success: true };
     }
@@ -128,7 +170,7 @@ async function loginUser(req) {
     const password = req.body.password;
     const existingUser = await userModel.findOne({ email });
     if (!existingUser) {
-        return { result: "Email not found", success: false };
+        return { error: { email: "Email does not exist" }, success: false };
     }
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
     if (passwordMatch) {
@@ -146,7 +188,10 @@ async function loginUser(req) {
             success: true,
         };
     } else {
-        return { result: "Password not correct", success: false };
+        return {
+            error: { password: "Password does not match" },
+            success: false,
+        };
     }
 }
 
@@ -156,19 +201,62 @@ async function getUserById(id) {
     return result;
 }
 
-// async function updateUser(id, newName, newPic) {
-//     const userModel = getDbConnection().model("User", UserSchema);
-//     try {
-//         return await userModel.findByIdAndUpdate(
-//             id,
-//             { name: newName, avatar: newPic },
-//             { new: true }
-//         );
-//     } catch (error) {
-//         console.log(error);
-//         return undefined;
-//     }
-// }
+async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        return await userModel.findByIdAndUpdate(
+            id,
+            {
+                name: newName,
+                avatar: newPic,
+                activeWorkouts: newActWorkouts,
+                workouts: newWorkouts,
+            },
+            { new: true }
+        );
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
+async function getUserByUsername(username) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    const result = await userModel.findOne({ username: username });
+    return result;
+}
+
+async function searchUsers(username) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        let res = await userModel.aggregate([
+            {
+                $search: {
+                    index: "userSearch",
+                    autocomplete: {
+                        query: username,
+                        path: "username",
+                        fuzzy: {
+                            maxEdits: 1,
+                            prefixLength: 0,
+                        },
+                    },
+                },
+            },
+            {
+                $project: {
+                    name: 0,
+                    email: 0,
+                    password: 0,
+                    __v: 0,
+                },
+            },
+        ]);
+        return res;
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
 
 exports.getWorkouts = getWorkouts;
 exports.findWorkoutById = findWorkoutById;
@@ -176,7 +264,13 @@ exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
 exports.updateStats = updateStats;
+exports.updateUser = updateUser;
+exports.updateWorkout = updateWorkout;
 exports.registerNewUser = registerNewUser;
 exports.loginUser = loginUser;
 exports.getUserById = getUserById;
+exports.getUserByUsername = getUserByUsername;
+exports.updateUser = updateUser;
 exports.setConnection = setConnection;
+exports.deleteStat = deleteStat;
+exports.searchUsers = searchUsers;

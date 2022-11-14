@@ -1,109 +1,137 @@
-import React, { useState } from "react";
-import { v4 as uuid } from "uuid";
-import WorkoutModal from "./WorkoutModal";
+import React, { useState, useEffect } from "react";
+import WorkoutCards from "./WorkoutCards";
+import axios from "axios";
 
-export default function Workouts() {
-    const restCard = {
-        title: "Rest",
-        exercises: [],
-    };
-
-    const [showWorkout, setShowWorkout] = useState(false);
-    const [openWorkout, setOpenWorkout] = useState(null);
+export default function Workouts(props) {
+    const [user, setUser] = useState([]);
+    const [workouts, setWorkouts] = useState([]);
+    const [ready, setReady] = useState(false);
     const [calendar, setCalendar] = useState({
-        Monday: restCard,
-        Tuesday: restCard,
-        Wednesday: restCard,
-        Thursday: restCard,
-        Friday: restCard,
-        Saturday: restCard,
-        Sunday: restCard,
+        Monday: "",
+        Tuesday: "",
+        Wednesday: "",
+        Thursday: "",
+        Friday: "",
+        Saturday: "",
+        Sunday: "",
     });
-    const [workoutCards, setWorkoutCards] = useState([]);
 
-    function toggleShowWorkout() {
-        setShowWorkout((prevStatus) => !prevStatus);
-        if (openWorkout) setOpenWorkout(null);
+    async function fetchAll() {
+        try {
+            const response = await axios.get("http://localhost:4000/workouts");
+            return response.data.workouts_list;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
     }
 
-    function addToDay(e, day) {
-        let plan = JSON.parse(e.dataTransfer.getData("card"));
-        console.log(plan);
-        setCalendar({ ...calendar, [day]: plan });
+    useEffect(() => {
+        fetchAll().then((result) => {
+            if (result) {
+                setWorkouts(result);
+            }
+        });
+    }, []);
+
+    async function fetchUser() {
+        try {
+            const response = await axios.get(
+                "http://localhost:4000/user/" + props.userToken.id
+            );
+            return response.data.user;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
     }
 
-    function updateWorkout(workout) {
+    useEffect(() => {
+        fetchUser().then((result) => {
+            if (result) {
+                setUser(result);
+                setCalendar(result.activeWorkouts[0]);
+            }
+            setReady(true);
+        });
+        // eslint-disable-next-line
+    }, []);
+
+    async function addActiveWorkout(workoutId) {
+        if (workoutId) {
+            user.workouts.push(workoutId);
+        }
+        try {
+            const response = await axios.post(
+                "http://localhost:4000/user/" + user._id,
+                {
+                    name: user.name,
+                    avatar: user.avatar,
+                    activeWorkouts: calendar,
+                    workouts: user.workouts,
+                }
+            );
+            setUser(response.data);
+            setCalendar(response.data.activeWorkouts[0]);
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
+    async function addWorkout(workout) {
         console.log(workout);
-        setWorkoutCards((prev) => [workout, ...prev]);
+        const found = workouts.find((elem) => elem._id === workout._id);
+        if (found) {
+            console.log("change");
+            try {
+                const response = await axios.post(
+                    "http://localhost:4000/workouts/" + workout._id,
+                    workout
+                );
+                const result = response.data.workout;
+                return result;
+            } catch (error) {
+                //We're not handling errors. Just logging into the console.
+                console.log(error);
+                return false;
+            }
+        } else {
+            console.log("new");
+            try {
+                const response = await axios.post(
+                    "http://localhost:4000/workouts",
+                    workout
+                );
+                const result = response.data.workout;
+                return result;
+            } catch (error) {
+                //We're not handling errors. Just logging into the console.
+                console.log(error);
+                return false;
+            }
+        }
     }
 
-    function handleOpenWorkout(workout) {
-        setOpenWorkout(workout);
-        setShowWorkout(true);
-    }
-
-    const cards = workoutCards.map((card) => (
-        <div
-            className="workouts-card"
-            draggable
-            onClick={() => handleOpenWorkout(card)}
-            onDragStart={(e) => {
-                let val = JSON.stringify(card);
-                e.dataTransfer.setData("card", val);
-            }}
-        >
-            <div className="workouts-card-header">{card.title}</div>
-            <div className="workouts-card-body">
-                {card.exercises.map((exercise) => (
-                    <div className="workouts-card-exercise-container">
-                        <div className="workouts-card-exercise">
-                            {exercise.exercise}
-                        </div>
-                        <div className="workouts-card-sets-reps">
-                            {exercise.sets}
-                            <span> sets x </span>
-                            {exercise.reps}
-                            <span> reps</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    ));
-
-    const content = Object.entries(calendar).map(([day, plan]) => (
-        <div
-            className="workouts-calendar-entry"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => addToDay(e, day)}
-        >
-            <h3 className="workouts-calendar-day">{day}</h3>
-            <div className="mini-workouts-card">{plan.title}</div>
-        </div>
-    ));
-
-    return (
-        <div className="workouts-main-container">
-            {showWorkout && (
-                <WorkoutModal
-                    toggle={toggleShowWorkout}
-                    updateWorkout={updateWorkout}
-                    workout={openWorkout}
+    if (ready) {
+        return (
+            <div className="workouts-main-container">
+                <WorkoutCards
+                    userToken={props.userToken}
+                    user={user}
+                    setUser={setUser}
+                    workouts={workouts}
+                    setWorkouts={setWorkouts}
+                    calendar={calendar}
+                    setCalendar={setCalendar}
+                    addActiveWorkout={addActiveWorkout}
+                    addWorkout={addWorkout}
                 />
-            )}
-            <div className="workouts-calendar-container">
-                <h2 className="section-header">My Workouts</h2>
-                <div className="workouts-calendar">{content}</div>
             </div>
-            <div className="workouts-cards-container">
-                {cards}
-                <div
-                    className="workouts-card"
-                    onClick={() => toggleShowWorkout()}
-                >
-                    Create New Workout
-                </div>
-            </div>
-        </div>
-    );
+        );
+    } else {
+        return null;
+    }
 }

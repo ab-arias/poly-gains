@@ -1,35 +1,51 @@
 import React from "react";
+import {
+    AiOutlineCloseCircle,
+    AiOutlineCheckCircle,
+    AiOutlineEdit,
+} from "react-icons/ai";
+import { IconContext } from "react-icons";
 import { v4 as uuid } from "uuid";
 
 export default function WorkoutModal({ toggle, updateWorkout, workout }) {
     const [editing, setEditing] = React.useState(workout ? false : true);
-    const [title, setTitle] = React.useState(workout ? workout.title : "");
-    const [exercises, setExercises] = React.useState(
-        workout ? workout.exercises : []
+    const [id] = React.useState(workout ? workout._id : "");
+    const [name, setName] = React.useState(workout ? workout.name : "");
+    const [exercise_list, setExercise_list] = React.useState(
+        workout ? workout.exercise_list : []
     );
     const [currExercise, setCurrExercise] = React.useState({
-        id: "",
         exercise: "",
         sets: "",
         reps: "",
     });
 
     function handleModeToggle() {
+        if (editing && workout) {
+            updateWorkout({
+                _id: id,
+                name: name,
+                exercise_list: exercise_list,
+            });
+            setEditing(false);
+            return;
+        }
         if (!editing) {
             setEditing(true);
             return;
         }
-        if (!title) {
+        if (!name) {
             return;
         }
         if (!workout) {
-            updateWorkout({ id: uuid(), title: title, exercises: exercises });
+            updateWorkout({ name: name, exercise_list: exercise_list });
+            setEditing(false);
+            return;
         }
-        setEditing(false);
     }
 
-    function handleTitleChange(event) {
-        setTitle(event.target.value);
+    function handleNameChange(event) {
+        setName(event.target.value);
     }
 
     function handleExerciseChange(event) {
@@ -45,16 +61,15 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
     }
 
     function handleExerciseSubmission() {
-        setExercises((prev) => [...prev, currExercise]);
+        setExercise_list((prev) => [...prev, currExercise]);
         setCurrExercise({
-            id: "",
             exercise: "",
             sets: "",
             reps: "",
         });
     }
-
-    const exerciseCards = exercises.map((card) => (
+    console.log(exercise_list);
+    const exerciseCards = exercise_list.map((card) => (
         <div className="workout-modal-exercise-card" key={card.id}>
             <div className="workout-modal-exercise-header">{card.exercise}</div>
             <div className="workout-modal-exercise-body">
@@ -65,31 +80,32 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
 
     return (
         <div className="modal-screen">
-            <div className="workout-modal-header">
-                <button
-                    className="workout-modal-close"
-                    onClick={() => toggle()}
-                >
-                    x
-                </button>
+            <div className="modal-header">
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div className="modal-left-button" onClick={() => toggle()}>
+                        <AiOutlineCloseCircle />
+                    </div>
+                </IconContext.Provider>
                 {editing ? (
                     <input
                         className="workout-modal-title-input"
-                        name="title"
-                        value={title}
-                        onChange={handleTitleChange}
-                        placeholder="Workout Title"
+                        name="name"
+                        value={name}
+                        onChange={handleNameChange}
+                        placeholder="Workout Name"
                         maxLength={20}
                     />
                 ) : (
-                    <h1 style={{ color: "white" }}>{title}</h1>
+                    <div className="modal-center-title">{name}</div>
                 )}
-                <button
-                    className="workout-modal-edit"
-                    onClick={handleModeToggle}
-                >
-                    {editing ? "Save" : "Edit"}
-                </button>
+                <IconContext.Provider value={{ color: "white", size: "35px" }}>
+                    <div
+                        className="modal-right-button"
+                        onClick={handleModeToggle}
+                    >
+                        {editing ? <AiOutlineCheckCircle /> : <AiOutlineEdit />}
+                    </div>
+                </IconContext.Provider>
             </div>
             <div className="workout-modal-container">
                 {exerciseCards}
