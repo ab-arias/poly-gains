@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StatForm from "./StatForm";
 
 function StatsBody(props) {
+    const [editing, setEditing] = useState(false)
+
     const rows = props.statsData.map((row) => {
         let statrows = [];
         for (const x of row.records) {
@@ -17,14 +19,19 @@ function StatsBody(props) {
                                 <td>{x.pr} lbs</td>
                             </th>
                             <th>
-                                <button
+                                {editing && <button
                                     class="delete-stat-button"
                                     onClick={() =>
-                                        makeDeleteStatCall(row._id, x.name)
+                                        props.updateStats([
+                                            row._id,
+                                            row.records.filter(
+                                                (current) => x !== current
+                                            ),
+                                        ])
                                     }
                                 >
                                     Delete
-                                </button>
+                                </button>}
                             </th>
                         </tr>
                     </tbody>
@@ -36,37 +43,11 @@ function StatsBody(props) {
     return (
         <div>
             <table>{rows}</table>
-            <button ClassName="edit-stats-button" onClick={deleteShow}>
+            <button ClassName="edit-stats-button" onClick={() => setEditing(prev => !prev)}>
                 Edit
             </button>
         </div>
     );
-}
-
-function deleteShow() {
-    var b = document.getElementsByClassName("delete-stat-button");
-    for (let i = 0; i < 8; i++) {
-        let element = b[i];
-        if (element.style.display === "none") {
-            element.style.display = "block";
-        } else {
-            element.style.display = "none";
-        }
-    }
-}
-
-async function makeDeleteStatCall(id, name) {
-    try {
-        const response = await axios.delete(
-            "http://localhost:4000/stats/" + id,
-            { data: { thisName: name } }
-        );
-        console.log(response);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
 }
 
 function DietBody(props) {
@@ -107,7 +88,10 @@ function StatTables(props) {
                 <div className="stats-pr-table">
                     <div>Stats</div>
                     <table>
-                        <StatsBody statsData={props.statsData} />
+                        <StatsBody
+                            statsData={props.statsData}
+                            updateStats={props.updateStats}
+                        />
                     </table>
                 </div>
 

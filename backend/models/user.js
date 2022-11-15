@@ -41,6 +41,11 @@ const UserSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        stats: {
+            type: mongoose.ObjectId,
+            required: true,
+            trim: true,
+        },
     }
     //{ collection: "user" }
 );

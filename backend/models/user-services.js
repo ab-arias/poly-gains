@@ -129,6 +129,7 @@ async function findWorkoutByName(name) {
 
 async function registerNewUser(req) {
     const userModel = getDbConnection().model("users", UserSchema);
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const existingUser = await userModel.findOne({
         $or: [{ email: req.body.email }, { username: req.body.username }],
@@ -144,6 +145,18 @@ async function registerNewUser(req) {
         }
     } else {
         req.body._id = mongoose.Types.ObjectId();
+        const newStat = new statsModel();
+        console.log("here");
+        newStat._id = mongoose.Types.ObjectId();
+        newStat.height = 0;
+        newStat.weight = 0;
+        newStat.mile = "N/A";
+        newStat.calories = 0;
+        newStat.plan = "N/A";
+        const stat = await newStat.save();
+        if (!stat) {
+            console.log(error);
+        }
         const newUser = new userModel(req.body);
         newUser.password = hashedPassword;
         newUser.workouts.push("637012e5c8e5bba98b4d3903");
@@ -159,6 +172,8 @@ async function registerNewUser(req) {
             },
         ];
         newUser.avatar = "";
+        console.log(stat);
+        newUser.stats = newStat._id;
         const res = await newUser.save();
         return { result: res, success: true };
     }
@@ -198,6 +213,12 @@ async function loginUser(req) {
 async function getUserById(id) {
     const userModel = getDbConnection().model("User", UserSchema);
     const result = await userModel.findById(id);
+    return result;
+}
+
+async function getStatsById(id) {
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
+    const result = await statsModel.findById(id);
     return result;
 }
 
@@ -260,6 +281,7 @@ async function searchUsers(username) {
 
 exports.getWorkouts = getWorkouts;
 exports.findWorkoutById = findWorkoutById;
+exports.getStatsById = getStatsById;
 exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
