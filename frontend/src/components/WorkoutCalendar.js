@@ -59,10 +59,10 @@ export default function WorkoutCalendar({
                         }
                     >
                         <div className="workouts-card-header">
-                            {getActiveWorkout(planId).name}
+                            {getActiveWorkout(planId)?.name}
                         </div>
                         <div className="workouts-card-body">
-                            {getActiveWorkout(planId).exercise_list.map(
+                            {getActiveWorkout(planId)?.exercise_list.map(
                                 (exercise) => (
                                     <div className="workouts-card-exercise-container">
                                         <div className="workouts-card-exercise">

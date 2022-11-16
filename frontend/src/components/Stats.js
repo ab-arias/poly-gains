@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import StatTables from "./StatTables";
 import axios from "axios";
 
-export default function Stats() {
+export default function Stats({ userToken }) {
     const [stats, setStats] = useState([]);
+    const [user, setUser] = useState();
+    const [statsReady, setStatsReady] = useState(false);
 
-    async function fetchAll() {
+    async function fetchUser() {
         try {
-            const response = await axios.get("http://localhost:4000/stats");
-            return response.data.stats_list;
+            const response = await axios.get(
+                "http://localhost:4000/user/" + userToken.id
+            );
+            return response.data.user;
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -17,10 +21,31 @@ export default function Stats() {
     }
 
     useEffect(() => {
-        fetchAll().then((result) => {
-            if (result) setStats(result);
+        fetchUser().then((result) => {
+            if (result) {
+                setUser(result);
+                fetchStats(result.stats).then((result1) => {
+                    if (result1) {
+                        setStats([result1]);
+                        setStatsReady(true);
+                    }
+                });
+            }
         });
     }, []);
+
+    async function fetchStats(Id) {
+        try {
+            const response = await axios.get(
+                "http://localhost:4000/stats/" + Id
+            );
+            return response.data.stats_list;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
 
     async function updateStats(stats) {
         const id = stats[0];
@@ -38,10 +63,11 @@ export default function Stats() {
             return false;
         }
     }
-
-    return (
-        <div className="container">
-            <StatTables statsData={stats} updateStats={updateStats} />
-        </div>
-    );
+    if (statsReady) {
+        return (
+            <div className="container">
+                <StatTables statsData={stats} updateStats={updateStats} />
+            </div>
+        );
+    }
 }

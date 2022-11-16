@@ -28,14 +28,13 @@ app.get("/workouts", async (req, res) => {
     }
 });
 
-app.get("/stats", async (req, res) => {
-    const name = req.query["name"];
-    try {
-        const result = await userServices.getStats(name);
+app.get("/stats/:id", async (req, res) => {
+    const id = req.params["id"];
+    const result = await userServices.getStatsById(id);
+    if (result === undefined || result.length == 0)
+        res.status(404).send("Resource not found.");
+    else {
         res.send({ stats_list: result });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("An error ocurred in the server.");
     }
 });
 
@@ -154,6 +153,17 @@ app.get("/user/:id", async (req, res) => {
         res.status(500).send("An error ocurred in the server.");
     }
 });
+
+// app.get("/stats", async (req, res) => {
+//     const name = req.query["name"];
+//     try {
+//         const result = await userServices.getStats(name);
+//         res.send({ stats_list: result });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send("An error ocurred in the server.");
+//     }
+// });
 
 app.post("/user/:id", async (req, res) => {
     const id = req.params["id"];
