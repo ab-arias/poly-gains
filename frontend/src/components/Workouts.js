@@ -6,15 +6,7 @@ export default function Workouts(props) {
     const [user, setUser] = useState([]);
     const [workouts, setWorkouts] = useState([]);
     const [ready, setReady] = useState(false);
-    const [calendar, setCalendar] = useState({
-        Monday: "",
-        Tuesday: "",
-        Wednesday: "",
-        Thursday: "",
-        Friday: "",
-        Saturday: "",
-        Sunday: "",
-    });
+    const [calendar, setCalendar] = useState();
 
     async function fetchAll() {
         try {
@@ -51,7 +43,7 @@ export default function Workouts(props) {
         fetchUser().then((result) => {
             if (result) {
                 setUser(result);
-                setCalendar(result.activeWorkouts[0]);
+                setCalendar(result.activeWorkouts);
             }
             setReady(true);
         });
@@ -73,7 +65,7 @@ export default function Workouts(props) {
                 }
             );
             setUser(response.data);
-            setCalendar(response.data.activeWorkouts[0]);
+            setCalendar(response.data.activeWorkouts);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -115,6 +107,29 @@ export default function Workouts(props) {
         }
     }
 
+    async function removeActiveWorkout(workoutId) {
+        if (workoutId) {
+            user.workouts.push(workoutId);
+        }
+        try {
+            const response = await axios.post(
+                "http://localhost:4000/user/" + user._id,
+                {
+                    name: user.name,
+                    avatar: user.avatar,
+                    activeWorkouts: calendar,
+                    workouts: user.workouts,
+                }
+            );
+            setUser(response.data);
+            setCalendar(response.data.activeWorkouts);
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
     if (ready) {
         return (
             <div>
@@ -128,6 +143,7 @@ export default function Workouts(props) {
                     setCalendar={setCalendar}
                     addActiveWorkout={addActiveWorkout}
                     addWorkout={addWorkout}
+                    removeActiveWorkout={removeActiveWorkout}
                 />
             </div>
         );

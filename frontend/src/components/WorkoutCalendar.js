@@ -6,6 +6,7 @@ export default function WorkoutCalendar({
     calendar,
     addToDay,
     handleOpenWorkout,
+    removeActiveWorkout,
     user,
 }) {
     const currentDate = new Date();
@@ -22,7 +23,7 @@ export default function WorkoutCalendar({
         }
         console.log(plan);
     }
-
+    
     const content = Object.entries(calendar).map(([day, planId], i) => {
         let dayOfWeek = new Date();
         dayOfWeek.setDate(lastMon.getDate() + i);
@@ -49,6 +50,24 @@ export default function WorkoutCalendar({
                 >
                     <div
                         className="mini-workouts-card"
+                        draggable
+                        // onDragStart={
+                        //     !preview
+                        //         ? (e) => {
+                        //             let val = JSON.stringify(planId);
+                        //             e.dataTransfer.setData("activeCard", val);
+                        //             console.log(planId)
+                        //         }
+                        //         : null
+                        // }
+                        onDragEnd={
+                            !preview
+                                ? (e) => {
+                                    // let val = JSON.stringify(card);
+                                    // e.dataTransfer.setData("card", val);
+                                }
+                                : null
+                        }
                         onClick={
                             !preview
                                 ? () =>

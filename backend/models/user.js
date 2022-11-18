@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
 
+const restId = mongoose.Types.ObjectId('637012e5c8e5bba98b4d3903')
+
+const ActiveWorkoutsSchema = new mongoose.Schema(
+    {
+        Monday: { type: mongoose.ObjectId, default: restId },
+        Tuesday: { type: mongoose.ObjectId, default: restId },
+        Wednesday: { type: mongoose.ObjectId, default: restId },
+        Thursday: { type: mongoose.ObjectId, default: restId },
+        Friday: { type: mongoose.ObjectId, default: restId },
+        Saturday: { type: mongoose.ObjectId, default: restId },
+        Sunday: { type: mongoose.ObjectId, default: restId }
+    }
+)
+
 const UserSchema = new mongoose.Schema(
     {
         _id: {
@@ -37,9 +51,9 @@ const UserSchema = new mongoose.Schema(
             },
         ],
         activeWorkouts: {
-            type: Array,
-            required: true,
-            trim: true,
+            _id: false,
+            type: ActiveWorkoutsSchema,
+            default: () => ({})
         },
         stats: {
             type: mongoose.ObjectId,
@@ -47,7 +61,6 @@ const UserSchema = new mongoose.Schema(
             trim: true,
         },
     }
-    //{ collection: "user" }
 );
 
 module.exports = UserSchema;

@@ -146,7 +146,6 @@ async function registerNewUser(req) {
     } else {
         req.body._id = mongoose.Types.ObjectId();
         const newStat = new statsModel();
-        console.log("here");
         newStat._id = mongoose.Types.ObjectId();
         newStat.height = 0;
         newStat.weight = 0;
@@ -160,19 +159,7 @@ async function registerNewUser(req) {
         const newUser = new userModel(req.body);
         newUser.password = hashedPassword;
         newUser.workouts.push("637012e5c8e5bba98b4d3903");
-        newUser.activeWorkouts = [
-            {
-                Monday: "637012e5c8e5bba98b4d3903",
-                Tuesday: "637012e5c8e5bba98b4d3903",
-                Wednesday: "637012e5c8e5bba98b4d3903",
-                Thursday: "637012e5c8e5bba98b4d3903",
-                Friday: "637012e5c8e5bba98b4d3903",
-                Saturday: "637012e5c8e5bba98b4d3903",
-                Sunday: "637012e5c8e5bba98b4d3903",
-            },
-        ];
-        newUser.avatar = "";
-        console.log(stat);
+        newUser.avatar = '';
         newUser.stats = newStat._id;
         const res = await newUser.save();
         return { result: res, success: true };
