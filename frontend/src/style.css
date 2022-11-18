@@ -51,6 +51,7 @@ Header CSS:
     left: 0;
     right: 0;
     z-index: 100;
+    background-color:rgb(22, 85, 22);
 }
 .left-header {
     display: flex;
@@ -60,9 +61,7 @@ Header CSS:
     margin-left: 20px;
 }
 .left-header-button {
-    display: flex;
-    align-items: center;
-    justify-items: center;
+    background-color: aliceblue;
     border-style: solid;
     border-width: 1px;
     border-radius: 20px;
@@ -72,6 +71,7 @@ Header CSS:
 .left-header-button:hover {
     transition: 0.2s;
     transform: scale(1.1);
+    background-color: grey;
 }
 .middle-header {
     padding-left: 25px;
@@ -134,12 +134,15 @@ Header CSS:
     margin-right: 20px;
     color: black;
     text-decoration: solid;
+    font-size: 20px;
+    color:rgb(230, 241, 230);
+    transition: 0.2s;
 }
 .Hlink:hover {
     cursor: pointer;
-    color: rgb(27, 104, 27);
-    transition: 0.4s;
-    transform: scale(1.1);
+    color:rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+    transform: scale(1.2);
 }
 
 /*
@@ -334,7 +337,7 @@ Profile CSS:
 }
 .link-container:hover {
     transition: 0.2s;
-    transform: scale(1.02);
+    transform: scale(1.1);
 }
 .profile-progress-container {
     display: flex;
