@@ -7,7 +7,6 @@ import Profile from "./components/Profile";
 import Stats from "./components/Stats";
 import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
-import EditProfile from "./components/EditProfile";
 import Auth from "./components/Auth";
 import OtherProfile from "./components/OtherProfile";
 
@@ -214,10 +213,6 @@ export default function App() {
                             <Route
                                 path="/workouts"
                                 element={<Workouts userToken={userToken} />}
-                            />
-                            <Route
-                                path="/editprofile"
-                                element={<EditProfile userToken={userToken} />}
                             />
                             <Route
                                 path={"/profile/:username"}
