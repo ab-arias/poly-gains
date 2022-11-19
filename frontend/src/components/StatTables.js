@@ -3,7 +3,7 @@ import axios from "axios";
 import StatForm from "./StatForm";
 
 function StatsBody(props) {
-    const [editing, setEditing] = useState(false)
+    const [editing, setEditing] = useState(false);
 
     const rows = props.statsData.map((row) => {
         let statrows = [];
@@ -19,19 +19,21 @@ function StatsBody(props) {
                                 <td>{x.pr} lbs</td>
                             </th>
                             <th>
-                                {editing && <button
-                                    class="delete-stat-button"
-                                    onClick={() =>
-                                        props.updateStats([
-                                            row._id,
-                                            row.records.filter(
-                                                (current) => x !== current
-                                            ),
-                                        ])
-                                    }
-                                >
-                                    Delete
-                                </button>}
+                                {editing && (
+                                    <button
+                                        class="delete-stat-button"
+                                        onClick={() =>
+                                            props.updateStats([
+                                                row._id,
+                                                row.records.filter(
+                                                    (current) => x !== current
+                                                ),
+                                            ])
+                                        }
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </th>
                         </tr>
                     </tbody>
@@ -43,7 +45,10 @@ function StatsBody(props) {
     return (
         <div>
             <table>{rows}</table>
-            <button ClassName="edit-stats-button" onClick={() => setEditing(prev => !prev)}>
+            <button
+                ClassName="edit-stats-button"
+                onClick={() => setEditing((prev) => !prev)}
+            >
                 Edit
             </button>
         </div>

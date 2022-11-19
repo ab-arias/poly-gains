@@ -91,7 +91,7 @@ export default function Profile({ userToken }) {
     function toggleModalView() {
         setShowEditProfileModal((prev) => !prev);
     }
-    
+
     if (userReady && workoutsReady && statsReady) {
         return (
             user && (

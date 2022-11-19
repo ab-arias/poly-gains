@@ -9,7 +9,6 @@ export default function WorkoutCards({
     setCalendar,
     addActiveWorkout,
     addWorkout,
-    removeActiveWorkout
 }) {
     const [showWorkout, setShowWorkout] = useState(false);
     const [openWorkout, setOpenWorkout] = useState(null);
@@ -38,10 +37,10 @@ export default function WorkoutCards({
     }
 
     function addToDay(e, day) {
+        e.stopPropagation();
         let plan = JSON.parse(e.dataTransfer.getData("card"));
-        setCalendar((prev) => ({ ...prev, [day]: plan._id }))
-        //calendar[day] = plan._id;
-        addActiveWorkout();
+        const newActives = { ...calendar, [day]: plan._id };
+        addActiveWorkout(newActives);
         return;
     }
 
@@ -122,7 +121,6 @@ export default function WorkoutCards({
                 workouts={workouts}
                 preview={false}
                 handleOpenWorkout={handleOpenWorkout}
-                removeActiveWorkout={removeActiveWorkout}
             />
             <div className="workouts-cards-container">
                 {displayCards}

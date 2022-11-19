@@ -50,17 +50,14 @@ export default function Workouts(props) {
         // eslint-disable-next-line
     }, []);
 
-    async function addActiveWorkout(workoutId) {
-        if (workoutId) {
-            user.workouts.push(workoutId);
-        }
+    async function addActiveWorkout(newActiveWorkouts) {
         try {
             const response = await axios.post(
                 "http://localhost:4000/user/" + user._id,
                 {
                     name: user.name,
                     avatar: user.avatar,
-                    activeWorkouts: calendar,
+                    activeWorkouts: newActiveWorkouts,
                     workouts: user.workouts,
                 }
             );
@@ -107,17 +104,16 @@ export default function Workouts(props) {
         }
     }
 
-    async function removeActiveWorkout(workoutId) {
-        if (workoutId) {
-            user.workouts.push(workoutId);
-        }
+    async function removeActiveWorkout(day) {
+        const restId = "637012e5c8e5bba98b4d3903";
+        const newActWorkouts = { ...user.activeWorkouts, [day]: restId };
         try {
             const response = await axios.post(
                 "http://localhost:4000/user/" + user._id,
                 {
                     name: user.name,
                     avatar: user.avatar,
-                    activeWorkouts: calendar,
+                    activeWorkouts: newActWorkouts,
                     workouts: user.workouts,
                 }
             );
@@ -130,9 +126,20 @@ export default function Workouts(props) {
         }
     }
 
+    function handleActiveDrop(e) {
+        let fromDay = e.dataTransfer.getData("activeCard");
+        if (fromDay) {
+            let day = JSON.parse(fromDay);
+            removeActiveWorkout(day);
+        }
+    }
+
     if (ready) {
         return (
-            <div>
+            <div
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleActiveDrop}
+            >
                 <WorkoutCards
                     userToken={props.userToken}
                     user={user}

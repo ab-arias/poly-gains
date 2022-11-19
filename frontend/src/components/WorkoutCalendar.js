@@ -6,7 +6,6 @@ export default function WorkoutCalendar({
     calendar,
     addToDay,
     handleOpenWorkout,
-    removeActiveWorkout,
     user,
 }) {
     const currentDate = new Date();
@@ -23,7 +22,7 @@ export default function WorkoutCalendar({
         }
         console.log(plan);
     }
-    
+
     const content = Object.entries(calendar).map(([day, planId], i) => {
         let dayOfWeek = new Date();
         dayOfWeek.setDate(lastMon.getDate() + i);
@@ -33,7 +32,7 @@ export default function WorkoutCalendar({
                 style={day === "Sunday" ? { borderRightWidth: "0" } : null}
                 onDragOver={!preview ? (e) => e.preventDefault() : null}
                 onDrop={!preview ? (e) => addToDay(e, day) : null}
-                key={i}
+                key={day}
             >
                 <div className="workouts-calendar-header">
                     <h3 className="workouts-calendar-date">
@@ -51,21 +50,12 @@ export default function WorkoutCalendar({
                     <div
                         className="mini-workouts-card"
                         draggable
-                        // onDragStart={
-                        //     !preview
-                        //         ? (e) => {
-                        //             let val = JSON.stringify(planId);
-                        //             e.dataTransfer.setData("activeCard", val);
-                        //             console.log(planId)
-                        //         }
-                        //         : null
-                        // }
-                        onDragEnd={
+                        onDragStart={
                             !preview
                                 ? (e) => {
-                                    // let val = JSON.stringify(card);
-                                    // e.dataTransfer.setData("card", val);
-                                }
+                                      let val = JSON.stringify(day);
+                                      e.dataTransfer.setData("activeCard", val);
+                                  }
                                 : null
                         }
                         onClick={

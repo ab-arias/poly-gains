@@ -51,7 +51,7 @@ Header CSS:
     left: 0;
     right: 0;
     z-index: 100;
-    background-color:rgb(22, 85, 22);
+    background-color: rgb(22, 85, 22);
 }
 .left-header {
     display: flex;
@@ -135,12 +135,12 @@ Header CSS:
     color: black;
     text-decoration: solid;
     font-size: 20px;
-    color:rgb(230, 241, 230);
+    color: rgb(230, 241, 230);
     transition: 0.2s;
 }
 .Hlink:hover {
     cursor: pointer;
-    color:rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
     transition: 0.3s;
     transform: scale(1.2);
 }

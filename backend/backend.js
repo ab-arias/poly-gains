@@ -165,17 +165,6 @@ app.get("/user/:id", async (req, res) => {
 //     }
 // });
 
-app.post("/user/:id", async (req, res) => {
-    const id = req.params["id"];
-    const { name, avatar } = req.body;
-    const updatedUser = await userServices.updateUser(id, name, avatar);
-    if (updatedUser) {
-        res.status(201).send(updatedUser).end();
-    } else {
-        res.status(404).end();
-    }
-});
-
 app.get("/profile/:username", async (req, res) => {
     const username = req.params["username"];
     try {
