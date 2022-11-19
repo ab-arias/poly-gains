@@ -24,7 +24,7 @@ export default function Stats({ userToken }) {
             if (result) {
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
-                        setStats([result1]);
+                        setStats(result1);
                         setStatsReady(true);
                     }
                 });

@@ -771,6 +771,23 @@ Stats css
     float: left;
 }
 
+.stats-row {
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.update-stats-form {
+    font-weight: 500;
+    padding: 5px;
+}
+
+.update-stats-form > div {
+    display: flex;
+    justify-content: space-between;
+}
+
 .stats-container-right {
     /* width: 40%; */
     display: flex;
@@ -792,6 +809,15 @@ Stats css
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
+}
+
+.diet-container {
+    display: flex;
+    width: 60%;
+    font-weight: 500;
+    font-size: 18px;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .stats-update-form {

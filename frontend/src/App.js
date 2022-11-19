@@ -88,6 +88,7 @@ export default function App() {
         searchResults.map((result, i) => (
             <Link
                 className="search-results-row"
+                key={i}
                 style={
                     i === searchResults.length - 1
                         ? { borderBottomWidth: "0" }
@@ -130,8 +131,8 @@ export default function App() {
         <BrowserRouter>
             {userToken ? (
                 <div className="app">
-                    <div class="header">
-                        <div class="left-header">
+                    <div className="header">
+                        <div className="left-header">
                             <div className="left-header-button">
                                 <Link to="/">
                                     <img
@@ -142,7 +143,7 @@ export default function App() {
                                 </Link>
                             </div>
                         </div>
-                        <div class="middle-header">
+                        <div className="middle-header">
                             <Link className="Hlink" to="/calpoly">
                                 CalPoly
                             </Link>
@@ -153,7 +154,7 @@ export default function App() {
                                 Workouts
                             </Link>
                         </div>
-                        <div class="right-header">
+                        <div className="right-header">
                             <div ref={closeSearchRef} className="search-block">
                                 {searchOpen ? (
                                     <input
