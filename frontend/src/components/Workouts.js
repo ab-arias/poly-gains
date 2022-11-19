@@ -10,7 +10,7 @@ export default function Workouts(props) {
 
     async function fetchAll() {
         try {
-            const response = await axios.get("http://localhost:4000/workouts");
+            const response = await axios.get(window.$BACKEND_URI + "workouts");
             return response.data.workouts_list;
         } catch (error) {
             console.log(error);
@@ -29,7 +29,7 @@ export default function Workouts(props) {
     async function fetchUser() {
         try {
             const response = await axios.get(
-                "http://localhost:4000/user/" + props.userToken.id
+                window.$BACKEND_URI + "user/" + props.userToken.id
             );
             return response.data.user;
         } catch (error) {
@@ -53,7 +53,7 @@ export default function Workouts(props) {
     async function addActiveWorkout(newActiveWorkouts) {
         try {
             const response = await axios.post(
-                "http://localhost:4000/user/" + user._id,
+                window.$BACKEND_URI + "user/" + user._id,
                 {
                     name: user.name,
                     avatar: user.avatar,
@@ -77,7 +77,7 @@ export default function Workouts(props) {
             console.log("change");
             try {
                 const response = await axios.post(
-                    "http://localhost:4000/workouts/" + workout._id,
+                    window.$BACKEND_URI + "workouts/" + workout._id,
                     workout
                 );
                 const result = response.data.workout;
@@ -91,7 +91,7 @@ export default function Workouts(props) {
             console.log("new");
             try {
                 const response = await axios.post(
-                    "http://localhost:4000/workouts",
+                    window.$BACKEND_URI + "workouts",
                     workout
                 );
                 const result = response.data.workout;
@@ -109,7 +109,7 @@ export default function Workouts(props) {
         const newActWorkouts = { ...user.activeWorkouts, [day]: restId };
         try {
             const response = await axios.post(
-                "http://localhost:4000/user/" + user._id,
+                window.$BACKEND_URI + "user/" + user._id,
                 {
                     name: user.name,
                     avatar: user.avatar,

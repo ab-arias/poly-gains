@@ -56,9 +56,10 @@ export default function App() {
     }
 
     async function fetchSearchResults() {
+        console.log(process.env.BACKEND_URI);
         try {
             const response = await axios.get(
-                "http://localhost:4000/search/" + searchBarInput
+                window.$BACKEND_URI + "search/" + searchBarInput
             );
             return response.data;
         } catch (error) {
