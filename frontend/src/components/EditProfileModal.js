@@ -45,7 +45,7 @@ export default function EditProfileModal(props) {
         const image = croppedImg ? croppedImg : currentPic;
         try {
             const response = await axios.post(
-                "http://localhost:4000/user/" + id,
+                window.$BACKEND_URI + "user/" + id,
                 {
                     name: name,
                     avatar: image,

@@ -20,7 +20,7 @@ export default function Profile({ userToken }) {
 
     async function fetchAllWorkouts() {
         try {
-            const response = await axios.get("http://localhost:4000/workouts");
+            const response = await axios.get(window.$BACKEND_URI + "workouts");
             return response.data.workouts_list;
         } catch (error) {
             console.log(error);
@@ -40,7 +40,7 @@ export default function Profile({ userToken }) {
     async function fetchUser() {
         try {
             const response = await axios.get(
-                "http://localhost:4000/user/" + userToken.id
+                window.$BACKEND_URI + "user/" + userToken.id
             );
             return response.data.user;
         } catch (error) {
@@ -69,7 +69,7 @@ export default function Profile({ userToken }) {
     async function fetchStats(Id) {
         try {
             const response = await axios.get(
-                "http://localhost:4000/stats/" + Id
+                window.$BACKEND_URI + "stats/" + Id
             );
             return response.data.stats_list;
         } catch (error) {

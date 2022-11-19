@@ -24,7 +24,7 @@ export default function OtherProfile() {
 
     async function fetchAll() {
         try {
-            const response = await axios.get("http://localhost:4000/stats");
+            const response = await axios.get(window.$BACKEND_URI + "stats");
             return response.data.stats_list;
         } catch (error) {
             //We're not handling errors. Just logging into the console.
@@ -42,7 +42,7 @@ export default function OtherProfile() {
     async function fetchUser() {
         try {
             const response = await axios.get(
-                "http://localhost:4000/profile/" + params.username
+                window.$BACKEND_URI + "profile/" + params.username
             );
             return response.data.user;
         } catch (error) {
