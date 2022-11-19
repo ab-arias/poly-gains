@@ -32,7 +32,7 @@ export default function WorkoutCalendar({
                 style={day === "Sunday" ? { borderRightWidth: "0" } : null}
                 onDragOver={!preview ? (e) => e.preventDefault() : null}
                 onDrop={!preview ? (e) => addToDay(e, day) : null}
-                key={i}
+                key={day}
             >
                 <div className="workouts-calendar-header">
                     <h3 className="workouts-calendar-date">
@@ -49,6 +49,15 @@ export default function WorkoutCalendar({
                 >
                     <div
                         className="mini-workouts-card"
+                        draggable
+                        onDragStart={
+                            !preview
+                                ? (e) => {
+                                      let val = JSON.stringify(day);
+                                      e.dataTransfer.setData("activeCard", val);
+                                  }
+                                : null
+                        }
                         onClick={
                             !preview
                                 ? () =>

@@ -16,15 +16,7 @@ export default function Profile({ userToken }) {
     const [userReady, setUserReady] = useState(false);
     const [statsReady, setStatsReady] = useState(false);
     const [workoutsReady, setWorkoutsReady] = useState(false);
-    const [calendar, setCalendar] = useState({
-        Monday: "",
-        Tuesday: "",
-        Wednesday: "",
-        Thursday: "",
-        Friday: "",
-        Saturday: "",
-        Sunday: "",
-    });
+    const [calendar, setCalendar] = useState();
 
     async function fetchAllWorkouts() {
         try {
@@ -62,7 +54,7 @@ export default function Profile({ userToken }) {
         fetchUser().then((result) => {
             if (result) {
                 setUser(result);
-                setCalendar(result.activeWorkouts[0]);
+                setCalendar(result.activeWorkouts);
                 setUserReady(true);
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
@@ -99,6 +91,7 @@ export default function Profile({ userToken }) {
     function toggleModalView() {
         setShowEditProfileModal((prev) => !prev);
     }
+
     if (userReady && workoutsReady && statsReady) {
         return (
             user && (

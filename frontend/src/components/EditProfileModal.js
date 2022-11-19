@@ -41,7 +41,6 @@ export default function EditProfileModal(props) {
     }
 
     async function updateUser() {
-        console.log(user);
         const id = user._id;
         const image = croppedImg ? croppedImg : currentPic;
         try {

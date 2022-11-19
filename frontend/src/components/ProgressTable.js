@@ -1,7 +1,6 @@
 import React from "react";
 
 function ProgressHeader(props) {
-    console.log(props.statsData);
     const header = props.statsData.map((row) => {
         let headers = [];
         for (const x of row.records) {
