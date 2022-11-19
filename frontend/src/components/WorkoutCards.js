@@ -76,9 +76,10 @@ export default function WorkoutCards({
 
     getUserWorkouts();
 
-    const displayCards = cards.map((card) => (
+    const displayCards = cards.map((card, i) => (
         <div
             className="workouts-card"
+            key={i}
             draggable
             onClick={() => handleOpenWorkout(card)}
             onDragStart={(e) => {
@@ -88,8 +89,8 @@ export default function WorkoutCards({
         >
             <div className="workouts-card-header">{card.name}</div>
             <div className="workouts-card-body">
-                {card.exercise_list.map((exercise) => (
-                    <div className="workouts-card-exercise-container">
+                {card.exercise_list.map((exercise, i) => (
+                    <div className="workouts-card-exercise-container" key={i}>
                         <div className="workouts-card-exercise">
                             {exercise.exercise}
                         </div>

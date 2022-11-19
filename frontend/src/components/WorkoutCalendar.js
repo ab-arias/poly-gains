@@ -20,7 +20,6 @@ export default function WorkoutCalendar({
         if (plan) {
             return plan;
         }
-        console.log(plan);
     }
 
     const content = Object.entries(calendar).map(([day, planId], i) => {
@@ -72,8 +71,11 @@ export default function WorkoutCalendar({
                         </div>
                         <div className="workouts-card-body">
                             {getActiveWorkout(planId)?.exercise_list.map(
-                                (exercise) => (
-                                    <div className="workouts-card-exercise-container">
+                                (exercise, i) => (
+                                    <div
+                                        className="workouts-card-exercise-container"
+                                        key={i}
+                                    >
                                         <div className="workouts-card-exercise">
                                             {exercise.exercise}
                                         </div>
