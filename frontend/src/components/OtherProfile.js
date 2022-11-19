@@ -58,6 +58,7 @@ export default function OtherProfile() {
                 setUser(result);
             }
         });
+        // eslint-disable-next-line
     }, [params.username]);
 
     const content = Object.entries(calendar).map(([day, plan]) => (

@@ -56,7 +56,6 @@ export default function App() {
     }
 
     async function fetchSearchResults() {
-        console.log(process.env.BACKEND_URI);
         try {
             const response = await axios.get(
                 window.$BACKEND_URI + "search/" + searchBarInput
@@ -75,6 +74,7 @@ export default function App() {
             : fetchSearchResults().then((result) => {
                   setSearchResults(result);
               });
+        // eslint-disable-next-line
     }, [searchBarInput]);
 
     function handleClearSearch() {

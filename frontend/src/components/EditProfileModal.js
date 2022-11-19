@@ -86,6 +86,7 @@ export default function EditProfileModal(props) {
                         className="profile-avatar"
                         src={croppedImg ? croppedImg : currentPic}
                         onMouseEnter={() => setShowFileSelector(true)}
+                        alt="Avatar"
                     />
                     <input
                         className="edit-profile-name"
