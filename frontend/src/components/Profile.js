@@ -64,6 +64,7 @@ export default function Profile({ userToken }) {
                 });
             }
         });
+        // eslint-disable-next-line
     }, [profilePic, name]);
 
     async function fetchStats(Id) {

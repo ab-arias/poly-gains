@@ -4,7 +4,6 @@ import axios from "axios";
 
 export default function Stats({ userToken }) {
     const [stats, setStats] = useState([]);
-    const [user, setUser] = useState();
     const [statsReady, setStatsReady] = useState(false);
 
     async function fetchUser() {
@@ -23,7 +22,6 @@ export default function Stats({ userToken }) {
     useEffect(() => {
         fetchUser().then((result) => {
             if (result) {
-                setUser(result);
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
                         setStats([result1]);
@@ -32,6 +30,7 @@ export default function Stats({ userToken }) {
                 });
             }
         });
+        // eslint-disable-next-line
     }, []);
 
     async function fetchStats(Id) {
