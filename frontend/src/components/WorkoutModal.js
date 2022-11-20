@@ -2,9 +2,9 @@ import React from "react";
 import {
     AiOutlineCloseCircle,
     AiOutlineCheckCircle,
+    AiOutlinePlusCircle,
     AiOutlineEdit,
 } from "react-icons/ai";
-import { IconContext } from "react-icons";
 
 export default function WorkoutModal({
     toggle,
@@ -62,8 +62,8 @@ export default function WorkoutModal({
         });
     }
 
-    const exerciseCards = exercise_list.map((card) => (
-        <div className="workout-modal-exercise-card" key={card.id}>
+    const exerciseCards = exercise_list.map((card, i) => (
+        <div className="workout-modal-exercise-card" key={i}>
             <div className="workout-modal-exercise-header">{card.exercise}</div>
             <div className="workout-modal-exercise-body">
                 {card.sets} sets x {card.reps} reps
@@ -74,11 +74,11 @@ export default function WorkoutModal({
     return (
         <div className="modal-screen">
             <div className="modal-header">
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div className="modal-left-button" onClick={() => toggle()}>
-                        <AiOutlineCloseCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCloseCircle
+                    className="modal-left-button"
+                    size={35}
+                    onClick={() => toggle()}
+                />
                 {editing ? (
                     <input
                         className="workout-modal-title-input"
@@ -91,16 +91,19 @@ export default function WorkoutModal({
                 ) : (
                     <div className="modal-center-title">{name}</div>
                 )}
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div
+                {editing ? (
+                    <AiOutlineCheckCircle
                         className="modal-right-button"
-                        onClick={() => {
-                            editing ? handleSave() : setEditing(true);
-                        }}
-                    >
-                        {editing ? <AiOutlineCheckCircle /> : <AiOutlineEdit />}
-                    </div>
-                </IconContext.Provider>
+                        size={35}
+                        onClick={handleSave}
+                    />
+                ) : (
+                    <AiOutlineEdit
+                        className="modal-right-button"
+                        size={35}
+                        onClick={() => setEditing(true)}
+                    />
+                )}
             </div>
             <div className="workout-modal-container">
                 {exerciseCards}
@@ -139,14 +142,21 @@ export default function WorkoutModal({
                         </div>
                     </div>
                 )}
-                {editing && (
-                    <button
-                        style={{ marginLeft: 10 }}
-                        onClick={handleExerciseSubmission}
-                    >
-                        Add New Exercise
-                    </button>
-                )}
+                {editing &&
+                    currExercise.exercise &&
+                    currExercise.sets &&
+                    currExercise.reps && (
+                        <div
+                            className="workout-container-button workout-modal-new-button"
+                            onClick={handleExerciseSubmission}
+                        >
+                            <AiOutlinePlusCircle
+                                className="workout-container-button-icon"
+                                size={20}
+                            />
+                            <div>Add New Exercise</div>
+                        </div>
+                    )}
             </div>
         </div>
     );

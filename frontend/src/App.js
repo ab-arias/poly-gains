@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { RiUserSearchLine } from "react-icons/ri";
-import { IconContext } from "react-icons";
 import axios from "axios";
 import Profile from "./components/Profile";
 import Stats from "./components/Stats";
@@ -167,25 +166,11 @@ export default function App() {
                                         placeholder="Search by username"
                                     />
                                 ) : (
-                                    <IconContext.Provider
-                                        value={{ size: "20px" }}
-                                    >
-                                        <div
-                                            className="Hlink"
-                                            style={{
-                                                paddingTop: 3,
-                                                cursor: "pointer",
-                                                marginRight: 0,
-                                                paddingRight: 0,
-                                            }}
-                                        >
-                                            <RiUserSearchLine
-                                                onClick={() =>
-                                                    setSearchOpen(true)
-                                                }
-                                            />
-                                        </div>
-                                    </IconContext.Provider>
+                                    <RiUserSearchLine
+                                        className="Hlink search-icon"
+                                        size={20}
+                                        onClick={() => setSearchOpen(true)}
+                                    />
                                 )}
                                 {renderSearchResults()}
                             </div>

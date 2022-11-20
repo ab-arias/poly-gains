@@ -3,8 +3,7 @@ import StatTables from "./StatTables";
 import axios from "axios";
 
 export default function Stats({ userToken }) {
-    const [stats, setStats] = useState([]);
-    const [statsReady, setStatsReady] = useState(false);
+    const [stats, setStats] = useState();
 
     async function fetchUser() {
         try {
@@ -25,7 +24,6 @@ export default function Stats({ userToken }) {
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
                         setStats(result1);
-                        setStatsReady(true);
                     }
                 });
             }
@@ -62,11 +60,12 @@ export default function Stats({ userToken }) {
             return false;
         }
     }
-    if (statsReady) {
-        return (
+
+    return (
+        stats && (
             <div className="container">
                 <StatTables statsData={stats} updateStats={updateStats} />
             </div>
-        );
-    }
+        )
+    );
 }

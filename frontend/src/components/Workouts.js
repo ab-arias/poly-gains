@@ -4,8 +4,7 @@ import axios from "axios";
 
 export default function Workouts({ userToken }) {
     const [user, setUser] = useState();
-    const [workouts, setWorkouts] = useState([]);
-    const [ready, setReady] = useState(false);
+    const [workouts, setWorkouts] = useState();
     const [calendar, setCalendar] = useState();
 
     async function fetchUser() {
@@ -27,7 +26,6 @@ export default function Workouts({ userToken }) {
                 setUser(result);
                 setCalendar(result.activeWorkouts);
             }
-            setReady(true);
         });
         // eslint-disable-next-line
     }, []);
@@ -168,15 +166,15 @@ export default function Workouts({ userToken }) {
     }
 
     function handleActiveDrop(e) {
-        let fromDay = e.dataTransfer.getData("activeCard");
-        if (fromDay) {
-            let day = JSON.parse(fromDay);
-            removeActiveWorkout(day);
+        let fromDay = JSON.parse(e.dataTransfer.getData("card"));
+        if (fromDay.day) {
+            removeActiveWorkout(fromDay.day);
         }
     }
 
-    if (ready) {
-        return (
+    return (
+        workouts &&
+        calendar && (
             <div
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleActiveDrop}
@@ -190,8 +188,6 @@ export default function Workouts({ userToken }) {
                     addNewWorkout={addNewWorkout}
                 />
             </div>
-        );
-    } else {
-        return null;
-    }
+        )
+    );
 }

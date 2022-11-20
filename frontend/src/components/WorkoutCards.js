@@ -6,7 +6,6 @@ import {
     AiOutlinePlusCircle,
     AiOutlineEdit,
 } from "react-icons/ai";
-import { IconContext } from "react-icons";
 import axios from "axios";
 
 export default function WorkoutCards({
@@ -29,8 +28,8 @@ export default function WorkoutCards({
 
     function addToDay(e, day) {
         e.stopPropagation();
-        let plan = JSON.parse(e.dataTransfer.getData("card"));
-        const newActives = { ...calendar, [day]: plan._id };
+        let data = JSON.parse(e.dataTransfer.getData("card"));
+        const newActives = { ...calendar, [day]: data.id };
         addActiveWorkout(newActives);
         return;
     }
@@ -59,6 +58,7 @@ export default function WorkoutCards({
                 window.$BACKEND_URI + "workouts/" + id
             );
             const result = response.data;
+            console.log(result);
             removeOldWorkout(id);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
@@ -85,19 +85,16 @@ export default function WorkoutCards({
             draggable
             onClick={() => handleOpenWorkout(card)}
             onDragStart={(e) => {
-                let val = JSON.stringify(card);
+                let val = JSON.stringify({ id: card._id, day: null });
                 e.dataTransfer.setData("card", val);
             }}
         >
             {editingWorkouts && (
-                <IconContext.Provider value={{ color: "white", size: "25px" }}>
-                    <div
-                        className="workouts-card-delete"
-                        onClick={(e) => deleteWorkout(e, card._id)}
-                    >
-                        <AiOutlineCloseCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCloseCircle
+                    className="workouts-card-delete"
+                    size={25}
+                    onClick={(e) => deleteWorkout(e, card._id)}
+                />
             )}
             <div className="workouts-card-header">
                 <div className="workouts-card-overflow">{card.name}</div>
@@ -144,27 +141,21 @@ export default function WorkoutCards({
                     style={{ marginRight: 50 }}
                     onClick={() => toggleShowWorkout()}
                 >
-                    <IconContext.Provider
-                        value={{ color: "white", size: "20px" }}
-                    >
-                        <div style={{ marginTop: 5, marginRight: 5 }}>
-                            <AiOutlinePlusCircle />
-                        </div>
-                    </IconContext.Provider>
+                    <AiOutlinePlusCircle
+                        className="workout-container-button-icon"
+                        size={20}
+                    />
                     <div>Create New Workout</div>
                 </div>
                 <div
                     className="workout-container-button"
                     onClick={() => setEditingWorkouts((prev) => !prev)}
                 >
-                    <IconContext.Provider
-                        value={{ color: "white", size: "20px" }}
-                    >
-                        <div style={{ marginTop: 5, marginRight: 5 }}>
-                            <AiOutlineEdit />
-                        </div>
-                    </IconContext.Provider>
-                    <div>Remove Workouts</div>
+                    <AiOutlineEdit
+                        className="workout-container-button-icon"
+                        size={20}
+                    />
+                    <div>Remove A Workout</div>
                 </div>
             </div>
             <div className="workouts-cards-container">{displayCards}</div>

@@ -53,8 +53,11 @@ export default function WorkoutCalendar({
                         onDragStart={
                             !preview
                                 ? (e) => {
-                                      let val = JSON.stringify(day);
-                                      e.dataTransfer.setData("activeCard", val);
+                                      let val = JSON.stringify({
+                                          id: planId,
+                                          day: day,
+                                      });
+                                      e.dataTransfer.setData("card", val);
                                   }
                                 : null
                         }

@@ -122,11 +122,6 @@ async function deleteWorkout(id) {
     }
 }
 
-async function findWorkoutByName(name) {
-    const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
-    return await workoutModel.find({ name: name });
-}
-
 async function registerNewUser(req) {
     const userModel = getDbConnection().model("users", UserSchema);
     const statsModel = getDbConnection().model("Stats", StatsSchema);
