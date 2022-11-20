@@ -7,7 +7,13 @@ const userServices = require("./models/user-services");
 const validateRegisterInput = require("./validation/register.js");
 const validateLoginInput = require("./validation/login.js");
 
-app.use(cors());
+//app.use(cors());
+app.use(
+    cors({
+        origin: "https://poly-gains.azurewebsites.net",
+    })
+);
+
 app.use(
     bodyParser.urlencoded({
         limit: "50mb",
