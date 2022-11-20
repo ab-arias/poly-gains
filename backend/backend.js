@@ -18,10 +18,10 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.json());
 
 app.get("/workouts", async (req, res) => {
-    const name = req.query["name"];
+    const workouts = req.query.workouts;
     try {
-        const result = await userServices.getWorkouts(name);
-        res.send({ workouts_list: result });
+        const result = await userServices.getUserWorkouts(workouts);
+        res.send(result);
     } catch (error) {
         console.log(error);
         res.status(500).send("An error ocurred in the server.");
@@ -103,13 +103,13 @@ app.post("/workouts/:id", async (req, res) => {
 app.post("/workouts", async (req, res) => {
     const workout = req.body;
     const savedWorkout = await userServices.addWorkout(workout);
-    if (savedWorkout) res.status(201).send({ workout: savedWorkout }).end();
+    if (savedWorkout) res.status(201).send(savedWorkout).end();
     else res.status(500).end();
 });
 
 app.delete("/workouts/:id", async (req, res) => {
     const id = req.params["id"];
-    const deletedWorkout = await userServices.deleteUser(id);
+    const deletedWorkout = await userServices.deleteWorkout(id);
     if (deletedWorkout) {
         res.status(204).end();
     } else {

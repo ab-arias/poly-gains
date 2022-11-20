@@ -23,6 +23,7 @@ export default function WorkoutCalendar({
     }
 
     const content = Object.entries(calendar).map(([day, planId], i) => {
+        const miniCard = getActiveWorkout(planId);
         let dayOfWeek = new Date();
         dayOfWeek.setDate(lastMon.getDate() + i);
         return (
@@ -58,36 +59,31 @@ export default function WorkoutCalendar({
                                 : null
                         }
                         onClick={
-                            !preview
-                                ? () =>
-                                      handleOpenWorkout(
-                                          getActiveWorkout(planId)
-                                      )
-                                : null
+                            !preview ? () => handleOpenWorkout(miniCard) : null
                         }
                     >
                         <div className="workouts-card-header">
-                            {getActiveWorkout(planId)?.name}
+                            <div className="workouts-card-overflow">
+                                {miniCard?.name}
+                            </div>
                         </div>
                         <div className="workouts-card-body">
-                            {getActiveWorkout(planId)?.exercise_list.map(
-                                (exercise, i) => (
-                                    <div
-                                        className="workouts-card-exercise-container"
-                                        key={i}
-                                    >
-                                        <div className="workouts-card-exercise">
-                                            {exercise.exercise}
-                                        </div>
-                                        <div className="workouts-card-sets-reps">
-                                            {exercise.sets}
-                                            <span> sets x </span>
-                                            {exercise.reps}
-                                            <span> reps</span>
-                                        </div>
+                            {miniCard?.exercise_list.map((exercise, i) => (
+                                <div
+                                    className="workouts-card-exercise-container"
+                                    key={i}
+                                >
+                                    <div className="workouts-card-exercise">
+                                        {exercise.exercise}
                                     </div>
-                                )
-                            )}
+                                    <div className="workouts-card-sets-reps">
+                                        {exercise.sets}
+                                        <span> sets x </span>
+                                        {exercise.reps}
+                                        <span> reps</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

@@ -24,15 +24,15 @@ function getDbConnection() {
     return dbConnection;
 }
 
-async function getWorkouts(name) {
+async function getUserWorkouts(list) {
     const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
-    let result;
-    if (name === undefined) {
-        result = await workoutModel.find();
-    } else if (name) {
-        result = await findWorkoutByName(name);
+    const workoutIDs = list.map((id) => mongoose.Types.ObjectId(id));
+    try {
+        return await workoutModel.find({ _id: { $in: workoutIDs } });
+    } catch (error) {
+        console.log(error);
+        return undefined;
     }
-    return result;
 }
 
 async function getStats() {
@@ -279,7 +279,7 @@ async function searchUsers(username) {
     }
 }
 
-exports.getWorkouts = getWorkouts;
+exports.getUserWorkouts = getUserWorkouts;
 exports.findWorkoutById = findWorkoutById;
 exports.getStatsById = getStatsById;
 exports.addWorkout = addWorkout;
