@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FiCamera } from "react-icons/fi";
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
-import { IconContext } from "react-icons";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
@@ -65,20 +64,17 @@ export default function EditProfileModal(props) {
     return (
         <div className="modal-screen">
             <div className="modal-header">
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div
-                        className="modal-left-button"
-                        onClick={() => closeModal()}
-                    >
-                        <AiOutlineCloseCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCloseCircle
+                    className="modal-left-button"
+                    size={35}
+                    onClick={() => closeModal()}
+                />
                 <div className="modal-center-title">Edit Profile</div>
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div className="modal-right-button" onClick={updateUser}>
-                        <AiOutlineCheckCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCheckCircle
+                    className="modal-right-button"
+                    size={35}
+                    onClick={updateUser}
+                />
             </div>
             <div className="edit-profile-modal-container">
                 <div className="edit-profile-modal-preview">
@@ -106,13 +102,9 @@ export default function EditProfileModal(props) {
                         onMouseLeave={() => setShowFileSelector(false)}
                         onClick={() => openFileSelector()}
                     >
-                        <IconContext.Provider
-                            value={{ color: "white", size: "30px" }}
-                        >
-                            <div style={{ padding: 5 }}>
-                                <FiCamera />
-                            </div>
-                        </IconContext.Provider>
+                        <div style={{ padding: 5 }}>
+                            <FiCamera color="white" size={30} />
+                        </div>
                     </div>
                     <input
                         type="file"

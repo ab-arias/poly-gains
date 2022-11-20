@@ -5,7 +5,8 @@
 .app {
     display: flex;
     flex-direction: column;
-    margin-top: 90px;
+    margin: 0px;
+    padding-top: 90px;
 }
 .main-body {
     display: flex;
@@ -89,7 +90,7 @@ Header CSS:
 .search-block {
     position: relative;
     height: fit-content;
-    top: 20px;
+    top: 24px;
 }
 .search-bar {
     width: 200px;
@@ -143,6 +144,11 @@ Header CSS:
     color: rgba(0, 0, 0, 0.5);
     transition: 0.3s;
     transform: scale(1.2);
+}
+.search-icon {
+    padding-top: 3px;
+    margin-right: 0px;
+    padding-right: 0px;
 }
 
 /*
@@ -279,6 +285,7 @@ Modal CSS:
     align-items: center;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    color: white;
 }
 
 .modal-left-button {
@@ -559,6 +566,11 @@ Workouts CSS:
     letter-spacing: 1px;
 }
 
+.workout-container-button-icon {
+    color: white;
+    margin-right: 5px;
+}
+
 .workouts-cards-container {
     display: flex;
     flex-wrap: wrap;
@@ -576,10 +588,6 @@ Workouts CSS:
     border-top-right-radius: 10px;
     background-color: white;
     cursor: pointer;
-}
-.workouts-card:hover {
-    transition: 0.2s;
-    transform: scale(1.02);
 }
 
 .workouts-card-header {
@@ -600,6 +608,10 @@ Workouts CSS:
     padding-top: 2px;
     padding-left: 2px;
     z-index: 101;
+    color: white;
+}
+.workouts-card-delete:hover {
+    color: red;
 }
 
 .workouts-card-overflow {
@@ -708,6 +720,12 @@ Workouts CSS:
     margin-left: 15px;
     margin-top: 10px;
     margin-right: 15px;
+}
+
+.workout-modal-new-button {
+    margin: 10px 10px;
+    padding: 5px 0px 5px 0px;
+    width: 50%;
 }
 
 /*
