@@ -5,11 +5,14 @@ import {
     AiOutlineEdit,
 } from "react-icons/ai";
 import { IconContext } from "react-icons";
-import { v4 as uuid } from "uuid";
 
-export default function WorkoutModal({ toggle, updateWorkout, workout }) {
+export default function WorkoutModal({
+    toggle,
+    updateWorkout,
+    workout,
+    createNewWorkout,
+}) {
     const [editing, setEditing] = React.useState(workout ? false : true);
-    const [id] = React.useState(workout ? workout._id : "");
     const [name, setName] = React.useState(workout ? workout.name : "");
     const [exercise_list, setExercise_list] = React.useState(
         workout ? workout.exercise_list : []
@@ -20,25 +23,18 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
         reps: "",
     });
 
-    function handleModeToggle() {
-        if (editing && workout) {
+    function handleSave() {
+        if (!name) return;
+        else if (workout) {
             updateWorkout({
-                _id: id,
+                ...workout,
                 name: name,
                 exercise_list: exercise_list,
             });
             setEditing(false);
             return;
-        }
-        if (!editing) {
-            setEditing(true);
-            return;
-        }
-        if (!name) {
-            return;
-        }
-        if (!workout) {
-            updateWorkout({ name: name, exercise_list: exercise_list });
+        } else if (!workout) {
+            createNewWorkout({ name: name, exercise_list: exercise_list });
             setEditing(false);
             return;
         }
@@ -54,9 +50,6 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
             if (Number(value) <= 0) value = "";
             else if (Number(value) > 999) value = "999";
         }
-        if (!currExercise.id) {
-            setCurrExercise((prev) => ({ ...prev, id: uuid() }));
-        }
         setCurrExercise((prev) => ({ ...prev, [name]: value }));
     }
 
@@ -68,7 +61,7 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
             reps: "",
         });
     }
-    console.log(exercise_list);
+
     const exerciseCards = exercise_list.map((card) => (
         <div className="workout-modal-exercise-card" key={card.id}>
             <div className="workout-modal-exercise-header">{card.exercise}</div>
@@ -101,7 +94,9 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
                 <IconContext.Provider value={{ color: "white", size: "35px" }}>
                     <div
                         className="modal-right-button"
-                        onClick={handleModeToggle}
+                        onClick={() => {
+                            editing ? handleSave() : setEditing(true);
+                        }}
                     >
                         {editing ? <AiOutlineCheckCircle /> : <AiOutlineEdit />}
                     </div>

@@ -11,31 +11,11 @@ export default function Profile({ userToken }) {
     const [name, setName] = useState("");
     const [user, setUser] = useState();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
-
     const [workouts, setWorkouts] = useState([]);
     const [userReady, setUserReady] = useState(false);
     const [statsReady, setStatsReady] = useState(false);
     const [workoutsReady, setWorkoutsReady] = useState(false);
     const [calendar, setCalendar] = useState();
-
-    async function fetchAllWorkouts() {
-        try {
-            const response = await axios.get(window.$BACKEND_URI + "workouts");
-            return response.data.workouts_list;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
-
-    useEffect(() => {
-        fetchAllWorkouts().then((result) => {
-            if (result) {
-                setWorkouts(result);
-                setWorkoutsReady(true);
-            }
-        });
-    }, []);
 
     async function fetchUser() {
         try {
@@ -66,6 +46,30 @@ export default function Profile({ userToken }) {
         });
         // eslint-disable-next-line
     }, [profilePic, name]);
+
+    async function fetchWorkouts() {
+        try {
+            const response = await axios.get(window.$BACKEND_URI + "workouts", {
+                params: { workouts: user.workouts },
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        if (user) {
+            fetchWorkouts().then((result) => {
+                if (result) {
+                    setWorkouts(result);
+                    setWorkoutsReady(true);
+                }
+            });
+        }
+        // eslint-disable-next-line
+    }, [user]);
 
     async function fetchStats(Id) {
         try {
