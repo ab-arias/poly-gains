@@ -135,7 +135,7 @@ export default function App() {
                             <div className="left-header-button">
                                 <Link to="/">
                                     <img
-                                        style={{ height: 60 }}
+                                        style={{ height: 50}}
                                         src={require("./assets/img/PolyGainsLogo.png")}
                                         alt="PolyGains"
                                     />
