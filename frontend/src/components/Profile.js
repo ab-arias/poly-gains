@@ -147,6 +147,56 @@ export default function Profile({ userToken }) {
                         user={user}
                     />
                 </Link>
+                <div class="space"></div>
+                <div class="shape"></div>
+                <h3 class="section-header">Resources:</h3>
+                <div class="resources">
+                    <div class="left-res">
+                        <div class="Res-Link"> 
+                            Learn More About Training: 
+                            <a
+                                className="RecLink"
+                                href="https://www.trifectanutrition.com/blog/hypertrophy-training-for-muscle-growth-and-how-to-do-it-right"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <img
+                                    className="article-icon"
+                                    src={require("../assets/img/Article-Icon.png")}
+                                    alt="cannot display"
+                                ></img>
+                            </a>
+                        </div>
+                        <div class="Res-Link"> 
+                            Learn More About Diet: 
+                            <a
+                                className="RecLink"
+                                href="https://www.healthline.com/nutrition/bodybuilding-meal-plan#:~:text=Foods%20to%20Focus%20On&text=Meats%2C%20poultry%2C%20and%20fish%3A,quinoa%2C%20popcorn%2C%20and%20rice."
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <img
+                                    className="article-icon"
+                                    src={require("../assets/img/Article-Icon.png")}
+                                    alt="cannot display"
+                                ></img>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="right-res">
+                        <div class="contact-head"> 
+                            Contact Us: 
+                            <a href = "mailto:polygains@gmail.com">
+                                <img
+                                    className="article-icon"
+                                    src={require("../assets/img/mail-icon.png")}
+                                    alt="cannot display"
+                                ></img>
+                            </a>
+                        </div>
+                        <div class="contact-head"> About Us:</div>
+                    </div>
+                </div>
             </div>
         )
     );
