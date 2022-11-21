@@ -105,7 +105,7 @@ export default function Profile({ userToken }) {
 
                 <div className="center-dashboard">
                     <Link className="link-container" to="/stats">
-                        <ProgressTable statsData={stats} />
+                        <ProgressTable statsData={stats}/>
                     </Link>
 
                     <div className="dashboard-buttons-container">
@@ -144,7 +144,6 @@ export default function Profile({ userToken }) {
                         preview={true}
                         workouts={workouts}
                         calendar={calendar}
-                        user={user}
                     />
                 </Link>
             </div>

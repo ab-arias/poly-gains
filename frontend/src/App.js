@@ -4,7 +4,7 @@ import Profile from "./components/Profile";
 import Stats from "./components/Stats";
 import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
-import Auth from "./components/Auth";
+import Auth from "./components/Auth/Auth";
 import OtherProfile from "./components/OtherProfile";
 import SearchBar from "./components/SearchBar";
 
@@ -87,7 +87,7 @@ export default function App() {
                             />
                             <Route
                                 path={"/profile/:username"}
-                                element={<OtherProfile />}
+                                element={<OtherProfile userToken={userToken}/>}
                             />
                         </Routes>
                     </div>

@@ -9,7 +9,7 @@ export default function Auth({ handleUserLogIn }) {
         <div className="auth-screen">
             <img
                 style={{ height: 250 }}
-                src={require("../assets/img/PolyGainsLogo.png")}
+                src={require("../../assets/img/PolyGainsLogo.png")}
                 alt="PolyGains"
             />
             <div className="auth-box">
