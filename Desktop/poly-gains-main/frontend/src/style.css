@@ -5,7 +5,8 @@
 .app {
     display: flex;
     flex-direction: column;
-    margin-top: 75px;
+    margin: 0px;
+    padding-top: 90px;
 }
 .main-body {
     display: flex;
@@ -51,6 +52,7 @@ Header CSS:
     left: 0;
     right: 0;
     z-index: 100;
+    background-color: rgb(22, 85, 22);
 }
 .left-header {
     display: flex;
@@ -60,9 +62,7 @@ Header CSS:
     margin-left: 20px;
 }
 .left-header-button {
-    display: flex;
-    align-items: center;
-    justify-items: center;
+    background-color: aliceblue;
     border-style: solid;
     border-width: 1px;
     border-radius: 20px;
@@ -72,6 +72,7 @@ Header CSS:
 .left-header-button:hover {
     transition: 0.2s;
     transform: scale(1.1);
+    background-color: grey;
 }
 .middle-header {
     padding-left: 25px;
@@ -89,7 +90,7 @@ Header CSS:
 .search-block {
     position: relative;
     height: fit-content;
-    top: 20px;
+    top: 24px;
 }
 .search-bar {
     width: 200px;
@@ -134,12 +135,20 @@ Header CSS:
     margin-right: 20px;
     color: black;
     text-decoration: solid;
+    font-size: 20px;
+    color: rgb(230, 241, 230);
+    transition: 0.2s;
 }
 .Hlink:hover {
     cursor: pointer;
-    color: rgb(27, 104, 27);
-    transition: 0.4s;
-    transform: scale(1.1);
+    color: rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+    transform: scale(1.2);
+}
+.search-icon {
+    padding-top: 3px;
+    margin-right: 0px;
+    padding-right: 0px;
 }
 
 /*
@@ -276,6 +285,7 @@ Modal CSS:
     align-items: center;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    color: white;
 }
 
 .modal-left-button {
@@ -334,7 +344,7 @@ Profile CSS:
 }
 .link-container:hover {
     transition: 0.2s;
-    transform: scale(1.02);
+    transform: scale(1.1);
 }
 .profile-progress-container {
     display: flex;
@@ -450,6 +460,56 @@ Profile CSS:
     font-size: 20px;
 }
 
+.shape {
+	width: 1500px;
+	height: 300px;
+    position:absolute;
+    bottom: 0;
+    top: 1300px;
+	background:rgb(22, 85, 22);
+	-moz-border-radius: 0px 0px  20px 110px;
+	-webkit-border-radius: 0px 0px  20px 110px;
+	border-radius: 0px 0px  300px 500px;
+    transform: rotate(180deg);
+    z-index: -100;
+}
+.space{
+    margin-bottom: 70px;
+}
+.resources{
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: left;
+}
+.left-res{
+    margin-left: -300px;
+}
+.right-res{
+    margin-top: 60px;
+    margin-left: 500px;
+}
+.contact-head{
+    font-size: 30px;
+    margin-bottom: 60px;
+    color:aliceblue;
+}
+.Res-Link{
+    z-index: 100;
+    font-size: 30px;
+    margin-top: 60px;
+    color:aliceblue;
+}
+.article-icon {
+    width: 30px;
+    margin-left: 20px;
+    transition: 0.2s;
+}
+.article-icon:hover {
+    transition: 0.2s;
+    transform: scale(1.2);
+}
+
 /*
 Workouts CSS:
 */
@@ -522,11 +582,43 @@ Workouts CSS:
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: white;
-    overflow: hidden;
+    cursor: pointer;
+}
+.mini-workouts-card:hover {
+    transition: 0.2s;
+    transform: scale(1.02);
 }
 
 .mini-workouts-card .workouts-card-sets-reps {
     font-size: 12px;
+}
+
+.mini-workouts-card .workouts-card-body {
+    height: 130px;
+}
+
+.edit-cards-header {
+    margin-top: 5px;
+    display: flex;
+}
+
+.workout-container-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    padding: 5px 10px;
+    background-color: rgb(25, 109, 25);
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.workout-container-button-icon {
+    color: white;
+    margin-right: 5px;
 }
 
 .workouts-cards-container {
@@ -534,7 +626,7 @@ Workouts CSS:
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 80%;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .workouts-card {
@@ -545,6 +637,7 @@ Workouts CSS:
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: white;
+    cursor: pointer;
 }
 
 .workouts-card-header {
@@ -558,6 +651,25 @@ Workouts CSS:
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     background-color: rgb(83, 83, 83, 0.5);
+}
+
+.workouts-card-delete {
+    position: absolute;
+    padding-top: 2px;
+    padding-left: 2px;
+    z-index: 101;
+    color: white;
+}
+.workouts-card-delete:hover {
+    color: red;
+}
+
+.workouts-card-overflow {
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
 .mini-workouts-card .workouts-card-header {
@@ -660,6 +772,12 @@ Workouts CSS:
     margin-right: 15px;
 }
 
+.workout-modal-new-button {
+    margin: 10px 10px;
+    padding: 5px 0px 5px 0px;
+    width: 50%;
+}
+
 /*
 ProfilePicModal CSS:
 */
@@ -694,6 +812,19 @@ ProfilePicModal CSS:
     align-items: flex-end;
     border-radius: 50%;
     background-color: rgba(84, 83, 83, 0.373);
+}
+
+.edit-profile-modal-cam {
+    color: white;
+    margin-bottom: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.edit-profile-modal-trash {
+    color: white;
+    margin-bottom: 18px;
+    margin-left: 10px;
     cursor: pointer;
 }
 
@@ -768,6 +899,23 @@ Stats css
     float: left;
 }
 
+.stats-row {
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.update-stats-form {
+    font-weight: 500;
+    padding: 5px;
+}
+
+.update-stats-form > div {
+    display: flex;
+    justify-content: space-between;
+}
+
 .stats-container-right {
     /* width: 40%; */
     display: flex;
@@ -789,6 +937,15 @@ Stats css
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
+}
+
+.diet-container {
+    display: flex;
+    width: 60%;
+    font-weight: 500;
+    font-size: 18px;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .stats-update-form {

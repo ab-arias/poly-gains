@@ -21,57 +21,51 @@ function StatForm(props) {
     }
 
     function submitForm() {
-        const newRec = props.statsData.map((elem) => {
-            let idx = elem.records.findIndex((x) => {
-                return x.name === record.name;
-            });
-            if (idx === -1) {
-                elem.records.push(record);
-            } else {
-                elem.records[idx] = record;
-            }
-            return elem.records;
+        let newRec = props.statsData.records;
+        let idx = newRec.findIndex((x) => {
+            return x.name === record.name;
         });
-        props.updateStats([props.statsData[0]._id, newRec[0]]);
+        if (idx === -1) {
+            newRec.push(record);
+        } else {
+            newRec[idx] = record;
+        }
+        props.updateStats([props.statsData._id, newRec]);
         setRecord({ name: "", pr: "", goal: "" });
     }
 
     return (
-        <form>
-            <th>
-                <tr>
-                    <td>
-                        <label htmlFor="name">Workout:</label>
-                        <input
-                            value={record.name}
-                            type="text"
-                            name="name"
-                            id="name"
-                            onChange={handleChange}
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <label htmlFor="pr">New Pr:</label>
-                    <input
-                        value={record.pr}
-                        type="text"
-                        name="pr"
-                        id="pr"
-                        onChange={handleChange}
-                    />
-                </tr>
-                <tr>
-                    <label htmlFor="pr">Goal:</label>
-                    <input
-                        value={record.goal}
-                        type="text"
-                        name="goal"
-                        id="goal"
-                        onChange={handleChange}
-                    />
-                </tr>
-            </th>
+        <form className="update-stats-form">
+            <div>
+                <label htmlFor="name">Workout:</label>
+                <input
+                    value={record.name}
+                    type="text"
+                    name="name"
+                    id="name"
+                    onChange={handleChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="pr">New Pr:</label>
+                <input
+                    value={record.pr}
+                    type="text"
+                    name="pr"
+                    id="pr"
+                    onChange={handleChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="pr">Goal:</label>
+                <input
+                    value={record.goal}
+                    type="text"
+                    name="goal"
+                    id="goal"
+                    onChange={handleChange}
+                />
+            </div>
             <input type="button" value="Submit" onClick={submitForm} />
         </form>
     );

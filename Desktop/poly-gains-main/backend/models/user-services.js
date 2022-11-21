@@ -24,15 +24,15 @@ function getDbConnection() {
     return dbConnection;
 }
 
-async function getWorkouts(name) {
+async function getUserWorkouts(list) {
     const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
-    let result;
-    if (name === undefined) {
-        result = await workoutModel.find();
-    } else if (name) {
-        result = await findWorkoutByName(name);
+    const workoutIDs = list.map((id) => mongoose.Types.ObjectId(id));
+    try {
+        return await workoutModel.find({ _id: { $in: workoutIDs } });
+    } catch (error) {
+        console.log(error);
+        return undefined;
     }
-    return result;
 }
 
 async function getStats() {
@@ -122,13 +122,9 @@ async function deleteWorkout(id) {
     }
 }
 
-async function findWorkoutByName(name) {
-    const workoutModel = getDbConnection().model("Workout", WorkoutSchema);
-    return await workoutModel.find({ name: name });
-}
-
 async function registerNewUser(req) {
     const userModel = getDbConnection().model("users", UserSchema);
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const existingUser = await userModel.findOne({
         $or: [{ email: req.body.email }, { username: req.body.username }],
@@ -144,21 +140,22 @@ async function registerNewUser(req) {
         }
     } else {
         req.body._id = mongoose.Types.ObjectId();
+        const newStat = new statsModel();
+        newStat._id = mongoose.Types.ObjectId();
+        newStat.height = 0;
+        newStat.weight = 0;
+        newStat.mile = "N/A";
+        newStat.calories = 0;
+        newStat.plan = "N/A";
+        const stat = await newStat.save();
+        if (!stat) {
+            console.log(error);
+        }
         const newUser = new userModel(req.body);
         newUser.password = hashedPassword;
         newUser.workouts.push("637012e5c8e5bba98b4d3903");
-        newUser.activeWorkouts = [
-            {
-                Monday: "637012e5c8e5bba98b4d3903",
-                Tuesday: "637012e5c8e5bba98b4d3903",
-                Wednesday: "637012e5c8e5bba98b4d3903",
-                Thursday: "637012e5c8e5bba98b4d3903",
-                Friday: "637012e5c8e5bba98b4d3903",
-                Saturday: "637012e5c8e5bba98b4d3903",
-                Sunday: "637012e5c8e5bba98b4d3903",
-            },
-        ];
         newUser.avatar = "";
+        newUser.stats = newStat._id;
         const res = await newUser.save();
         return { result: res, success: true };
     }
@@ -201,6 +198,12 @@ async function getUserById(id) {
     return result;
 }
 
+async function getStatsById(id) {
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
+    const result = await statsModel.findById(id);
+    return result;
+}
+
 async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
     const userModel = getDbConnection().model("User", UserSchema);
     try {
@@ -219,6 +222,19 @@ async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
         return undefined;
     }
 }
+
+async function updateActiveWorkouts(id, newWorkouts) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        return await userModel.findByIdAndUpdate(id, {
+            activeWorkouts: newWorkouts,
+        });
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
 async function getUserByUsername(username) {
     const userModel = getDbConnection().model("User", UserSchema);
     const result = await userModel.findOne({ username: username });
@@ -237,10 +253,13 @@ async function searchUsers(username) {
                         path: "username",
                         fuzzy: {
                             maxEdits: 1,
-                            prefixLength: 0,
+                            prefixLength: 1,
                         },
                     },
                 },
+            },
+            {
+                $limit: 5,
             },
             {
                 $project: {
@@ -258,8 +277,9 @@ async function searchUsers(username) {
     }
 }
 
-exports.getWorkouts = getWorkouts;
+exports.getUserWorkouts = getUserWorkouts;
 exports.findWorkoutById = findWorkoutById;
+exports.getStatsById = getStatsById;
 exports.addWorkout = addWorkout;
 exports.deleteWorkout = deleteWorkout;
 exports.getStats = getStats;
@@ -274,3 +294,4 @@ exports.updateUser = updateUser;
 exports.setConnection = setConnection;
 exports.deleteStat = deleteStat;
 exports.searchUsers = searchUsers;
+exports.updateActiveWorkouts = updateActiveWorkouts;
