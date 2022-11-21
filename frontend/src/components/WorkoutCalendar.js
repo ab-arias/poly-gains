@@ -62,7 +62,9 @@ export default function WorkoutCalendar({
                                 : null
                         }
                         onClick={
-                            !preview ? () => handleOpenWorkout(miniCard) : null
+                            !preview && planId !== "637012e5c8e5bba98b4d3903"
+                                ? () => handleOpenWorkout(miniCard)
+                                : null
                         }
                     >
                         <div className="workouts-card-header">

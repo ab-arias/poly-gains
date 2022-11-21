@@ -762,6 +762,19 @@ ProfilePicModal CSS:
     align-items: flex-end;
     border-radius: 50%;
     background-color: rgba(84, 83, 83, 0.373);
+}
+
+.edit-profile-modal-cam {
+    color: white;
+    margin-bottom: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.edit-profile-modal-trash {
+    color: white;
+    margin-bottom: 18px;
+    margin-left: 10px;
     cursor: pointer;
 }
 
