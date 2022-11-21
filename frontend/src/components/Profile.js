@@ -7,8 +7,6 @@ import WorkoutCalendar from "./WorkoutCalendar";
 
 export default function Profile({ userToken }) {
     const [stats, setStats] = useState();
-    const [profilePic, setProfilePic] = useState();
-    const [name, setName] = useState("");
     const [user, setUser] = useState();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [workouts, setWorkouts] = useState();
@@ -40,7 +38,7 @@ export default function Profile({ userToken }) {
             }
         });
         // eslint-disable-next-line
-    }, [profilePic, name]);
+    }, []);
 
     async function fetchWorkouts() {
         try {
@@ -90,15 +88,8 @@ export default function Profile({ userToken }) {
                 {showEditProfileModal && (
                     <EditProfileModal
                         closeModal={toggleModalView}
-                        updateProfilePic={setProfilePic}
-                        currentPic={
-                            user?.avatar
-                                ? user.avatar
-                                : require("../assets/img/DefaultProfilePic.jpeg")
-                        }
-                        updateName={setName}
-                        currentName={user.name}
                         user={user}
+                        setUser={setUser}
                     />
                 )}
                 <img

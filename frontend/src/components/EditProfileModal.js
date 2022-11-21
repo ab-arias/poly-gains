@@ -1,25 +1,19 @@
 import React, { useState, useRef } from "react";
-import { FiCamera } from "react-icons/fi";
+import { FiCamera, FiTrash2 } from "react-icons/fi";
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 
-export default function EditProfileModal(props) {
-    const {
-        updateProfilePic,
-        closeModal,
-        currentPic,
-        updateName,
-        currentName,
-        user,
-    } = props;
+export default function EditProfileModal({ closeModal, user, setUser }) {
     const [srcImg, setSrcImg] = useState();
     const cropperRef = useRef(null);
     const inputFile = useRef(null);
-    const [croppedImg, setCroppedImg] = useState("");
+    const [croppedImg, setCroppedImg] = useState(
+        user?.avatar ? user.avatar : ""
+    );
     const [showFileSelector, setShowFileSelector] = useState(false);
-    const [name, setName] = useState(currentName);
+    const [name, setName] = useState(user.name);
 
     const onCrop = () => {
         const imageElement = cropperRef?.current;
@@ -28,7 +22,9 @@ export default function EditProfileModal(props) {
     };
 
     function handlePhotoChange(e) {
-        setSrcImg(URL.createObjectURL(e.target.files[0]));
+        if (e.target.files[0]) {
+            setSrcImg(URL.createObjectURL(e.target.files[0]));
+        }
     }
 
     function openFileSelector() {
@@ -39,21 +35,24 @@ export default function EditProfileModal(props) {
         setName(event.target.value);
     }
 
+    function handleImageDelete() {
+        setSrcImg(null);
+        inputFile.current.value = "";
+        setCroppedImg("");
+    }
+
     async function updateUser() {
         const id = user._id;
-        const image = croppedImg ? croppedImg : currentPic;
         try {
             const response = await axios.post(
                 window.$BACKEND_URI + "user/" + id,
                 {
                     name: name,
-                    avatar: image,
-                    activeWorkouts: user.activeWorkouts,
+                    avatar: croppedImg,
                 }
             );
             const result = response.data;
-            updateName(result.name);
-            updateProfilePic(result.avatar);
+            setUser(result);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -80,7 +79,11 @@ export default function EditProfileModal(props) {
                 <div className="edit-profile-modal-preview">
                     <img
                         className="profile-avatar"
-                        src={croppedImg ? croppedImg : currentPic}
+                        src={
+                            croppedImg
+                                ? croppedImg
+                                : require("../assets/img/DefaultProfilePic.jpeg")
+                        }
                         onMouseEnter={() => setShowFileSelector(true)}
                         alt="Avatar"
                     />
@@ -100,11 +103,17 @@ export default function EditProfileModal(props) {
                                 : { visibility: "hidden" }
                         }
                         onMouseLeave={() => setShowFileSelector(false)}
-                        onClick={() => openFileSelector()}
                     >
-                        <div style={{ padding: 5 }}>
-                            <FiCamera color="white" size={30} />
-                        </div>
+                        <FiCamera
+                            className="edit-profile-modal-cam"
+                            size={30}
+                            onClick={openFileSelector}
+                        />
+                        <FiTrash2
+                            className="edit-profile-modal-trash"
+                            size={30}
+                            onClick={handleImageDelete}
+                        />
                     </div>
                     <input
                         type="file"

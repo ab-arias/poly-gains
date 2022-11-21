@@ -83,13 +83,16 @@ export default function WorkoutCards({
             className="workouts-card"
             key={i}
             draggable
-            onClick={() => handleOpenWorkout(card)}
+            onClick={() => {
+                if (card._id !== "637012e5c8e5bba98b4d3903")
+                    handleOpenWorkout(card);
+            }}
             onDragStart={(e) => {
                 let val = JSON.stringify({ id: card._id, day: null });
                 e.dataTransfer.setData("card", val);
             }}
         >
-            {editingWorkouts && (
+            {editingWorkouts && card._id !== "637012e5c8e5bba98b4d3903" && (
                 <AiOutlineCloseCircle
                     className="workouts-card-delete"
                     size={25}

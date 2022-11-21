@@ -7,20 +7,14 @@ const userServices = require("./models/user-services");
 const validateRegisterInput = require("./validation/register.js");
 const validateLoginInput = require("./validation/login.js");
 
-//app.use(cors());
-app.use(
-    cors({
-        origin: "https://poly-gains.azurewebsites.net",
-    })
-);
-
+app.use(cors());
 app.use(
     bodyParser.urlencoded({
-        limit: "50mb",
+        limit: "2mb",
         extended: false,
     })
 );
-app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.json({ limit: "2mb" }));
 app.use(express.json());
 
 app.get("/workouts", async (req, res) => {

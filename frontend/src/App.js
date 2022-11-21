@@ -1,40 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { RiUserSearchLine } from "react-icons/ri";
-import axios from "axios";
 import Profile from "./components/Profile";
 import Stats from "./components/Stats";
 import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
 import Auth from "./components/Auth";
 import OtherProfile from "./components/OtherProfile";
+import SearchBar from "./components/SearchBar";
 
 export default function App() {
     const [userToken, setUserToken] = useState();
-    const [searchBarInput, setSearchBarInput] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-    const [searchOpen, setSearchOpen] = useState(false);
-    const closeSearchRef = useRef();
-
-    const useOutsideClick = (ref, callback) => {
-        const handleClick = (e) => {
-            if (ref.current && !ref.current.contains(e.target)) {
-                callback();
-            }
-        };
-
-        useEffect(() => {
-            document.addEventListener("click", handleClick);
-
-            return () => {
-                document.removeEventListener("click", handleClick);
-            };
-        });
-    };
-
-    useOutsideClick(closeSearchRef, () => {
-        if (searchOpen) handleClearSearch();
-    });
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
@@ -52,78 +27,6 @@ export default function App() {
     function handleLogOut() {
         setUserToken();
         localStorage.clear();
-    }
-
-    async function fetchSearchResults() {
-        try {
-            const response = await axios.get(
-                window.$BACKEND_URI + "search/" + searchBarInput
-            );
-            return response.data;
-        } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
-            return false;
-        }
-    }
-
-    useEffect(() => {
-        !searchBarInput
-            ? setSearchResults([])
-            : fetchSearchResults().then((result) => {
-                  setSearchResults(result);
-              });
-        // eslint-disable-next-line
-    }, [searchBarInput]);
-
-    function handleClearSearch() {
-        setSearchBarInput("");
-        setSearchResults([]);
-        setSearchOpen(false);
-    }
-
-    const userList =
-        searchBarInput &&
-        searchResults.map((result, i) => (
-            <Link
-                className="search-results-row"
-                key={i}
-                style={
-                    i === searchResults.length - 1
-                        ? { borderBottomWidth: "0" }
-                        : null
-                }
-                onClick={handleClearSearch}
-                to={
-                    userToken.username === result.username
-                        ? "/"
-                        : "/profile/" + result.username
-                }
-            >
-                <img
-                    className="search-results-avatar"
-                    src={
-                        result?.avatar
-                            ? result.avatar
-                            : require("./assets/img/DefaultProfilePic.jpeg")
-                    }
-                    alt="Cannot display"
-                />
-                @{result.username}
-            </Link>
-        ));
-
-    function renderSearchResults() {
-        if (userList.length !== 0 && searchBarInput.length > 1) {
-            return <div className="search-results">{userList}</div>;
-        } else if (searchOpen && searchBarInput.length > 1) {
-            return (
-                <div className="search-results search-results-row">
-                    No Users Found
-                </div>
-            );
-        }
-        return <div></div>;
     }
 
     return (
@@ -154,26 +57,7 @@ export default function App() {
                             </Link>
                         </div>
                         <div className="right-header">
-                            <div ref={closeSearchRef} className="search-block">
-                                {searchOpen ? (
-                                    <input
-                                        className="search-bar"
-                                        name="usersearch"
-                                        value={searchBarInput}
-                                        onChange={(e) =>
-                                            setSearchBarInput(e.target.value)
-                                        }
-                                        placeholder="Search by username"
-                                    />
-                                ) : (
-                                    <RiUserSearchLine
-                                        className="Hlink search-icon"
-                                        size={20}
-                                        onClick={() => setSearchOpen(true)}
-                                    />
-                                )}
-                                {renderSearchResults()}
-                            </div>
+                            <SearchBar userToken={userToken} />
                             <div
                                 className="log-out Hlink"
                                 onClick={handleLogOut}

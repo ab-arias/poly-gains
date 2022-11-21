@@ -253,10 +253,13 @@ async function searchUsers(username) {
                         path: "username",
                         fuzzy: {
                             maxEdits: 1,
-                            prefixLength: 0,
+                            prefixLength: 1,
                         },
                     },
                 },
+            },
+            {
+                $limit: 5,
             },
             {
                 $project: {
