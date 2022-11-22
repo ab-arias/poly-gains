@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import ProgressTable from "./ProgressTable";
 import WorkoutCalendar from "./WorkoutCalendar";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-export default function OtherProfile() {
+export default function OtherProfile({ userToken }) {
     const params = useParams();
     const [stats, setStats] = useState();
     const [user, setUser] = useState();
@@ -93,19 +92,14 @@ export default function OtherProfile() {
                 <h2>{user.name}</h2>
 
                 <div className="center-dashboard">
-                    <Link className="link-container" to="/stats">
-                        <ProgressTable statsData={stats} />
-                    </Link>
+                    <ProgressTable statsData={stats} otherName={user.name} />
                 </div>
-
-                <Link className="link-container" to="/workouts">
-                    <WorkoutCalendar
-                        preview={true}
-                        workouts={workouts}
-                        calendar={calendar}
-                        user={user}
-                    />
-                </Link>
+                <WorkoutCalendar
+                    preview={true}
+                    workouts={workouts}
+                    calendar={calendar}
+                    otherName={user.name}
+                />
             </div>
         )
     );
