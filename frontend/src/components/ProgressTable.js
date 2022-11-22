@@ -40,7 +40,7 @@ function ProgressTable({ statsData, otherName }) {
     return (
         <div className="profile-progress-container">
             <h2 className="section-header">
-                { otherName ? `${otherName}'s` : "My" } Progress
+                {otherName ? `${otherName}'s` : "My"} Progress
             </h2>
             <table>
                 <tbody>

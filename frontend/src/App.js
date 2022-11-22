@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile";
 import Stats from "./components/Stats";
 import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
 import Auth from "./components/Auth/Auth";
 import OtherProfile from "./components/OtherProfile";
-import SearchBar from "./components/SearchBar";
+import Header from "./components/Header";
 
 export default function App() {
     const [userToken, setUserToken] = useState();
+    const [showFriendsModal, setShowFriendsModal] = useState(false);
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
@@ -33,41 +34,13 @@ export default function App() {
         <BrowserRouter>
             {userToken ? (
                 <div className="app">
-                    <div className="header">
-                        <div className="left-header">
-                            <div className="left-header-button">
-                                <Link to="/">
-                                    <img
-                                        style={{ height: 50 }}
-                                        src={require("./assets/img/PolyGainsLogo.png")}
-                                        alt="PolyGains"
-                                    />
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="middle-header">
-                            <Link className="Hlink" to="/calpoly">
-                                CalPoly
-                            </Link>
-                            <Link className="Hlink" to="/stats">
-                                Stats
-                            </Link>
-                            <Link className="Hlink" to="/workouts">
-                                Workouts
-                            </Link>
-                        </div>
-                        <div className="right-header">
-                            <SearchBar userToken={userToken} />
-                            <div
-                                className="log-out Hlink"
-                                onClick={handleLogOut}
-                            >
-                                Log Out
-                            </div>
-                        </div>
-                    </div>
-
+                    <Header
+                        userToken={userToken}
+                        handleLogOut={handleLogOut}
+                        setShowFriendsModal={setShowFriendsModal}
+                    />
                     <div className="main-body">
+                        {showFriendsModal && <div></div>}
                         <Routes>
                             <Route
                                 path="/"
@@ -87,7 +60,7 @@ export default function App() {
                             />
                             <Route
                                 path={"/profile/:username"}
-                                element={<OtherProfile userToken={userToken}/>}
+                                element={<OtherProfile userToken={userToken} />}
                             />
                         </Routes>
                     </div>

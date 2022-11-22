@@ -98,10 +98,11 @@ export default function WorkoutCalendar({
 
     return (
         <div className="workouts-calendar-container">
-            {preview && 
-            <h2 className="section-header">
-                { otherName ? `${otherName}'s` : "My" } Workouts
-            </h2>}
+            {preview && (
+                <h2 className="section-header">
+                    {otherName ? `${otherName}'s` : "My"} Workouts
+                </h2>
+            )}
             <h2 className="calendar-month">{monthName}</h2>
             <div className="workouts-calendar">{content}</div>
         </div>

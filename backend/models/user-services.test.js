@@ -3,11 +3,13 @@ const WorkoutSchema = require("./workout");
 const StatsSchema = require("./stats");
 const userServices = require("./user-services");
 const { MongoMemoryServer } = require("mongodb-memory-server");
+const UserSchema = require("./user");
 
 let mongoServer;
 let conn;
 let WorkoutModel;
 let StatsModel;
+let UserModel;
 
 beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
@@ -17,9 +19,10 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     };
-
+    realcon = await userServices.getDbConnection();
     conn = await mongoose.createConnection(uri, mongooseOpts);
 
+    UserModel = conn.model("User", UserSchema);
     WorkoutModel = conn.model("Workout", WorkoutSchema);
     StatsModel = conn.model("Stats", StatsSchema);
 
@@ -27,15 +30,38 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+    await realcon.close();
     await conn.dropDatabase();
     await conn.close();
     await mongoServer.stop();
 });
 
 beforeEach(async () => {
+    let dummyUser = {
+        _id: "637012e5c8e5bba72b4d3956",
+        name: "dummy User",
+        username: "dumbUsername45",
+        email: "dumb@stupidemail.com",
+        password: "stupidPassword4",
+        avatar: "",
+        workouts: ["637012e5c8e5bba98b4d3903"],
+        activeWorkouts: {
+            Monday: "637012e5c8e5bba98b4d3903",
+            Tuesday: "637012e5c8e5bba98b4d3903",
+            Wednesday: "637012e5c8e5bba98b4d3903",
+            Thursday: "637012e5c8e5bba98b4d3903",
+            Friday: "637012e5c8e5bba98b4d3903",
+            Saturday: "637012e5c8e5bba98b4d3903",
+            Sunday: "637012e5c8e5bba98b4d3903",
+        },
+        stats: "6362cfa7c8e5bba98bd31324",
+    };
+    let result = new UserModel(dummyUser);
+    await result.save();
+
     let dummyWorkout = {
+        _id: "637012e5c8e5bba98b4d3903",
         name: "Push",
-        day: "None",
         exercise_list: [
             {
                 exercise: "Bench",
@@ -51,12 +77,12 @@ beforeEach(async () => {
             },
         ],
     };
-    let result = new WorkoutModel(dummyWorkout);
+    result = new WorkoutModel(dummyWorkout);
     await result.save();
 
     dummyWorkout = {
+        _id: "637012e5c8e5bba98b4d3904",
         name: "Pull",
-        day: "None",
         exercise_list: [
             {
                 exercise: "Cable rows",
@@ -76,8 +102,8 @@ beforeEach(async () => {
     await result.save();
 
     dummyWorkout = {
+        _id: "637012e5c8e5bba98b4d3905",
         name: "Legs",
-        day: "None",
         exercise_list: [
             {
                 exercise: "Front Squat",
@@ -146,28 +172,292 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+    await UserModel.deleteMany();
     await WorkoutModel.deleteMany();
     await StatsModel.deleteMany();
 });
 
-test("Fetching all users", async () => {
-    const workouts = await userServices.getWorkouts();
-    expect(workouts).toBeDefined();
-    expect(workouts.length).toBeGreaterThan(0);
+test("Unsuccessful db connection", async () => {
+    let temp = conn;
+    await userServices.setConnection(null);
+    const newConn = await userServices.getDbConnection();
+    expect(newConn).toBeDefined();
+    await newConn.close();
+    await userServices.setConnection(temp);
 });
 
-test("Fetching users by name", async () => {
-    const workoutName = "Push";
-    const workouts = await userServices.getWorkouts(workoutName);
-    expect(workouts).toBeDefined();
-    expect(workouts.length).toBeGreaterThan(0);
-    workouts.forEach((workout) => expect(workout.name).toBe(workoutName));
+// REGISTRATION
+
+test("Successfully register new user", async () => {
+    const input = {
+        body: {
+            name: "new guy",
+            username: "newguy20",
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    const user = await userServices.registerNewUser(input);
+    expect(user.success).toBeTruthy();
 });
 
-test("Fetching stats data", async () => {
-    const stats = await userServices.getStats();
-    expect(stats).toBeDefined();
-    expect(stats.length).toBeGreaterThan(0);
+test("Registration fail: email", async () => {
+    let input = {
+        body: {
+            name: "new guy",
+            username: "newguy20",
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    await userServices.registerNewUser(input);
+    input.body.username = "neqguy21";
+    const result = await userServices.registerNewUser(input);
+    expect(result).toEqual({
+        error: { email: "Email already exists" },
+        success: false,
+    });
+});
+
+test("Registration fail: username", async () => {
+    let input = {
+        body: {
+            name: "new guy",
+            username: "newguy20",
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    await userServices.registerNewUser(input);
+    input.body.email = "newguy@diffemail.com";
+    const result = await userServices.registerNewUser(input);
+    expect(result).toEqual({
+        error: { username: "Username already exists" },
+        success: false,
+    });
+});
+
+// LOGIN
+
+test("Successfully log in user", async () => {
+    const reg = {
+        body: {
+            name: "new guy",
+            username: "newguy20",
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    await userServices.registerNewUser(reg);
+    const input = {
+        body: {
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    const user = await userServices.loginUser(input);
+    expect(user.success).toBeTruthy();
+});
+
+test("Login fail: email does not exist", async () => {
+    const input = {
+        body: {
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    const result = await userServices.loginUser(input);
+    expect(result).toEqual({
+        error: { email: "Email does not exist" },
+        success: false,
+    });
+});
+
+test("Login fail: password does not match", async () => {
+    const reg = {
+        body: {
+            name: "new guy",
+            username: "newguy20",
+            email: "newguy@test.com",
+            password: "password4",
+        },
+    };
+    await userServices.registerNewUser(reg);
+    const input = {
+        body: {
+            email: "newguy@test.com",
+            password: "wrongpassword34",
+        },
+    };
+    const result = await userServices.loginUser(input);
+    expect(result).toEqual({
+        error: { password: "Password does not match" },
+        success: false,
+    });
+});
+
+// USER
+
+test("Get user by ID", async () => {
+    const input = "637012e5c8e5bba72b4d3956";
+    const user = await userServices.getUserById(input);
+    expect(user).toBeDefined();
+});
+
+test("Get user by username", async () => {
+    const input = "dumbUsername45";
+    const user = await userServices.getUserByUsername(input);
+    expect(user).toBeDefined();
+});
+
+test("Successfully update user", async () => {
+    const id = "637012e5c8e5bba72b4d3956";
+    const newName = "Smart User";
+    const newPic = "data:image/png;base64,";
+    const newActWorkouts = {
+        Monday: "637012e5c8e5bba98b4d3954",
+        Tuesday: "637012e5c8e5bba98b4d3903",
+        Wednesday: "637012e5c8e5bba98b4d3903",
+        Thursday: "637012e5c8e5bba98b4d3903",
+        Friday: "637012e5c8e5bba98b4d3903",
+        Saturday: "637012e5c8e5bba98b4d3954",
+        Sunday: "637012e5c8e5bba98b4d3903",
+    };
+    const newWorkouts = [
+        "637012e5c8e5bba98b4d3903",
+        "637012e5c8e5bba98b4d3954",
+    ];
+    const user = await userServices.updateUser(
+        id,
+        newName,
+        newPic,
+        newActWorkouts,
+        newWorkouts
+    );
+    expect(user.name).toMatch(newName);
+    expect(JSON.stringify(user.avatar)).toMatch(newPic);
+    expect(user.workouts.toString()).toMatch(newWorkouts.toString());
+    expect(user.activeWorkouts.Monday.toString()).toMatch(
+        newActWorkouts.Monday
+    );
+});
+
+test("Fail to update user", async () => {
+    const id = "";
+    const result = await userServices.updateUser(id);
+    expect(result).toBeUndefined();
+});
+
+test("Successful user search", async () => {
+    let temp = conn;
+    await userServices.setConnection(realcon);
+    const input = "testact";
+    const users = await userServices.searchUsers(input);
+    expect(users).toBeDefined();
+    await userServices.setConnection(temp);
+});
+
+test("Unsuccessful user search", async () => {
+    let temp = conn;
+    await userServices.setConnection(realcon);
+    const input = "";
+    const result = await userServices.searchUsers(input);
+    expect(result).toBeUndefined();
+    await realcon.close();
+    await userServices.setConnection(temp);
+});
+
+// WORKOUTS
+
+test("Successfully get workouts", async () => {
+    const workouts = [
+        "637012e5c8e5bba98b4d3903",
+        "637012e5c8e5bba98b4d3904",
+        "637012e5c8e5bba98b4d3905",
+    ];
+    const result = await userServices.getUserWorkouts(workouts);
+    expect(result.length).toBe(3);
+});
+
+test("Fail to get workouts", async () => {
+    const workouts = [""];
+    const result = await userServices.getUserWorkouts(workouts);
+    expect(result).toBeUndefined();
+});
+
+test("Successfully update workout", async () => {
+    const workoutID = "637012e5c8e5bba98b4d3903";
+    const editedWorkout = {
+        name: "Push Day",
+        exercise_list: [],
+    };
+    const result = await userServices.updateWorkout(workoutID, editedWorkout);
+    expect(result.name).toMatch(editedWorkout.name);
+    expect(result.exercise_list.length).toBe(0);
+});
+
+test("Fail to update workout", async () => {
+    const workoutID = "";
+    const editedWorkout = {
+        name: "Push Day",
+        exercise_list: [],
+    };
+    const result = await userServices.updateWorkout(workoutID, editedWorkout);
+    expect(result).toBeUndefined();
+});
+
+test("Successfully find workout by ID", async () => {
+    const workoutID = "637012e5c8e5bba98b4d3903";
+    const result = await userServices.findWorkoutById(workoutID);
+    expect(result).toBeDefined();
+});
+
+test("Fail to find workout by ID", async () => {
+    const workoutID = "";
+    const result = await userServices.findWorkoutById(workoutID);
+    expect(result).toBeUndefined();
+});
+
+test("Successfully add workout", async () => {
+    const newWorkout = {
+        name: "Quick Pump",
+        exercise_list: [
+            {
+                exercise: "Bicep Curl",
+                sets: 20,
+                reps: 500,
+                weight: 225,
+            },
+        ],
+    };
+    const result = await userServices.addWorkout(newWorkout);
+    expect(result).toBeDefined();
+});
+
+test("Fail to add workout", async () => {
+    const newWorkout = {};
+    const result = await userServices.addWorkout(newWorkout);
+    expect(result).toBeFalsy();
+});
+
+test("Successfully delete workout by ID", async () => {
+    const workoutID = "637012e5c8e5bba98b4d3903";
+    const result = await userServices.deleteWorkout(workoutID);
+    expect(result).toBeDefined();
+});
+
+test("Successfully delete workout by ID", async () => {
+    const workoutID = "";
+    const result = await userServices.deleteWorkout(workoutID);
+    expect(result).toBeFalsy();
+});
+
+// STATS
+
+test("Successfully get stats", async () => {
+    const statID = "6362cfa7c8e5bba98bd31324";
+    const result = await userServices.getStatsById(statID);
+    expect(result).toBeDefined();
 });
 
 test("Update records in stats", async () => {
@@ -186,127 +476,23 @@ test("Update records in stats", async () => {
     expect(stats.records[0].pr).toBe("315");
 });
 
-// test("Fetching users by job", async () => {
-//   const userJob = "Soccer coach";
-//   const users = await userServices.getUsers(undefined, userJob);
-//   expect(users).toBeDefined();
-//   expect(users.length).toBeGreaterThan(0);
-//   users.forEach((user) => expect(user.job).toBe(userJob));
-// });
+test("Fail to update records in stats", async () => {
+    let id = "";
+    let newRec = [{ name: "Bench", pr: "315", goal: "355" }];
+    const stats = await userServices.updateStats(id, newRec);
+    expect(stats).toBeUndefined();
+});
 
-// test("Fetching users by name and job", async () => {
-//   const userName = "Ted Lasso";
-//   const userJob = "Soccer coach";
-//   const users = await userServices.getUsers(userName, userJob);
-//   expect(users).toBeDefined();
-//   expect(users.length).toBeGreaterThan(0);
-//   users.forEach(
-//     (user) => expect(user.name).toBe(userName) && expect(user.job).toBe(userJob)
-//   );
-// });
+test("Delete record in stat", async () => {
+    let id = "6362cfa7c8e5bba98bd31324";
+    let nameToDelete = "Bench";
+    const stats = await userServices.deleteStat(id, nameToDelete);
+    expect(stats).toBeDefined();
+});
 
-// test("Fetching by invalid id format", async () => {
-//   const anyId = "123";
-//   const user = await userServices.findUserById(anyId);
-//   expect(user).toBeUndefined();
-// });
-
-// test("Fetching by valid id and not finding", async () => {
-//   const anyId = "6132b9d47cefd0cc1916b6a9";
-//   const user = await userServices.findUserById(anyId);
-//   expect(user).toBeNull();
-// });
-
-// test("Fetching by valid id and finding", async () => {
-//   const dummyUser = {
-//     name: "Harry Potter",
-//     job: "Young wizard",
-//   };
-//   const result = new userModel(dummyUser);
-//   const addedUser = await result.save();
-//   const foundUser = await userServices.findUserById(addedUser.id);
-//   expect(foundUser).toBeDefined();
-//   expect(foundUser.id).toBe(addedUser.id);
-//   expect(foundUser.name).toBe(addedUser.name);
-//   expect(foundUser.job).toBe(addedUser.job);
-// });
-
-// test("Deleting a user by Id -- successful path", async () => {
-//   const dummyUser = {
-//     name: "Harry Potter",
-//     job: "Young wizard",
-//   };
-//   const result = new userModel(dummyUser);
-//   const addedUser = await result.save();
-//   const deleteResult = await userModel.findOneAndDelete({ _id: addedUser.id });
-//   expect(deleteResult).toBeTruthy();
-// });
-
-// test("Deleting a user by Id -- inexisting id", async () => {
-//   const anyId = "6132b9d47cefd0cc1916b6a9";
-//   const deleteResult = await userModel.findOneAndDelete({ _id: anyId });
-//   expect(deleteResult).toBeNull();
-// });
-
-// test("Adding user -- successful path", async () => {
-//   const dummyUser = {
-//     name: "Harry Potter",
-//     job: "Young wizard",
-//   };
-//   const result = await userServices.addUser(dummyUser);
-//   expect(result).toBeTruthy();
-//   expect(result.name).toBe(dummyUser.name);
-//   expect(result.job).toBe(dummyUser.job);
-//   expect(result).toHaveProperty("_id");
-// });
-
-// test("Adding user -- failure path with invalid id", async () => {
-//   const dummyUser = {
-//     _id: "123",
-//     name: "Harry Potter",
-//     job: "Young wizard",
-//   };
-//   const result = await userServices.addUser(dummyUser);
-//   expect(result).toBeFalsy();
-// });
-
-// test("Adding user -- failure path with already taken id", async () => {
-//   const dummyUser = {
-//     name: "Harry Potter",
-//     job: "Young wizard",
-//   };
-//   const addedUser = await userServices.addUser(dummyUser);
-
-//   const anotherDummyUser = {
-//     _id: addedUser.id,
-//     name: "Ron",
-//     job: "Young wizard",
-//   };
-//   const result = await userServices.addUser(anotherDummyUser);
-//   expect(result).toBeFalsy();
-// });
-
-// test("Adding user -- failure path with invalid job length", async () => {
-//   const dummyUser = {
-//     name: "Harry Potter",
-//     job: "Y",
-//   };
-//   const result = await userServices.addUser(dummyUser);
-//   expect(result).toBeFalsy();
-// });
-
-// test("Adding user -- failure path with no job", async () => {
-//   const dummyUser = {
-//     name: "Harry Potter",
-//   };
-//   const result = await userServices.addUser(dummyUser);
-//   expect(result).toBeFalsy();
-// });
-
-// test("Adding user -- failure path with no name", async () => {
-//   const dummyUser = {
-//     job: "Young wizard",
-//   };
-//   const result = await userServices.addUser(dummyUser);
-//   expect(result).toBeFalsy();
-// });
+test("Fail to delete record in stat", async () => {
+    let id = "";
+    let nameToDelete = "Bench";
+    const stats = await userServices.deleteStat(id, nameToDelete);
+    expect(stats).toBeUndefined();
+});

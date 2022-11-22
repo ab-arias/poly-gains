@@ -92,10 +92,7 @@ export default function OtherProfile({ userToken }) {
                 <h2>{user.name}</h2>
 
                 <div className="center-dashboard">
-                    <ProgressTable 
-                        statsData={stats}
-                        otherName={user.name}
-                    />
+                    <ProgressTable statsData={stats} otherName={user.name} />
                 </div>
                 <WorkoutCalendar
                     preview={true}
