@@ -6,49 +6,16 @@ import EditProfileModal from "./EditProfileModal";
 import WorkoutCalendar from "./WorkoutCalendar";
 
 export default function Profile({ userToken }) {
-    const [stats, setStats] = useState([]);
-    const [profilePic, setProfilePic] = useState();
-    const [name, setName] = useState("");
+    const [stats, setStats] = useState();
     const [user, setUser] = useState();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
-
-    const [workouts, setWorkouts] = useState([]);
-    const [userReady, setUserReady] = useState(false);
-    const [statsReady, setStatsReady] = useState(false);
-    const [workoutsReady, setWorkoutsReady] = useState(false);
-    const [calendar, setCalendar] = useState({
-        Monday: "",
-        Tuesday: "",
-        Wednesday: "",
-        Thursday: "",
-        Friday: "",
-        Saturday: "",
-        Sunday: "",
-    });
-
-    async function fetchAllWorkouts() {
-        try {
-            const response = await axios.get("http://localhost:4000/workouts");
-            return response.data.workouts_list;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
-
-    useEffect(() => {
-        fetchAllWorkouts().then((result) => {
-            if (result) {
-                setWorkouts(result);
-                setWorkoutsReady(true);
-            }
-        });
-    }, []);
+    const [workouts, setWorkouts] = useState();
+    const [calendar, setCalendar] = useState();
 
     async function fetchUser() {
         try {
             const response = await axios.get(
-                "http://localhost:4000/user/" + userToken.id
+                window.$BACKEND_URI + "user/" + userToken.id
             );
             return response.data.user;
         } catch (error) {
@@ -62,22 +29,44 @@ export default function Profile({ userToken }) {
         fetchUser().then((result) => {
             if (result) {
                 setUser(result);
-                setCalendar(result.activeWorkouts[0]);
-                setUserReady(true);
+                setCalendar(result.activeWorkouts);
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
-                        setStats([result1]);
-                        setStatsReady(true);
+                        setStats(result1);
                     }
                 });
             }
         });
-    }, [profilePic, name]);
+        // eslint-disable-next-line
+    }, []);
+
+    async function fetchWorkouts() {
+        try {
+            const response = await axios.get(window.$BACKEND_URI + "workouts", {
+                params: { workouts: user.workouts },
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        if (user) {
+            fetchWorkouts().then((result) => {
+                if (result) {
+                    setWorkouts(result);
+                }
+            });
+        }
+        // eslint-disable-next-line
+    }, [user]);
 
     async function fetchStats(Id) {
         try {
             const response = await axios.get(
-                "http://localhost:4000/stats/" + Id
+                window.$BACKEND_URI + "stats/" + Id
             );
             return response.data.stats_list;
         } catch (error) {
@@ -87,95 +76,128 @@ export default function Profile({ userToken }) {
         }
     }
 
-    // useEffect(() => {
-    //     fetchStats(user?.stats).then((result) => {
-    //         if (result) {
-    //             setStats(result);
-    //             setStatsReady(true);
-    //         }
-    //     });
-    // }, []);
-
     function toggleModalView() {
         setShowEditProfileModal((prev) => !prev);
     }
-    if (userReady && workoutsReady && statsReady) {
-        return (
-            user && (
-                <div className="profile-main-container">
-                    {showEditProfileModal && (
-                        <EditProfileModal
-                            closeModal={toggleModalView}
-                            updateProfilePic={setProfilePic}
-                            currentPic={
-                                user?.avatar
-                                    ? user.avatar
-                                    : require("../assets/img/DefaultProfilePic.jpeg")
-                            }
-                            updateName={setName}
-                            currentName={user.name}
-                            user={user}
-                        />
-                    )}
-                    <img
-                        className="profile-avatar"
-                        src={
-                            user?.avatar
-                                ? user.avatar
-                                : require("../assets/img/DefaultProfilePic.jpeg")
-                        }
-                        alt="Cannot display"
+
+    return (
+        user &&
+        workouts &&
+        stats && (
+            <div className="profile-main-container">
+                {showEditProfileModal && (
+                    <EditProfileModal
+                        closeModal={toggleModalView}
+                        user={user}
+                        setUser={setUser}
                     />
-                    <h2>{user?.name ? user.name : ""}</h2>
+                )}
+                <img
+                    className="profile-avatar"
+                    src={
+                        user?.avatar
+                            ? user.avatar
+                            : require("../assets/img/DefaultProfilePic.jpeg")
+                    }
+                    alt="Cannot display"
+                />
+                <h2>{user.name}</h2>
 
-                    <div className="center-dashboard">
-                        <Link className="link-container" to="/stats">
-                            <ProgressTable statsData={stats} />
-                        </Link>
+                <div className="center-dashboard">
+                    <Link className="link-container" to="/stats">
+                        <ProgressTable statsData={stats} />
+                    </Link>
 
-                        <div className="dashboard-buttons-container">
-                            <div
-                                style={{ cursor: "pointer" }}
-                                onClick={() => toggleModalView()}
-                            >
-                                <div className="update-profile-button">
-                                    <img
-                                        className="profile-button-avatar"
-                                        src={
-                                            user?.avatar
-                                                ? user.avatar
-                                                : require("../assets/img/DefaultProfilePic.jpeg")
-                                        }
-                                        alt="Cannot display"
-                                    />
-                                    <h3>Edit Profile</h3>
-                                </div>
+                    <div className="dashboard-buttons-container">
+                        <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() => toggleModalView()}
+                        >
+                            <div className="update-profile-button">
+                                <img
+                                    className="profile-button-avatar"
+                                    src={
+                                        user?.avatar
+                                            ? user.avatar
+                                            : require("../assets/img/DefaultProfilePic.jpeg")
+                                    }
+                                    alt="Cannot display"
+                                />
+                                <h3>Edit Profile</h3>
                             </div>
-                            <Link className="link-container" to="/calpoly">
-                                <div className="calpoly-button">
-                                    <img
-                                        className="calpoly-logo"
-                                        src={require("../assets/img/CalPolyLogo.png")}
-                                        alt="Cannot display"
-                                    />
-                                    <h3>Cal Poly Resources</h3>
-                                </div>
-                            </Link>
+                        </div>
+                        <Link className="link-container" to="/calpoly">
+                            <div className="calpoly-button">
+                                <img
+                                    className="calpoly-logo"
+                                    src={require("../assets/img/CalPolyLogo.png")}
+                                    alt="Cannot display"
+                                />
+                                <h3>Cal Poly Resources</h3>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+                <Link className="link-container" to="/workouts">
+                    <WorkoutCalendar
+                        preview={true}
+                        workouts={workouts}
+                        calendar={calendar}
+                        user={user}
+                    />
+                </Link>
+                <div class="space"></div>
+                <div class="shape"></div>
+                <h3 class="section-header">Resources:</h3>
+                <div class="resources">
+                    <div class="left-res">
+                        <div class="Res-Link"> 
+                            Learn More About Training: 
+                            <a
+                                className="RecLink"
+                                href="https://www.trifectanutrition.com/blog/hypertrophy-training-for-muscle-growth-and-how-to-do-it-right"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <img
+                                    className="article-icon"
+                                    src={require("../assets/img/Article-Icon.png")}
+                                    alt="cannot display"
+                                ></img>
+                            </a>
+                        </div>
+                        <div class="Res-Link"> 
+                            Learn More About Diet: 
+                            <a
+                                className="RecLink"
+                                href="https://www.healthline.com/nutrition/bodybuilding-meal-plan#:~:text=Foods%20to%20Focus%20On&text=Meats%2C%20poultry%2C%20and%20fish%3A,quinoa%2C%20popcorn%2C%20and%20rice."
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <img
+                                    className="article-icon"
+                                    src={require("../assets/img/Article-Icon.png")}
+                                    alt="cannot display"
+                                ></img>
+                            </a>
                         </div>
                     </div>
-
-                    <Link className="link-container" to="/workouts">
-                        <WorkoutCalendar
-                            preview={true}
-                            workouts={workouts}
-                            calendar={calendar}
-                            user={user}
-                        />
-                    </Link>
+                    <div class="right-res">
+                        <div class="contact-head"> 
+                            Contact Us: 
+                            <a href = "mailto:polygains@gmail.com">
+                                <img
+                                    className="article-icon"
+                                    src={require("../assets/img/mail-icon.png")}
+                                    alt="cannot display"
+                                ></img>
+                            </a>
+                        </div>
+                        <div class="contact-head"> About Us:</div>
+                    </div>
                 </div>
-            )
-        );
-    } else {
-        return null;
-    }
+            </div>
+        )
+    );
 }

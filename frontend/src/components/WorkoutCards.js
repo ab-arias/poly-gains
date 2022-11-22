@@ -1,71 +1,75 @@
 import React, { useState } from "react";
 import WorkoutCalendar from "./WorkoutCalendar";
 import WorkoutModal from "./WorkoutModal";
+import {
+    AiOutlineCloseCircle,
+    AiOutlinePlusCircle,
+    AiOutlineEdit,
+} from "react-icons/ai";
+import axios from "axios";
 
 export default function WorkoutCards({
-    user,
     workouts,
     calendar,
     addActiveWorkout,
-    addWorkout,
+    updateExistingWorkout,
+    removeOldWorkout,
+    addNewWorkout,
 }) {
     const [showWorkout, setShowWorkout] = useState(false);
     const [openWorkout, setOpenWorkout] = useState(null);
-    const [cards, setCards] = useState([]);
+    const [editingWorkouts, setEditingWorkouts] = useState(false);
 
     function toggleShowWorkout() {
-        console.log(cards);
         setShowWorkout((prevStatus) => !prevStatus);
         if (openWorkout) setOpenWorkout(null);
-        console.log(cards);
-        return;
-    }
-
-    function getUserWorkouts() {
-        for (const x of user.workouts) {
-            const workout = workouts.find((elem) => elem._id === x);
-            if (workout) {
-                const found = cards.find((elem) => elem._id === workout._id);
-                if (!found && workout) {
-                    cards.push(workout);
-                } else if (found && workout) {
-                    const idx = cards.indexOf(found);
-                    cards[idx] = workout;
-                }
-            }
-        }
         return;
     }
 
     function addToDay(e, day) {
-        let plan = JSON.parse(e.dataTransfer.getData("card"));
-        calendar[day] = plan._id;
-        addActiveWorkout();
+        e.stopPropagation();
+        let data = JSON.parse(e.dataTransfer.getData("card"));
+        const newActives = { ...calendar, [day]: data.id };
+        addActiveWorkout(newActives);
         return;
     }
 
-    async function updateWorkout(workout) {
-        console.log(workout);
-        const backendWorkout = await addWorkout(workout);
-        const found = cards.find((elem) => elem._id === backendWorkout._id);
-        console.log(backendWorkout);
-        console.log(workout);
-        if (!found) {
-            workouts.push(backendWorkout);
-            setCards((prev) => [backendWorkout, ...prev]);
-            addActiveWorkout(backendWorkout._id);
-            setShowWorkout((prevStatus) => !prevStatus);
-            setOpenWorkout(backendWorkout);
-            setShowWorkout((prevStatus) => !prevStatus);
-            return;
-        } else {
-            const idx = workouts.indexOf(found);
-            workouts[idx] = backendWorkout;
-            setShowWorkout((prevStatus) => !prevStatus);
-            setOpenWorkout(backendWorkout);
-            setShowWorkout((prevStatus) => !prevStatus);
-            return;
+    async function createNewWorkout(workout) {
+        try {
+            const response = await axios.post(
+                window.$BACKEND_URI + "workouts",
+                workout
+            );
+            const result = response.data;
+            setOpenWorkout(result);
+            addNewWorkout(result);
+            return result._id;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
         }
+    }
+
+    async function deleteWorkout(e, id) {
+        e.stopPropagation();
+        try {
+            const response = await axios.delete(
+                window.$BACKEND_URI + "workouts/" + id
+            );
+            const result = response.data;
+            console.log(result);
+            removeOldWorkout(id);
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
+    async function updateWorkout(workout) {
+        const backendWorkout = await updateExistingWorkout(workout);
+        setOpenWorkout(backendWorkout);
     }
 
     function handleOpenWorkout(workout) {
@@ -74,22 +78,33 @@ export default function WorkoutCards({
         return;
     }
 
-    getUserWorkouts();
-
-    const displayCards = cards.map((card) => (
+    const displayCards = workouts.map((card, i) => (
         <div
             className="workouts-card"
+            key={i}
             draggable
-            onClick={() => handleOpenWorkout(card)}
+            onClick={() => {
+                if (card._id !== "637012e5c8e5bba98b4d3903")
+                    handleOpenWorkout(card);
+            }}
             onDragStart={(e) => {
-                let val = JSON.stringify(card);
+                let val = JSON.stringify({ id: card._id, day: null });
                 e.dataTransfer.setData("card", val);
             }}
         >
-            <div className="workouts-card-header">{card.name}</div>
+            {editingWorkouts && card._id !== "637012e5c8e5bba98b4d3903" && (
+                <AiOutlineCloseCircle
+                    className="workouts-card-delete"
+                    size={25}
+                    onClick={(e) => deleteWorkout(e, card._id)}
+                />
+            )}
+            <div className="workouts-card-header">
+                <div className="workouts-card-overflow">{card.name}</div>
+            </div>
             <div className="workouts-card-body">
-                {card.exercise_list.map((exercise) => (
-                    <div className="workouts-card-exercise-container">
+                {card.exercise_list.map((exercise, i) => (
+                    <div className="workouts-card-exercise-container" key={i}>
                         <div className="workouts-card-exercise">
                             {exercise.exercise}
                         </div>
@@ -113,6 +128,7 @@ export default function WorkoutCards({
                     updateWorkout={updateWorkout}
                     workout={openWorkout}
                     setWorkout={setOpenWorkout}
+                    createNewWorkout={createNewWorkout}
                 />
             )}
             <WorkoutCalendar
@@ -122,15 +138,30 @@ export default function WorkoutCards({
                 preview={false}
                 handleOpenWorkout={handleOpenWorkout}
             />
-            <div className="workouts-cards-container">
-                {displayCards}
+            <div className="edit-cards-header">
                 <div
-                    className="workouts-card"
+                    className="workout-container-button"
+                    style={{ marginRight: 50 }}
                     onClick={() => toggleShowWorkout()}
                 >
-                    Create New Workout
+                    <AiOutlinePlusCircle
+                        className="workout-container-button-icon"
+                        size={20}
+                    />
+                    <div>Create New Workout</div>
+                </div>
+                <div
+                    className="workout-container-button"
+                    onClick={() => setEditingWorkouts((prev) => !prev)}
+                >
+                    <AiOutlineEdit
+                        className="workout-container-button-icon"
+                        size={20}
+                    />
+                    <div>Remove A Workout</div>
                 </div>
             </div>
+            <div className="workouts-cards-container">{displayCards}</div>
         </div>
     );
 }

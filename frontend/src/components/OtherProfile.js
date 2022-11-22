@@ -1,48 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProgressTable from "./ProgressTable";
+import WorkoutCalendar from "./WorkoutCalendar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function OtherProfile() {
     const params = useParams();
-    const [stats, setStats] = useState([]);
+    const [stats, setStats] = useState();
     const [user, setUser] = useState();
-    const restCard = {
-        title: "Rest",
-        exercises: [],
-    };
-    const calendar = {
-        Monday: restCard,
-        Tuesday: restCard,
-        Wednesday: restCard,
-        Thursday: restCard,
-        Friday: restCard,
-        Saturday: restCard,
-        Sunday: restCard,
-    };
-
-    async function fetchAll() {
-        try {
-            const response = await axios.get("http://localhost:4000/stats");
-            return response.data.stats_list;
-        } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
-            return false;
-        }
-    }
-
-    useEffect(() => {
-        fetchAll().then((result) => {
-            if (result) setStats(result);
-        });
-    }, []);
+    const [calendar, setCalendar] = useState();
+    const [workouts, setWorkouts] = useState();
 
     async function fetchUser() {
         try {
             const response = await axios.get(
-                "http://localhost:4000/profile/" + params.username
+                window.$BACKEND_URI + "profile/" + params.username
             );
             return response.data.user;
         } catch (error) {
@@ -56,39 +29,57 @@ export default function OtherProfile() {
         fetchUser().then((result) => {
             if (result) {
                 setUser(result);
+                setCalendar(result.activeWorkouts);
+                fetchStats(result.stats).then((result1) => {
+                    if (result1) {
+                        setStats(result1);
+                    }
+                });
             }
         });
+        // eslint-disable-next-line
     }, [params.username]);
 
-    const content = Object.entries(calendar).map(([day, plan]) => (
-        <div
-            className="workouts-calendar-entry"
-            style={day === "Sunday" ? { borderRightWidth: "0" } : null}
-        >
-            <h3 className="workouts-calendar-day">{day}</h3>
-            <div className="mini-workouts-card">
-                <div className="workouts-card-header">{plan.title}</div>
-                <div className="workouts-card-body">
-                    {plan.exercises.map((exercise) => (
-                        <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                {exercise.exercise}
-                            </div>
-                            <div className="workouts-card-sets-reps">
-                                {exercise.sets}
-                                <span> sets x </span>
-                                {exercise.reps}
-                                <span> reps</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    ));
+    async function fetchWorkouts() {
+        try {
+            const response = await axios.get(window.$BACKEND_URI + "workouts", {
+                params: { workouts: user.workouts },
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        if (user) {
+            fetchWorkouts().then((result) => {
+                if (result) {
+                    setWorkouts(result);
+                }
+            });
+        }
+        // eslint-disable-next-line
+    }, [user]);
+
+    async function fetchStats(Id) {
+        try {
+            const response = await axios.get(
+                window.$BACKEND_URI + "stats/" + Id
+            );
+            return response.data.stats_list;
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
 
     return (
-        user && (
+        user &&
+        workouts &&
+        stats && (
             <div className="profile-main-container">
                 <img
                     className="profile-avatar"
@@ -99,7 +90,7 @@ export default function OtherProfile() {
                     }
                     alt="Cannot display"
                 />
-                <h2>{user?.name ? user.name : "User's Name"}</h2>
+                <h2>{user.name}</h2>
 
                 <div className="center-dashboard">
                     <Link className="link-container" to="/stats">
@@ -108,10 +99,12 @@ export default function OtherProfile() {
                 </div>
 
                 <Link className="link-container" to="/workouts">
-                    <div className="workouts-calendar-container">
-                        <h2 className="section-header">My Workouts</h2>
-                        <div className="workouts-calendar">{content}</div>
-                    </div>
+                    <WorkoutCalendar
+                        preview={true}
+                        workouts={workouts}
+                        calendar={calendar}
+                        user={user}
+                    />
                 </Link>
             </div>
         )

@@ -31,7 +31,7 @@ export default function RegisterForm() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                "http://localhost:4000/users/register",
+                window.$BACKEND_URI + "users/register",
                 registerFormData
             );
             const result = response.data;

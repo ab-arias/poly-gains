@@ -3,14 +3,12 @@ import StatTables from "./StatTables";
 import axios from "axios";
 
 export default function Stats({ userToken }) {
-    const [stats, setStats] = useState([]);
-    const [user, setUser] = useState();
-    const [statsReady, setStatsReady] = useState(false);
+    const [stats, setStats] = useState();
 
     async function fetchUser() {
         try {
             const response = await axios.get(
-                "http://localhost:4000/user/" + userToken.id
+                window.$BACKEND_URI + "user/" + userToken.id
             );
             return response.data.user;
         } catch (error) {
@@ -23,21 +21,20 @@ export default function Stats({ userToken }) {
     useEffect(() => {
         fetchUser().then((result) => {
             if (result) {
-                setUser(result);
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
-                        setStats([result1]);
-                        setStatsReady(true);
+                        setStats(result1);
                     }
                 });
             }
         });
+        // eslint-disable-next-line
     }, []);
 
     async function fetchStats(Id) {
         try {
             const response = await axios.get(
-                "http://localhost:4000/stats/" + Id
+                window.$BACKEND_URI + "stats/" + Id
             );
             return response.data.stats_list;
         } catch (error) {
@@ -52,7 +49,7 @@ export default function Stats({ userToken }) {
         const records = stats[1];
         try {
             const response = await axios.post(
-                "http://localhost:4000/stats/" + id,
+                window.$BACKEND_URI + "stats/" + id,
                 records
             );
             const result = response.data.stats_list;
@@ -63,11 +60,12 @@ export default function Stats({ userToken }) {
             return false;
         }
     }
-    if (statsReady) {
-        return (
+
+    return (
+        stats && (
             <div className="container">
                 <StatTables statsData={stats} updateStats={updateStats} />
             </div>
-        );
-    }
+        )
+    );
 }
