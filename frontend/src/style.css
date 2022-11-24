@@ -858,6 +858,7 @@ Cal Poly CSS
 }
 
 .CalPolyAbout {
+    margin-left:100px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -889,7 +890,9 @@ Cal Poly CSS
 .CalPolyCalendar {
     margin-top: 50px;
 }
-
+.cp-width {
+    width:150px;
+}
 /*
 Stats css
 */
