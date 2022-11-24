@@ -102,6 +102,7 @@ export default function Profile({ userToken }) {
                     alt="Cannot display"
                 />
                 <h2>{user.name}</h2>
+                <h4>@{user.username}</h4>
 
                 <div className="center-dashboard">
                     <Link className="link-container" to="/stats">
@@ -144,16 +145,15 @@ export default function Profile({ userToken }) {
                         preview={true}
                         workouts={workouts}
                         calendar={calendar}
-                        user={user}
                     />
                 </Link>
-                <div class="space"></div>
-                <div class="shape"></div>
-                <h3 class="section-header">Resources:</h3>
-                <div class="resources">
-                    <div class="left-res">
-                        <div class="Res-Link"> 
-                            Learn More About Training: 
+                <div className="space"></div>
+                <div className="shape"></div>
+                <h3 className="section-header">Resources:</h3>
+                <div className="resources">
+                    <div className="left-res">
+                        <div className="Res-Link">
+                            Learn More About Training:
                             <a
                                 className="RecLink"
                                 href="https://www.trifectanutrition.com/blog/hypertrophy-training-for-muscle-growth-and-how-to-do-it-right"
@@ -167,8 +167,8 @@ export default function Profile({ userToken }) {
                                 ></img>
                             </a>
                         </div>
-                        <div class="Res-Link"> 
-                            Learn More About Diet: 
+                        <div className="Res-Link">
+                            Learn More About Diet:
                             <a
                                 className="RecLink"
                                 href="https://www.healthline.com/nutrition/bodybuilding-meal-plan#:~:text=Foods%20to%20Focus%20On&text=Meats%2C%20poultry%2C%20and%20fish%3A,quinoa%2C%20popcorn%2C%20and%20rice."
@@ -183,10 +183,10 @@ export default function Profile({ userToken }) {
                             </a>
                         </div>
                     </div>
-                    <div class="right-res">
-                        <div class="contact-head"> 
-                            Contact Us: 
-                            <a href = "mailto:polygains@gmail.com">
+                    <div className="right-res">
+                        <div className="contact-head">
+                            Contact Us:
+                            <a href="mailto:polygains@gmail.com">
                                 <img
                                     className="article-icon"
                                     src={require("../assets/img/mail-icon.png")}
@@ -194,7 +194,7 @@ export default function Profile({ userToken }) {
                                 ></img>
                             </a>
                         </div>
-                        <div class="contact-head"> About Us:</div>
+                        <div className="contact-head"> About Us:</div>
                     </div>
                 </div>
             </div>

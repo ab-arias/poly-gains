@@ -154,17 +154,6 @@ app.get("/user/:id", async (req, res) => {
     }
 });
 
-// app.get("/stats", async (req, res) => {
-//     const name = req.query["name"];
-//     try {
-//         const result = await userServices.getStats(name);
-//         res.send({ stats_list: result });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send("An error ocurred in the server.");
-//     }
-// });
-
 app.get("/profile/:username", async (req, res) => {
     const username = req.params["username"];
     try {
