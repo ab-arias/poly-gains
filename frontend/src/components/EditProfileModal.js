@@ -1,26 +1,19 @@
 import React, { useState, useRef } from "react";
-import { FiCamera } from "react-icons/fi";
+import { FiCamera, FiTrash2 } from "react-icons/fi";
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
-import { IconContext } from "react-icons";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 
-export default function EditProfileModal(props) {
-    const {
-        updateProfilePic,
-        closeModal,
-        currentPic,
-        updateName,
-        currentName,
-        user,
-    } = props;
+export default function EditProfileModal({ closeModal, user, setUser }) {
     const [srcImg, setSrcImg] = useState();
     const cropperRef = useRef(null);
     const inputFile = useRef(null);
-    const [croppedImg, setCroppedImg] = useState("");
+    const [croppedImg, setCroppedImg] = useState(
+        user?.avatar ? user.avatar : ""
+    );
     const [showFileSelector, setShowFileSelector] = useState(false);
-    const [name, setName] = useState(currentName);
+    const [name, setName] = useState(user.name);
 
     const onCrop = () => {
         const imageElement = cropperRef?.current;
@@ -29,7 +22,9 @@ export default function EditProfileModal(props) {
     };
 
     function handlePhotoChange(e) {
-        setSrcImg(URL.createObjectURL(e.target.files[0]));
+        if (e.target.files[0]) {
+            setSrcImg(URL.createObjectURL(e.target.files[0]));
+        }
     }
 
     function openFileSelector() {
@@ -40,22 +35,24 @@ export default function EditProfileModal(props) {
         setName(event.target.value);
     }
 
+    function handleImageDelete() {
+        setSrcImg(null);
+        inputFile.current.value = "";
+        setCroppedImg("");
+    }
+
     async function updateUser() {
-        console.log(user);
         const id = user._id;
-        const image = croppedImg ? croppedImg : currentPic;
         try {
             const response = await axios.post(
-                "http://localhost:4000/user/" + id,
+                window.$BACKEND_URI + "user/" + id,
                 {
                     name: name,
-                    avatar: image,
-                    activeWorkouts: user.activeWorkouts,
+                    avatar: croppedImg,
                 }
             );
             const result = response.data;
-            updateName(result.name);
-            updateProfilePic(result.avatar);
+            setUser(result);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -66,27 +63,29 @@ export default function EditProfileModal(props) {
     return (
         <div className="modal-screen">
             <div className="modal-header">
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div
-                        className="modal-left-button"
-                        onClick={() => closeModal()}
-                    >
-                        <AiOutlineCloseCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCloseCircle
+                    className="modal-left-button"
+                    size={35}
+                    onClick={() => closeModal()}
+                />
                 <div className="modal-center-title">Edit Profile</div>
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div className="modal-right-button" onClick={updateUser}>
-                        <AiOutlineCheckCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCheckCircle
+                    className="modal-right-button"
+                    size={35}
+                    onClick={updateUser}
+                />
             </div>
             <div className="edit-profile-modal-container">
                 <div className="edit-profile-modal-preview">
                     <img
                         className="profile-avatar"
-                        src={croppedImg ? croppedImg : currentPic}
+                        src={
+                            croppedImg
+                                ? croppedImg
+                                : require("../assets/img/DefaultProfilePic.jpeg")
+                        }
                         onMouseEnter={() => setShowFileSelector(true)}
+                        alt="Avatar"
                     />
                     <input
                         className="edit-profile-name"
@@ -104,15 +103,17 @@ export default function EditProfileModal(props) {
                                 : { visibility: "hidden" }
                         }
                         onMouseLeave={() => setShowFileSelector(false)}
-                        onClick={() => openFileSelector()}
                     >
-                        <IconContext.Provider
-                            value={{ color: "white", size: "30px" }}
-                        >
-                            <div style={{ padding: 5 }}>
-                                <FiCamera />
-                            </div>
-                        </IconContext.Provider>
+                        <FiCamera
+                            className="edit-profile-modal-cam"
+                            size={30}
+                            onClick={openFileSelector}
+                        />
+                        <FiTrash2
+                            className="edit-profile-modal-trash"
+                            size={30}
+                            onClick={handleImageDelete}
+                        />
                     </div>
                     <input
                         type="file"
