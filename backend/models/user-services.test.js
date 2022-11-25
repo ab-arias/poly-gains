@@ -55,8 +55,32 @@ beforeEach(async () => {
             Sunday: "637012e5c8e5bba98b4d3903",
         },
         stats: "6362cfa7c8e5bba98bd31324",
+        friends: [{ friend: "637012e5c8e5bba72b4d3234", status: "friend" }],
     };
     let result = new UserModel(dummyUser);
+    await result.save();
+
+    dummyUser = {
+        _id: "637012e5c8e5bba72b4d3234",
+        name: "dummy User2",
+        username: "dumbUsername452",
+        email: "dumb2@stupidemail.com",
+        password: "stupidPassword42",
+        avatar: "",
+        workouts: ["637012e5c8e5bba98b4d3903"],
+        activeWorkouts: {
+            Monday: "637012e5c8e5bba98b4d3903",
+            Tuesday: "637012e5c8e5bba98b4d3903",
+            Wednesday: "637012e5c8e5bba98b4d3903",
+            Thursday: "637012e5c8e5bba98b4d3903",
+            Friday: "637012e5c8e5bba98b4d3903",
+            Saturday: "637012e5c8e5bba98b4d3903",
+            Sunday: "637012e5c8e5bba98b4d3903",
+        },
+        stats: "6362cfa7c8e5bba98bd31324",
+        friends: [{ friend: "637012e5c8e5bba72b4d3956", status: "friend" }],
+    };
+    result = new UserModel(dummyUser);
     await result.save();
 
     let dummyWorkout = {
@@ -366,6 +390,18 @@ test("Fail to update user", async () => {
 //     await realcon.close();
 //     await userServices.setConnection(temp);
 // });
+
+test("Successfully find friends", async () => {
+    const id = "637012e5c8e5bba72b4d3956";
+    const result = await userServices.getFriends(id);
+    expect(result.length).toBe(1);
+});
+
+test("Fail to find friends", async () => {
+    const id = "637012e5c8e5bba72b4d3953";
+    const result = await userServices.getFriends(id);
+    expect(result).toBeUndefined();
+});
 
 // WORKOUTS
 
