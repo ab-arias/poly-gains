@@ -105,7 +105,14 @@ async function getUserByUsername(username) {
     return result;
 }
 
-async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
+async function updateUser(
+    id,
+    newName,
+    newPic,
+    newActWorkouts,
+    newWorkouts,
+    newFriends
+) {
     const userModel = getDbConnection().model("User", UserSchema);
     try {
         return await userModel.findByIdAndUpdate(
@@ -115,6 +122,7 @@ async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
                 avatar: newPic,
                 activeWorkouts: newActWorkouts,
                 workouts: newWorkouts,
+                friends: newFriends,
             },
             { new: true }
         );
@@ -153,6 +161,34 @@ async function searchUsers(username) {
             },
         ]);
     } catch (error) {
+        return undefined;
+    }
+}
+
+// async function getFriends(userList) {
+//     const userModel = getDbConnection().model("User", UserSchema);
+//     const userIDs = userList.map((member) => mongoose.Types.ObjectId(member));
+//     try{
+//         return await userModel.find({ _id: { $in: userIDs }}).select('_id username avatar')
+//     }
+//     catch (error) {
+//         return undefined
+//     }
+// }
+
+async function getFriends(id) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        const user = await userModel.findById(id).populate({
+            path: "friends",
+            populate: {
+                path: "friend",
+                select: { _id: 1, username: 1, avatar: 1 },
+            },
+        });
+        return user.friends;
+    } catch (error) {
+        console.log(error);
         return undefined;
     }
 }
@@ -257,6 +293,7 @@ module.exports = {
     getUserByUsername,
     updateUser,
     searchUsers,
+    getFriends,
     getUserWorkouts,
     updateWorkout,
     findWorkoutById,
