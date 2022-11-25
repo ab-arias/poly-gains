@@ -57,6 +57,12 @@ const UserSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    friends: [
+        {
+            type: mongoose.ObjectId,
+            ref: "Friends",
+        },
+    ],
 });
 
 module.exports = UserSchema;

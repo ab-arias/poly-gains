@@ -94,6 +94,7 @@ Header CSS:
 }
 .search-bar {
     width: 200px;
+    margin-right: 12px;
 }
 .search-results {
     border: 2px solid forestgreen;
@@ -123,12 +124,6 @@ Header CSS:
     border-radius: 50%;
     padding-right: 7px;
 }
-.log-out {
-    height: fit-content;
-    position: relative;
-    top: 20px;
-    margin-left: 15px;
-}
 .Hlink {
     padding-left: 8px;
     padding-right: 8px;
@@ -147,8 +142,22 @@ Header CSS:
 }
 .search-icon {
     padding-top: 3px;
-    margin-right: 0px;
+    margin-right: 12px;
     padding-right: 0px;
+}
+.friend-icon {
+    padding-right: 0px;
+    margin-right: 0px;
+    padding-top: 26px;
+    flex-shrink: 0;
+}
+.log-out {
+    height: fit-content;
+    position: relative;
+    min-width: fit-content;
+    top: 20px;
+    margin-left: 12px;
+    margin-right: 0px;
 }
 
 /*
@@ -461,44 +470,44 @@ Profile CSS:
 }
 
 .shape {
-	width: 1500px;
-	height: 300px;
-    position:absolute;
+    width: 1500px;
+    height: 300px;
+    position: absolute;
     bottom: 0;
     top: 1300px;
-	background:rgb(22, 85, 22);
-	-moz-border-radius: 0px 0px  20px 110px;
-	-webkit-border-radius: 0px 0px  20px 110px;
-	border-radius: 0px 0px  300px 500px;
+    background: rgb(22, 85, 22);
+    -moz-border-radius: 0px 0px 20px 110px;
+    -webkit-border-radius: 0px 0px 20px 110px;
+    border-radius: 0px 0px 300px 500px;
     transform: rotate(180deg);
     z-index: -100;
 }
-.space{
+.space {
     margin-bottom: 70px;
 }
-.resources{
+.resources {
     display: flex;
     flex-direction: row;
     align-items: left;
     justify-content: left;
 }
-.left-res{
+.left-res {
     margin-left: -300px;
 }
-.right-res{
+.right-res {
     margin-top: 60px;
     margin-left: 500px;
 }
-.contact-head{
+.contact-head {
     font-size: 30px;
     margin-bottom: 60px;
-    color:aliceblue;
+    color: aliceblue;
 }
-.Res-Link{
+.Res-Link {
     z-index: 100;
     font-size: 30px;
     margin-top: 60px;
-    color:aliceblue;
+    color: aliceblue;
 }
 .article-icon {
     width: 30px;
@@ -849,6 +858,7 @@ Cal Poly CSS
 }
 
 .CalPolyAbout {
+    margin-left:100px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -880,7 +890,9 @@ Cal Poly CSS
 .CalPolyCalendar {
     margin-top: 50px;
 }
-
+.cp-width {
+    width:150px;
+}
 /*
 Stats css
 */
