@@ -96,15 +96,14 @@ export default function Workouts({ userToken }) {
     async function removeOldWorkout(oldWorkout) {
         try {
             const restId = "637012e5c8e5bba98b4d3903";
+            console.log(oldWorkout);
             const newWorkouts = user.workouts.filter(
-                (workout) => workout._id !== oldWorkout
+                (workout) => workout !== oldWorkout
             );
-            const newActiveWorkouts = Object.entries(user.activeWorkouts).map(
-                ([day, planID]) => {
-                    return planID === oldWorkout
-                        ? { day: restId }
-                        : { day: planID };
-                }
+            const newActiveWorkouts = Object.fromEntries(
+                Object.entries(user.activeWorkouts).map(([day, id]) =>
+                    id === oldWorkout ? [day, restId] : [day, id]
+                )
             );
             const response = await axios.post(
                 window.$BACKEND_URI + "user/" + user._id,

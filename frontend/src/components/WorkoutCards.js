@@ -144,20 +144,14 @@ export default function WorkoutCards({
                     style={{ marginRight: 50 }}
                     onClick={() => toggleShowWorkout()}
                 >
-                    <AiOutlinePlusCircle
-                        className="workout-container-button-icon"
-                        size={20}
-                    />
+                    <AiOutlinePlusCircle className="button-icon" size={20} />
                     <div>Create New Workout</div>
                 </div>
                 <div
                     className="workout-container-button"
                     onClick={() => setEditingWorkouts((prev) => !prev)}
                 >
-                    <AiOutlineEdit
-                        className="workout-container-button-icon"
-                        size={20}
-                    />
+                    <AiOutlineEdit className="button-icon" size={20} />
                     <div>Remove A Workout</div>
                 </div>
             </div>

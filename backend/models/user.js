@@ -12,6 +12,18 @@ const ActiveWorkoutsSchema = new mongoose.Schema({
     Sunday: { type: mongoose.ObjectId, default: restId },
 });
 
+const FriendSchema = new mongoose.Schema({
+    friend: {
+        type: mongoose.ObjectId,
+        required: true,
+        ref: "User",
+    },
+    status: {
+        type: String,
+        required: true,
+    },
+});
+
 const UserSchema = new mongoose.Schema({
     _id: {
         type: mongoose.ObjectId,
@@ -59,8 +71,8 @@ const UserSchema = new mongoose.Schema({
     },
     friends: [
         {
-            type: mongoose.ObjectId,
-            ref: "Friends",
+            _id: false,
+            type: FriendSchema,
         },
     ],
 });

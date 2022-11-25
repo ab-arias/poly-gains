@@ -119,7 +119,7 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                     onClick={updateUser}
                 />
             </div>
-            <div className="edit-profile-modal-container">
+            <div className="modal-container">
                 <div className="edit-profile-modal-preview">
                     <img
                         className="profile-avatar"

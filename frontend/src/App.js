@@ -6,6 +6,7 @@ import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
 import Auth from "./components/Auth/Auth";
 import OtherProfile from "./components/OtherProfile";
+import FriendsModal from "./components/FriendsModal";
 import Header from "./components/Header";
 
 export default function App() {
@@ -30,6 +31,12 @@ export default function App() {
         localStorage.clear();
     }
 
+    function closeFriends() {
+        if (window.location.pathname.indexOf("/profile/") === 0) {
+            window.location.reload().then(setShowFriendsModal(false));
+        } else setShowFriendsModal(false);
+    }
+
     return (
         <BrowserRouter>
             {userToken ? (
@@ -40,7 +47,12 @@ export default function App() {
                         setShowFriendsModal={setShowFriendsModal}
                     />
                     <div className="main-body">
-                        {showFriendsModal && <div></div>}
+                        {showFriendsModal && (
+                            <FriendsModal
+                                userToken={userToken}
+                                closeFriends={closeFriends}
+                            />
+                        )}
                         <Routes>
                             <Route
                                 path="/"

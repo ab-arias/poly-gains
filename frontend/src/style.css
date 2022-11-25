@@ -161,6 +161,45 @@ Header CSS:
 }
 
 /*
+Friend Modal CSS:
+*/
+
+.friends-block-header {
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 10px;
+    border-bottom: 1.5px solid black;
+}
+.friend-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-bottom: 0.5px solid gray;
+    background-color: rgba(217, 207, 207, 0.549);
+    color: black;
+    text-decoration: solid;
+}
+.friend-link {
+    display: flex;
+    align-items: center;
+    padding: 5px 0px;
+    color: black;
+    text-decoration: solid;
+    font-size: 18px;
+}
+.friend-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    padding-right: 7px;
+}
+.no-friends {
+    font-size: 18px;
+    padding: 10px 10px;
+}
+
+/*
 Auth CSS:
 */
 
@@ -285,10 +324,21 @@ Modal CSS:
     width: 100%;
 }
 
+.modal-container {
+    overflow-y: scroll;
+    background-color: white;
+    height: 80%;
+    width: 50%;
+    min-width: 500px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 .modal-header {
     display: flex;
     height: 70px;
     width: 50%;
+    min-width: 500px;
     background-color: rgb(22, 85, 22);
     justify-content: space-between;
     align-items: center;
@@ -311,6 +361,21 @@ Modal CSS:
 
 .modal-right-button {
     margin-right: 20px;
+    cursor: pointer;
+}
+
+.friend-request-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+    padding: 5px 10px;
+    background-color: rgb(25, 109, 25);
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
     cursor: pointer;
 }
 
@@ -625,7 +690,7 @@ Workouts CSS:
     letter-spacing: 1px;
 }
 
-.workout-container-button-icon {
+.button-icon {
     color: white;
     margin-right: 5px;
 }
@@ -647,6 +712,9 @@ Workouts CSS:
     border-top-right-radius: 10px;
     background-color: white;
     cursor: pointer;
+}
+.other-card {
+    cursor: default;
 }
 
 .workouts-card-header {
@@ -671,6 +739,16 @@ Workouts CSS:
 }
 .workouts-card-delete:hover {
     color: red;
+}
+.workouts-card-add {
+    position: absolute;
+    padding-top: 2px;
+    padding-left: 2px;
+    z-index: 101;
+    color: white;
+}
+.workouts-card-add:hover {
+    color: green;
 }
 
 .workouts-card-overflow {
@@ -722,15 +800,6 @@ Workouts CSS:
     width: 300px;
     height: 40px;
     border-radius: 10px;
-}
-
-.workout-modal-container {
-    overflow-y: scroll;
-    background-color: white;
-    height: 80%;
-    width: 50%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 
 .workout-modal-exercise-row {
@@ -790,15 +859,6 @@ Workouts CSS:
 /*
 ProfilePicModal CSS:
 */
-
-.edit-profile-modal-container {
-    overflow-y: scroll;
-    background-color: white;
-    width: 50%;
-    height: 80%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
 
 .edit-profile-modal-preview {
     display: flex;

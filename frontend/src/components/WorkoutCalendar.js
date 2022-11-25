@@ -49,6 +49,7 @@ export default function WorkoutCalendar({
                 >
                     <div
                         className="mini-workouts-card"
+                        style={otherName ? { cursor: "default" } : null}
                         draggable
                         onDragStart={
                             !preview
