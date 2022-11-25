@@ -713,6 +713,9 @@ Workouts CSS:
     background-color: white;
     cursor: pointer;
 }
+.other-card {
+    cursor: default;
+}
 
 .workouts-card-header {
     display: flex;
@@ -736,6 +739,16 @@ Workouts CSS:
 }
 .workouts-card-delete:hover {
     color: red;
+}
+.workouts-card-add {
+    position: absolute;
+    padding-top: 2px;
+    padding-left: 2px;
+    z-index: 101;
+    color: white;
+}
+.workouts-card-add:hover {
+    color: green;
 }
 
 .workouts-card-overflow {

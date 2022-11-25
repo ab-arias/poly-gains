@@ -13,7 +13,7 @@ export default function OtherProfile({ userToken }) {
     const [user, setUser] = useState();
     const [otherUser, setOtherUser] = useState();
     const [calendar, setCalendar] = useState();
-    const [workouts, setWorkouts] = useState();
+    const [workouts, setWorkouts] = useState([]);
     const [friendStatus, setFriendStatus] = useState();
 
     async function fetchOtherUser() {
@@ -160,48 +160,106 @@ export default function OtherProfile({ userToken }) {
         }
     }
 
-    function renderButton() {
-        if (friendStatus === "sent") {
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={handleRemoveRequest}
-                >
-                    <FiSend className="button-icon" size={16} />
-                    <div>Request Sent</div>
-                </div>
+    async function addNewWorkout(newWorkout) {
+        try {
+            const newWorkouts = [...user.workouts, newWorkout];
+            const response = await axios.post(
+                window.$BACKEND_URI + "user/" + user._id,
+                {
+                    name: user.name,
+                    avatar: user.avatar,
+                    activeWorkouts: user.activeWorkouts,
+                    workouts: newWorkouts,
+                }
             );
-        } else if (friendStatus === "pending") {
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={handleAcceptRequest}
-                >
-                    <AiOutlineCheckCircle className="button-icon" size={16} />
-                    <div>Accept Friend Request</div>
-                </div>
-            );
-        } else if (friendStatus === "friends") {
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={handleRemoveRequest}
-                >
-                    <FaUserFriends className="button-icon" size={16} />
-                    <div>Friends</div>
-                </div>
-            );
-        } else
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={handleSendRequest}
-                >
-                    <AiOutlinePlusCircle className="button-icon" size={16} />
-                    <div>Send Friend Request</div>
-                </div>
-            );
+            setUser(response.data);
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
     }
+
+    async function createNewWorkout(workout) {
+        const newCopy = {
+            name: workout.name,
+            exercise_list: workout.exercise_list,
+        };
+        try {
+            const response = await axios.post(
+                window.$BACKEND_URI + "workouts",
+                newCopy
+            );
+            const result = response.data;
+            addNewWorkout(result._id);
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
+    function renderButton() {
+        let clickHandle, icon, buttonText;
+        if (friendStatus === "sent") {
+            clickHandle = handleRemoveRequest;
+            icon = <FiSend className="button-icon" size={16} />;
+            buttonText = "Request Sent";
+        } else if (friendStatus === "pending") {
+            clickHandle = handleAcceptRequest;
+            icon = <AiOutlineCheckCircle className="button-icon" size={16} />;
+            buttonText = "Accept Friend Request";
+        } else if (friendStatus === "friends") {
+            clickHandle = handleRemoveRequest;
+            icon = <FaUserFriends className="button-icon" size={16} />;
+            buttonText = "Friends";
+        } else {
+            clickHandle = handleSendRequest;
+            icon = <AiOutlinePlusCircle className="button-icon" size={16} />;
+            buttonText = "Send Friend Request";
+        }
+
+        return (
+            <div className="friend-request-button" onClick={clickHandle}>
+                {icon}
+                <div>{buttonText}</div>
+            </div>
+        );
+    }
+
+    const displayCards = workouts.map((card, i) => {
+        if (card._id === "637012e5c8e5bba98b4d3903") return null;
+        return (
+            <div className="workouts-card" key={i}>
+                <AiOutlinePlusCircle
+                    className="workouts-card-add"
+                    size={25}
+                    onClick={() => createNewWorkout(card)}
+                />
+                <div className="workouts-card-header">
+                    <div className="workouts-card-overflow">{card.name}</div>
+                </div>
+                <div className="workouts-card-body">
+                    {card.exercise_list.map((exercise, i) => (
+                        <div
+                            className="workouts-card-exercise-container"
+                            key={i}
+                        >
+                            <div className="workouts-card-exercise">
+                                {exercise.exercise}
+                            </div>
+                            <div className="workouts-card-sets-reps">
+                                {exercise.sets}
+                                <span> sets x </span>
+                                {exercise.reps}
+                                <span> reps</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    });
 
     return (
         otherUser &&
@@ -235,6 +293,7 @@ export default function OtherProfile({ userToken }) {
                     calendar={calendar}
                     otherName={otherUser.name}
                 />
+                <div className="workouts-cards-container">{displayCards}</div>
             </div>
         )
     );

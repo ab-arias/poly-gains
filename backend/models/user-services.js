@@ -165,17 +165,6 @@ async function searchUsers(username) {
     }
 }
 
-// async function getFriends(userList) {
-//     const userModel = getDbConnection().model("User", UserSchema);
-//     const userIDs = userList.map((member) => mongoose.Types.ObjectId(member));
-//     try{
-//         return await userModel.find({ _id: { $in: userIDs }}).select('_id username avatar')
-//     }
-//     catch (error) {
-//         return undefined
-//     }
-// }
-
 async function getFriends(id) {
     const userModel = getDbConnection().model("User", UserSchema);
     try {

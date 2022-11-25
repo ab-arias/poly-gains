@@ -5,7 +5,7 @@ import { FiSend } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
 import axios from "axios";
 
-export default function FriendsModal({ userToken, setShowFriendsModal }) {
+export default function FriendsModal({ userToken, closeFriends }) {
     const [user, setUser] = useState();
     const [currentFriends, setCurrentFriends] = useState([]);
     const [pendingFriends, setPendingFriends] = useState([]);
@@ -118,37 +118,28 @@ export default function FriendsModal({ userToken, setShowFriendsModal }) {
     }
 
     function renderButton(rel) {
+        let clickHandle, icon, buttonText;
         if (rel.status === "sent") {
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={() => handleRemoveRequest(rel._id)}
-                >
-                    <FiSend className="button-icon" size={16} />
-                    <div>Request Sent</div>
-                </div>
-            );
+            clickHandle = () => handleRemoveRequest(rel._id);
+            icon = <FiSend className="button-icon" size={16} />;
+            buttonText = "Request Sent";
         } else if (rel.status === "pending") {
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={() => handleAcceptRequest(rel._id)}
-                >
-                    <AiOutlineCheckCircle className="button-icon" size={16} />
-                    <div>Accept Friend Request</div>
-                </div>
-            );
+            clickHandle = () => handleAcceptRequest(rel._id);
+            icon = <AiOutlineCheckCircle className="button-icon" size={16} />;
+            buttonText = "Accept Friend Request";
         } else if (rel.status === "friends") {
-            return (
-                <div
-                    className="friend-request-button"
-                    onClick={() => handleRemoveRequest(rel._id)}
-                >
-                    <FaUserFriends className="button-icon" size={16} />
-                    <div>Friends</div>
-                </div>
-            );
-        } else return null;
+            clickHandle = () => handleRemoveRequest(rel._id);
+            icon = <FaUserFriends className="button-icon" size={16} />;
+            buttonText = "Friends";
+        } else {
+            return null;
+        }
+        return (
+            <div className="friend-request-button" onClick={clickHandle}>
+                {icon}
+                <div>{buttonText}</div>
+            </div>
+        );
     }
 
     function renderFriends(friends) {
@@ -183,7 +174,7 @@ export default function FriendsModal({ userToken, setShowFriendsModal }) {
                 <AiOutlineCloseCircle
                     className="modal-left-button"
                     size={35}
-                    onClick={() => setShowFriendsModal(false)}
+                    onClick={closeFriends}
                 />
                 <div className="modal-center-title">My Friends</div>
                 <div className="modal-right-button" style={{ width: 35 }}></div>
