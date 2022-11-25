@@ -44,7 +44,7 @@ function DietBody(props) {
                 <div>Weight: </div>
                 <div>Height:</div>
                 <div>Calories:</div>
-                <div>Plan:</div>
+                <div>Diet Plan:</div>
             </div>
             <div>
                 <div>{props.statsData.weight} lbs</div>
@@ -66,7 +66,7 @@ function StatTables(props) {
 
             <div className="stats-container-left">
                 <div className="stats-pr-table">
-                    <div>Stats</div>
+                <h3 className="sub-header">Records</h3>
                     <StatsBody
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -84,7 +84,7 @@ function StatTables(props) {
 
             <div className="stats-conatiner-right">
                 <div className="stats-diet-table">
-                    <div>Diet</div>
+                <h3 className="sub-header">Stats</h3>
                     <DietBody statsData={props.statsData} />
                 </div>
 

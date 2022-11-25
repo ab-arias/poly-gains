@@ -5,7 +5,7 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 
-export default function EditProfileModal({ closeModal, user, setUser }) {
+export default function EditProfileModal({ closeModal, user, setUser, stats, setStats }) {
     const [srcImg, setSrcImg] = useState();
     const cropperRef = useRef(null);
     const inputFile = useRef(null);
@@ -14,6 +14,11 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
     );
     const [showFileSelector, setShowFileSelector] = useState(false);
     const [name, setName] = useState(user.name);
+    const [weight, setWeight] = useState(stats.weight);
+    const [height, setHeight] = useState(stats.height);
+    const [calories, setCalories] = useState(stats.calories);
+    const [plan, setPlan] = useState(stats.plan);
+
 
     const onCrop = () => {
         const imageElement = cropperRef?.current;
@@ -35,6 +40,22 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
         setName(event.target.value);
     }
 
+    function handleWeightChange(event) {
+        setWeight(event.target.value);
+    }    
+
+    function handleHeightChange(event) {
+        setHeight(event.target.value);
+    }
+
+    function handleCaloriesChange(event) {
+        setCalories(event.target.value);
+    }
+
+    function handlePlanChange(event) {
+        setPlan(event.target.value);
+    }
+
     function handleImageDelete() {
         setSrcImg(null);
         inputFile.current.value = "";
@@ -53,12 +74,35 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
             );
             const result = response.data;
             setUser(result);
+            updateStats();
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
             return false;
         }
     }
+    
+    async function updateStats() {
+        const id = stats._id;
+        try {
+            const response = await axios.post(
+                window.$BACKEND_URI + "stats/" + id,
+                {
+                    weight: weight,
+                    height: height,
+                    calories: calories,
+                    plan: plan,
+                }
+            );
+            const result = response.data;
+            setStats(result);
+        } catch (error) {
+            //We're not handling errors. Just logging into the console.
+            console.log(error);
+            return false;
+        }
+    }
+
 
     return (
         <div className="modal-screen">
@@ -93,6 +137,38 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                         value={name}
                         onChange={handleNameChange}
                         placeholder="Name"
+                        maxLength={20}
+                    />
+                    <input
+                        className="edit-profile-weight"
+                        name="weight"
+                        value={weight}
+                        onChange={handleWeightChange}
+                        placeholder="Weight"
+                        maxLength={20}
+                    />
+                    <input
+                        className="edit-profile-height"
+                        name="height"
+                        value={height}
+                        onChange={handleHeightChange}
+                        placeholder="Height"
+                        maxLength={20}
+                    />
+                    <input
+                        className="edit-profile-calories"
+                        name="calories"
+                        value={calories}
+                        onChange={handleCaloriesChange}
+                        placeholder="Calories"
+                        maxLength={20}
+                    />
+                    <input
+                        className="edit-profile-plan"
+                        name="plan"
+                        value={plan}
+                        onChange={handlePlanChange}
+                        placeholder="Diet Plan"
                         maxLength={20}
                     />
                     <div
