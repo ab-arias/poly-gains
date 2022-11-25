@@ -105,7 +105,7 @@ export default function WorkoutModal({
                     />
                 )}
             </div>
-            <div className="workout-modal-container">
+            <div className="modal-container">
                 {exerciseCards}
                 {editing && (
                     <div className="workout-modal-exercise-card">
@@ -151,7 +151,7 @@ export default function WorkoutModal({
                             onClick={handleExerciseSubmission}
                         >
                             <AiOutlinePlusCircle
-                                className="workout-container-button-icon"
+                                className="button-icon"
                                 size={20}
                             />
                             <div>Add New Exercise</div>

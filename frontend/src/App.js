@@ -6,6 +6,7 @@ import CalPoly from "./components/CalPoly";
 import Workouts from "./components/Workouts";
 import Auth from "./components/Auth/Auth";
 import OtherProfile from "./components/OtherProfile";
+import FriendsModal from "./components/FriendsModal";
 import Header from "./components/Header";
 
 export default function App() {
@@ -40,7 +41,12 @@ export default function App() {
                         setShowFriendsModal={setShowFriendsModal}
                     />
                     <div className="main-body">
-                        {showFriendsModal && <div></div>}
+                        {showFriendsModal && (
+                            <FriendsModal
+                                userToken={userToken}
+                                setShowFriendsModal={setShowFriendsModal}
+                            />
+                        )}
                         <Routes>
                             <Route
                                 path="/"
