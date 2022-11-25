@@ -95,6 +95,7 @@ async function loginUser(req) {
 
 async function getUserById(id) {
     const userModel = getDbConnection().model("User", UserSchema);
+    console.log("here")
     const result = await userModel.findById(id);
     return result;
 }
@@ -224,7 +225,7 @@ async function updateStats(id, newRec) {
     try {
         return await statsModel.findByIdAndUpdate(
             id,
-            { records: newRec },
+            { newRec },
             { new: true }
         );
     } catch (error) {

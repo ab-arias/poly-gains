@@ -5,7 +5,7 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 
-export default function EditProfileModal({ closeModal, user, setUser, stats, setStats }) {
+export default function EditProfileModal({ closeModal, user, setUser }) {
     const [srcImg, setSrcImg] = useState();
     const cropperRef = useRef(null);
     const inputFile = useRef(null);
@@ -14,10 +14,10 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
     );
     const [showFileSelector, setShowFileSelector] = useState(false);
     const [name, setName] = useState(user.name);
-    const [weight, setWeight] = useState(stats.weight);
-    const [height, setHeight] = useState(stats.height);
-    const [calories, setCalories] = useState(stats.calories);
-    const [plan, setPlan] = useState(stats.plan);
+    // const [weight, setWeight] = useState(stats.weight);
+    // const [height, setHeight] = useState(stats.height);
+    // const [calories, setCalories] = useState(stats.calories);
+    // const [plan, setPlan] = useState(stats.plan);
 
 
     const onCrop = () => {
@@ -40,21 +40,21 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
         setName(event.target.value);
     }
 
-    function handleWeightChange(event) {
-        setWeight(event.target.value);
-    }    
+    // function handleWeightChange(event) {
+    //     setWeight(event.target.value);
+    // }    
 
-    function handleHeightChange(event) {
-        setHeight(event.target.value);
-    }
+    // function handleHeightChange(event) {
+    //     setHeight(event.target.value);
+    // }
 
-    function handleCaloriesChange(event) {
-        setCalories(event.target.value);
-    }
+    // function handleCaloriesChange(event) {
+    //     setCalories(event.target.value);
+    // }
 
-    function handlePlanChange(event) {
-        setPlan(event.target.value);
-    }
+    // function handlePlanChange(event) {
+    //     setPlan(event.target.value);
+    // }
 
     function handleImageDelete() {
         setSrcImg(null);
@@ -74,7 +74,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
             );
             const result = response.data;
             setUser(result);
-            updateStats();
+            // updateStats();
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -82,26 +82,26 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
         }
     }
     
-    async function updateStats() {
-        const id = stats._id;
-        try {
-            const response = await axios.post(
-                window.$BACKEND_URI + "stats/" + id,
-                {
-                    weight: weight,
-                    height: height,
-                    calories: calories,
-                    plan: plan,
-                }
-            );
-            const result = response.data;
-            setStats(result);
-        } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
-            return false;
-        }
-    }
+    // async function updateStats() {
+    //     const id = stats._id;
+    //     try {
+    //         const response = await axios.post(
+    //             window.$BACKEND_URI + "stats/" + id,
+    //             {
+    //                 weight: weight,
+    //                 height: height,
+    //                 calories: calories,
+    //                 plan: plan,
+    //             }
+    //         );
+    //         const result = response.data;
+    //         setStats(result);
+    //     } catch (error) {
+    //         //We're not handling errors. Just logging into the console.
+    //         console.log(error);
+    //         return false;
+    //     }
+    // }
 
 
     return (
@@ -131,6 +131,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
                         onMouseEnter={() => setShowFileSelector(true)}
                         alt="Avatar"
                     />
+                    <div>Name</div>
                     <input
                         className="edit-profile-name"
                         name="name"
@@ -139,6 +140,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
                         placeholder="Name"
                         maxLength={20}
                     />
+                    {/* <div>Weight</div>
                     <input
                         className="edit-profile-weight"
                         name="weight"
@@ -147,6 +149,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
                         placeholder="Weight"
                         maxLength={20}
                     />
+                    <div>Height</div>
                     <input
                         className="edit-profile-height"
                         name="height"
@@ -155,6 +158,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
                         placeholder="Height"
                         maxLength={20}
                     />
+                    <div>Maintenance Calories</div>
                     <input
                         className="edit-profile-calories"
                         name="calories"
@@ -163,6 +167,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
                         placeholder="Calories"
                         maxLength={20}
                     />
+                    <div>Plan</div>
                     <input
                         className="edit-profile-plan"
                         name="plan"
@@ -170,7 +175,7 @@ export default function EditProfileModal({ closeModal, user, setUser, stats, set
                         onChange={handlePlanChange}
                         placeholder="Diet Plan"
                         maxLength={20}
-                    />
+                    /> */}
                     <div
                         className="edit-profile-modal-overlay"
                         style={
