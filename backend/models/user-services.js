@@ -148,9 +148,7 @@ async function searchUsers(username) {
                     },
                 },
             },
-            {
-                $limit: 5,
-            },
+            { $limit: 5 },
             {
                 $project: {
                     name: 0,
@@ -177,7 +175,6 @@ async function getFriends(id) {
         });
         return user.friends;
     } catch (error) {
-        console.log(error);
         return undefined;
     }
 }
@@ -253,7 +250,6 @@ async function updateStats(id, newRec) {
             { new: true }
         );
     } catch (error) {
-        console.log(error);
         return undefined;
     }
 }

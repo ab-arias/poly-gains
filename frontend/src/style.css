@@ -758,6 +758,12 @@ Workouts CSS:
     text-overflow: ellipsis;
     text-align: center;
 }
+.body-workouts-card-overflow {
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .mini-workouts-card .workouts-card-header {
     font-size: 16px;
@@ -800,42 +806,44 @@ Workouts CSS:
     width: 300px;
     height: 40px;
     border-radius: 10px;
+    border-style: none;
 }
 
 .workout-modal-exercise-row {
     display: flex;
-}
-
-.workout-modal-exercise-card {
-    display: flex;
     flex-direction: column;
-    margin: 10px;
-    width: 50%;
-    height: 100px;
-    border: 1px solid forestgreen;
-    border-radius: 10px;
+    padding: 10px 10px 15px 20px;
+    border-bottom: 0.5px solid gray;
     background-color: rgba(160, 160, 160, 0.213);
 }
 
 .workout-modal-exercise-header {
-    margin-left: 15px;
-    margin-top: 10px;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     text-decoration: underline;
 }
 
 .workout-modal-exercise-body {
-    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 10px;
     font-size: 18px;
 }
 
-.workout-modal-exercise-input {
-    margin-left: 15px;
-    margin-top: 15px;
-    width: 200px;
-    font-size: 20px;
+.workout-modal-input {
+    background-color: rgba(255, 255, 255, 0);
+    border: hidden;
+    border-bottom: 1px groove rgba(143, 127, 127, 0.77);
+    padding: 0px 0px 3px 0px;
+}
+.workout-modal-input:focus {
+    outline: none;
+}
+
+.modal-exercise {
+    font-size: 28px;
+    width: fit-content;
 }
 
 .workout-modal-set-rep {
@@ -843,11 +851,13 @@ Workouts CSS:
     align-items: baseline;
 }
 
-.workout-modal-set-rep-input {
-    width: 55px;
-    margin-left: 15px;
-    margin-top: 10px;
-    margin-right: 15px;
+.modal-set {
+    margin-right: 10px;
+    width: 50px;
+}
+.modal-rep {
+    margin-left: 10px;
+    width: 50px;
 }
 
 .workout-modal-new-button {
@@ -918,7 +928,7 @@ Cal Poly CSS
 }
 
 .CalPolyAbout {
-    margin-left:100px;
+    margin-left: 100px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -951,7 +961,7 @@ Cal Poly CSS
     margin-top: 50px;
 }
 .cp-width {
-    width:150px;
+    width: 150px;
 }
 /*
 Stats css
