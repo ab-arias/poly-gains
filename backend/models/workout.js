@@ -29,6 +29,7 @@ const WorkoutSchema = new mongoose.Schema(
             {
                 type: ExerciseSchema,
                 required: true,
+                _id: false,
             },
         ],
     },

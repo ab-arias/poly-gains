@@ -79,7 +79,7 @@ export default function WorkoutCalendar({
                                     className="workouts-card-exercise-container"
                                     key={i}
                                 >
-                                    <div className="workouts-card-exercise">
+                                    <div className="workouts-card-exercise body-workouts-card-overflow">
                                         {exercise.exercise}
                                     </div>
                                     <div className="workouts-card-sets-reps">
