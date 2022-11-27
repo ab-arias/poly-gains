@@ -36,37 +36,41 @@ function StatForm(props) {
 
     return (
         <form className="update-stats-form">
-            <div>
+            <div class="form-row">
                 <label htmlFor="name">Workout:</label>
                 <input
                     value={record.name}
                     type="text"
                     name="name"
                     id="name"
+                    style={{width: '200px'}}
                     onChange={handleChange}
                 />
             </div>
-            <div>
+            <div class="form-row">
                 <label htmlFor="pr">New Pr:</label>
                 <input
                     value={record.pr}
                     type="text"
                     name="pr"
                     id="pr"
+                    style={{width: '100px'}}
                     onChange={handleChange}
                 />
             </div>
-            <div>
+            <div class="form-row">
                 <label htmlFor="pr">Goal:</label>
                 <input
                     value={record.goal}
                     type="text"
                     name="goal"
                     id="goal"
+                    style={{width: '100px'}}
                     onChange={handleChange}
                 />
             </div>
-            <input type="button" value="Submit" onClick={submitForm} />
+            
+            <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
         </form>
     );
 }
