@@ -15,7 +15,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
     const [showFileSelector, setShowFileSelector] = useState(false);
     const [name, setName] = useState(user.name);
 
-
     const onCrop = () => {
         const imageElement = cropperRef?.current;
         const cropper = imageElement?.cropper;
@@ -36,7 +35,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
         setName(event.target.value);
     }
 
-
     function handleImageDelete() {
         setSrcImg(null);
         inputFile.current.value = "";
@@ -55,15 +53,12 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
             );
             const result = response.data;
             setUser(result);
-            // updateStats();
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
             return false;
         }
     }
-    
-
 
     return (
         <div className="modal-screen">
@@ -92,7 +87,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                         onMouseEnter={() => setShowFileSelector(true)}
                         alt="Avatar"
                     />
-                    <div>Name</div>
                     <input
                         className="edit-profile-name"
                         name="name"

@@ -1,7 +1,7 @@
 import React from "react";
 
 function ProgressHeader(props) {
-    let header = props.statsData.records?.map((record, i) => (
+    let header = props.statsData.records.map((record, i) => (
         <th key={i}>{record.name}</th>
     ));
     return (
@@ -13,7 +13,7 @@ function ProgressHeader(props) {
 }
 
 function PrBody(props) {
-    const body = props.statsData.records?.map((record, i) => (
+    const body = props.statsData.records.map((record, i) => (
         <td key={i}>{record.pr}</td>
     ));
     return (
@@ -25,7 +25,7 @@ function PrBody(props) {
 }
 
 function GoalBody(props) {
-    const body = props.statsData.records?.map((record, i) => (
+    const body = props.statsData.records.map((record, i) => (
         <td key={i}>{record.goal}</td>
     ));
     return (

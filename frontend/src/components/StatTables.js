@@ -48,7 +48,7 @@ function DietBody(props) {
                 <div>Weight: </div>
                 <div>Height:</div>
                 <div>Calories:</div>
-                <div>Diet Plan:</div>
+                <div>Plan:</div>
             </div>
             <div>
                 <div>{props.statsData.weight} lbs</div>
