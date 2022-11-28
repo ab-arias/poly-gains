@@ -37,43 +37,50 @@ function StatForm(props) {
     }
 
     return (
-        <form>
-            <th>
-                <tr>
-                    <td>
-                        <label htmlFor="name">Workout:</label>
-                        <input
+        <div>
+            <div class = "workout-form">
+                <div class="bold-header">Workout:
+                    <input
                             value={record.name}
                             type="text"
                             name="name"
                             id="name"
                             onChange={handleChange}
+                    /> 
+                </div>
+            </div>
+            <div>
+                <div class="pr-form">
+                    <div class="bold-header">New Pr:
+                        <input
+                            value={record.pr}
+                            type="text"
+                            name="pr"
+                            id="pr"
+                            onChange={handleChange}
                         />
-                    </td>
-                </tr>
-                <tr>
-                    <label htmlFor="pr">New Pr:</label>
-                    <input
-                        value={record.pr}
-                        type="text"
-                        name="pr"
-                        id="pr"
-                        onChange={handleChange}
-                    />
-                </tr>
-                <tr>
-                    <label htmlFor="pr">Goal:</label>
-                    <input
-                        value={record.goal}
-                        type="text"
-                        name="goal"
-                        id="goal"
-                        onChange={handleChange}
-                    />
-                </tr>
-            </th>
-            <input type="button" value="Submit" onClick={submitForm} />
-        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="goal-form">
+                        <div class="bold-header">Goal:
+                            <input
+                            value={record.goal}
+                            type="text"
+                            name="goal"
+                            id="goal"
+                            onChange={handleChange}
+                            />
+                        </div>
+                    </div> 
+            </div>
+            <div>
+                <button class="form-submit" onClick={submitForm}>
+                    Submit
+                </button>
+            </div>
+        </div>
     );
 }
 
