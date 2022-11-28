@@ -7,7 +7,7 @@ function StatsBody(props) {
     const records = props.statsData.records.map((row, i) => (
         <div className="stats-row" key={i}>
             <div>{row.name}:</div>
-            <div>{row.pr} lbs</div>
+            <div>{row.pr} </div>
             <button
                 className="delete-stat-button"
                 style={!editing ? { visibility: "hidden" } : null}
@@ -25,8 +25,8 @@ function StatsBody(props) {
         </div>
     ));
     return (
-        <div>
-            <div>{records}</div>
+        <div class="stats-table-container">
+            <div class="stats-records">{records}</div>
             <button
                 className="edit-stats-button"
                 onClick={() => setEditing((prev) => !prev)}
@@ -59,14 +59,13 @@ function DietBody(props) {
 function StatTables(props) {
     return (
         <div className="stats-main-container">
-            <h2 className="section-header">
-                {" "}
-                Welcome User, Lets Get This Bread{" "}
-            </h2>
-
+            <h3 className="section-header" 
+                style={{width: '800px', 'font-size': '50px'}}>
+                Edit your stats
+            </h3>
             <div className="stats-container-left">
                 <div className="stats-pr-table">
-                    <div>Stats</div>
+                    <h3 class="sub-header" style={{'font-size': '35px'}}>Stats</h3>
                     <StatsBody
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -74,7 +73,7 @@ function StatTables(props) {
                 </div>
 
                 <div className="stats-update-form">
-                    <h3 className="sub-header">Update Stats</h3>
+                    <h3 className="sub-header" style={{'font-size': '35px'}}>Update Stats</h3>
                     <StatForm
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -84,12 +83,12 @@ function StatTables(props) {
 
             <div className="stats-conatiner-right">
                 <div className="stats-diet-table">
-                    <div>Diet</div>
+                    <h3 class="sub-header" style={{'font-size': '35px'}}>Diet</h3>
                     <DietBody statsData={props.statsData} />
                 </div>
 
                 <div className="stats-bmi-calculator">
-                    <h3 className="sub-header">BMI Calculator</h3>
+                    <h3 className="sub-header" style={{'font-size': '35px'}}>BMI Calculator</h3>
                     <div className="BMI calculator">
                         <div className="weight-bmi">
                             <div className="bold-header">Weight:</div>
@@ -121,6 +120,13 @@ function StatTables(props) {
                             <label htmlFor="height-input-in">in</label>
                         </div>
                         <div className="bottom-bmi">
+                            <button
+                                className="BMI-submit"
+                                style={{'margin-top': '30px'}}
+                                onClick={calculateBMI}
+                            >
+                                Submit
+                            </button>
                             <div className="bold-header">BMI:</div>
                             <input
                                 className="BMI-result"
@@ -128,14 +134,8 @@ function StatTables(props) {
                             ></input>
                             <label
                                 id="BMI-health-label"
-                                htmlFor="BMIresult"
+                                htmlFor="BMI-result"
                             ></label>
-                            <button
-                                className="BMI-submit"
-                                onClick={calculateBMI}
-                            >
-                                Submit
-                            </button>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ export default function CalPoly() {
     return (
         <div className="CalPolyPage">
             <div className="CalPolyHeader">
-                <div className="section-header">Cal Poly Fitness</div>
+                <h2 className="section-header">Cal Poly Fitness</h2>
                 <img
                     className="RecImg"
                     src={require("../assets/img/CalPolyRec.jpeg")}
@@ -12,7 +12,7 @@ export default function CalPoly() {
                 ></img>
                 <div className="CalPolyAbout">
                     <div className="CalPolyInfoSection">
-                        <div className="sub-header">Rec Center Ammenities:</div>
+                        <h2 className="sub-header">Rec Center Ammenities:</h2>
                         <div className="ammenities">
                             -State-of-the-art equipment
                         </div>
@@ -40,7 +40,7 @@ export default function CalPoly() {
                         </div>
                     </div>
                     <div className="CalPolyActSection">
-                        <div className="sub-header">Operational Hours:</div>
+                        <h2 className="sub-header">Operational Hours:</h2>
                         <div className="ammenities">
                             Monday - Friday: 6am - 12am
                         </div>
