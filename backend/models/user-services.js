@@ -233,7 +233,7 @@ async function deleteWorkout(id) {
     }
 }
 
-// // STATS
+// STATS
 
 async function getStatsById(id) {
     const statsModel = getDbConnection().model("Stats", StatsSchema);
