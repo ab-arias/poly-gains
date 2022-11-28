@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import StatForm from "./StatForm";
+import {
+    AiOutlineEdit,
+} from "react-icons/ai";
+import { FiTrash2 } from "react-icons/fi";
 
 function StatsBody(props) {
     const [editing, setEditing] = useState(false);
@@ -8,7 +12,7 @@ function StatsBody(props) {
         <div className="stats-row" key={i}>
             <div>{row.name}:</div>
             <div>{row.pr} </div>
-            <button
+            <FiTrash2
                 className="delete-stat-button"
                 style={!editing ? { visibility: "hidden" } : null}
                 onClick={() =>
@@ -21,18 +25,18 @@ function StatsBody(props) {
                 }
             >
                 Delete
-            </button>
+            </FiTrash2>
         </div>
     ));
     return (
         <div class="stats-table-container">
             <div class="stats-records">{records}</div>
-            <button
+            <AiOutlineEdit
                 className="edit-stats-button"
                 onClick={() => setEditing((prev) => !prev)}
             >
                 Edit
-            </button>
+            </AiOutlineEdit>
         </div>
     );
 }
