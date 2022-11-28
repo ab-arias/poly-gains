@@ -121,8 +121,8 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                         ref={inputFile}
                         onChange={handlePhotoChange}
                         style={{ display: "none" }}
-                    />    
-                </div>  
+                    />
+                </div>
                 {srcImg && (
                     <div className="crop-region">
                         <Cropper
@@ -141,68 +141,70 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                             autoCropArea={1}
                             checkOrientation={false}
                         />
-                    </div>   
+                    </div>
                 )}
 
-                    <div className="body-stats-main">
-                        <div className="body-stats-table">
-                            <h3 className="sub-header" style={{'font-size': '20px'}}>Body Stats</h3>
-                                <div className="body-stats-height">
-                                    <div className="bold-header">Height:</div>
-                                        <input
-                                            id="height-input-ft"
-                                            type="text"
-                                            className="height-ft"
-                                        ></input>
-                                        <label
-                                            htmlFor="height-input-ft"
-                                            className="label-ft"
-                                        >
-                                            ft
-                                        </label>
-                                        <input
-                                        id="height-input-in"
-                                        type="text"
-                                        className="height-in"
-                                        ></input>
-                                        <label htmlFor="height-input-in">in</label>
-                                </div>
-                                <div>
-                                    <div className="bold-header">Weight:</div>
-                                        <input
-                                            id="weight-input-id"
-                                            type="text"
-                                            className="weight-lbs"
-                                        ></input>
-                                        <label htmlFor="weight-input-id">lbs</label>
-                                    </div>
-                                <div>
-                                    <div className="bold-header">Calories:</div>
-                                        <input
-                                        id="calorie-input-in"
-                                        type="text"
-                                        clasName="calories-in"
-                                        ></input>
-                                        <label htmlFor="calorie-input-in">cal</label>
-                                </div>
-
-                                <div>
-                                    <div className="bold-header">Plan</div>
-                                    <input>
-                                    </input>
-                                </div>
-
-                                <button
-                                className="body-stats-submit"
-                                style={{'margin-top': '30px'}}
+                <div className="body-stats-main">
+                    <div className="body-stats-table">
+                        <h3
+                            className="sub-header"
+                            style={{ "font-size": "20px" }}
+                        >
+                            Body Stats
+                        </h3>
+                        <div className="body-stats-height">
+                            <div className="bold-header">Height:</div>
+                            <input
+                                id="height-input-ft"
+                                type="text"
+                                className="height-ft"
+                            ></input>
+                            <label
+                                htmlFor="height-input-ft"
+                                className="label-ft"
                             >
-                                Submit
-                            </button>
-                        </div> 
+                                ft
+                            </label>
+                            <input
+                                id="height-input-in"
+                                type="text"
+                                className="height-in"
+                            ></input>
+                            <label htmlFor="height-input-in">in</label>
+                        </div>
+                        <div>
+                            <div className="bold-header">Weight:</div>
+                            <input
+                                id="weight-input-id"
+                                type="text"
+                                className="weight-lbs"
+                            ></input>
+                            <label htmlFor="weight-input-id">lbs</label>
+                        </div>
+                        <div>
+                            <div className="bold-header">Calories:</div>
+                            <input
+                                id="calorie-input-in"
+                                type="text"
+                                clasName="calories-in"
+                            ></input>
+                            <label htmlFor="calorie-input-in">cal</label>
+                        </div>
+
+                        <div>
+                            <div className="bold-header">Plan</div>
+                            <input></input>
+                        </div>
+
+                        <button
+                            className="body-stats-submit"
+                            style={{ "margin-top": "30px" }}
+                        >
+                            Submit
+                        </button>
                     </div>
+                </div>
             </div>
         </div>
-
-        
     );
 }

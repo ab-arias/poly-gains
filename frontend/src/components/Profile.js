@@ -196,58 +196,62 @@ export default function Profile({ userToken }) {
                         </div>
                         <div class="LI-Link">
                             Grant Jonhson
-                            <a 
+                            <a
                                 classname="RecLink"
                                 href="#/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                         <div class="LI-Link">
                             Nicholas Micali
-                            <a 
+                            <a
                                 classname="RecLink"
                                 href="https://www.linkedin.com/in/nicholas-micali-a83b29181"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                         <div class="LI-Link">
                             Marco Araiza
-                            <a 
+                            <a
                                 classname="RecLink"
                                 href="#/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                         <div class="LI-Link">
                             Abraham Arais
-                            <a 
+                            <a
                                 classname="RecLink"
                                 href="https://www.linkedin.com/in/abraham-arias/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                     </div>

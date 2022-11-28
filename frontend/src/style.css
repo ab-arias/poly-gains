@@ -942,7 +942,7 @@ Edit Body Stats CSS
     padding-left: 10px;
 }
 
-.body-stats-submit{
+.body-stats-submit {
     width: 200px;
     margin-bottom: 10px;
     background-color: white;
@@ -1017,7 +1017,7 @@ Stats CSS:
     justify-content: space-evenly;
 }
 
-.stats-main-container *{
+.stats-main-container * {
     font-size: 20px;
 }
 
@@ -1104,13 +1104,13 @@ Stats CSS:
     transition: 0.2s;
 }
 
-.delete-stat-button:hover{
+.delete-stat-button:hover {
     cursor: pointer;
     transform: scale(1.2);
     transition: 0.2s;
 }
 
-.delete-stat-button:active{
+.delete-stat-button:active {
     background-color: lightcoral;
 }
 
@@ -1123,12 +1123,12 @@ Stats CSS:
     background-color: white;
     transition: 0.2s;
 }
-.edit-stats-button:hover{
+.edit-stats-button:hover {
     cursor: pointer;
     transition: 0.2s;
     transform: scale(1.2);
 }
-.edit-stats-button:active{
+.edit-stats-button:active {
     background-color: white;
 }
 .stats-bmi-calculator {
