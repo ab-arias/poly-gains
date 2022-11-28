@@ -40,14 +40,13 @@ app.get("/stats/:id", async (req, res) => {
 
 app.post("/user/:id", async (req, res) => {
     const id = req.params["id"];
-    const { name, avatar, activeWorkouts, workouts, friends } = req.body;
+    const { name, avatar, activeWorkouts, workouts } = req.body;
     const updatedUser = await userServices.updateUser(
         id,
         name,
         avatar,
         activeWorkouts,
-        workouts,
-        friends
+        workouts
     );
     if (updatedUser) {
         res.status(201).send(updatedUser).end();
@@ -152,16 +151,6 @@ app.get("/user/:id", async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send("An error ocurred in the server.");
-    }
-});
-
-app.get("/friends/:id", async (req, res) => {
-    const id = req.params["id"];
-    try {
-        let result = await userServices.getFriends(id);
-        res.send(result);
-    } catch (e) {
-        res.status(500).end();
     }
 });
 

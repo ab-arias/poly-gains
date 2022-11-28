@@ -14,10 +14,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
     );
     const [showFileSelector, setShowFileSelector] = useState(false);
     const [name, setName] = useState(user.name);
-    // const [weight, setWeight] = useState(stats.weight);
-    // const [height, setHeight] = useState(stats.height);
-    // const [calories, setCalories] = useState(stats.calories);
-    // const [plan, setPlan] = useState(stats.plan);
 
 
     const onCrop = () => {
@@ -40,21 +36,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
         setName(event.target.value);
     }
 
-    // function handleWeightChange(event) {
-    //     setWeight(event.target.value);
-    // }    
-
-    // function handleHeightChange(event) {
-    //     setHeight(event.target.value);
-    // }
-
-    // function handleCaloriesChange(event) {
-    //     setCalories(event.target.value);
-    // }
-
-    // function handlePlanChange(event) {
-    //     setPlan(event.target.value);
-    // }
 
     function handleImageDelete() {
         setSrcImg(null);
@@ -82,26 +63,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
         }
     }
     
-    // async function updateStats() {
-    //     const id = stats._id;
-    //     try {
-    //         const response = await axios.post(
-    //             window.$BACKEND_URI + "stats/" + id,
-    //             {
-    //                 weight: weight,
-    //                 height: height,
-    //                 calories: calories,
-    //                 plan: plan,
-    //             }
-    //         );
-    //         const result = response.data;
-    //         setStats(result);
-    //     } catch (error) {
-    //         //We're not handling errors. Just logging into the console.
-    //         console.log(error);
-    //         return false;
-    //     }
-    // }
 
 
     return (
@@ -140,42 +101,6 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                         placeholder="Name"
                         maxLength={20}
                     />
-                    {/* <div>Weight</div>
-                    <input
-                        className="edit-profile-weight"
-                        name="weight"
-                        value={weight}
-                        onChange={handleWeightChange}
-                        placeholder="Weight"
-                        maxLength={20}
-                    />
-                    <div>Height</div>
-                    <input
-                        className="edit-profile-height"
-                        name="height"
-                        value={height}
-                        onChange={handleHeightChange}
-                        placeholder="Height"
-                        maxLength={20}
-                    />
-                    <div>Maintenance Calories</div>
-                    <input
-                        className="edit-profile-calories"
-                        name="calories"
-                        value={calories}
-                        onChange={handleCaloriesChange}
-                        placeholder="Calories"
-                        maxLength={20}
-                    />
-                    <div>Plan</div>
-                    <input
-                        className="edit-profile-plan"
-                        name="plan"
-                        value={plan}
-                        onChange={handlePlanChange}
-                        placeholder="Diet Plan"
-                        maxLength={20}
-                    /> */}
                     <div
                         className="edit-profile-modal-overlay"
                         style={
