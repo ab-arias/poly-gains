@@ -43,7 +43,7 @@ export default function WorkoutCards({
             const result = response.data;
             setOpenWorkout(result);
             addNewWorkout(result);
-            return result._id;
+            return result;
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -54,11 +54,7 @@ export default function WorkoutCards({
     async function deleteWorkout(e, id) {
         e.stopPropagation();
         try {
-            const response = await axios.delete(
-                window.$BACKEND_URI + "workouts/" + id
-            );
-            const result = response.data;
-            console.log(result);
+            await axios.delete(window.$BACKEND_URI + "workouts/" + id);
             removeOldWorkout(id);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
@@ -70,6 +66,7 @@ export default function WorkoutCards({
     async function updateWorkout(workout) {
         const backendWorkout = await updateExistingWorkout(workout);
         setOpenWorkout(backendWorkout);
+        return backendWorkout;
     }
 
     function handleOpenWorkout(workout) {
@@ -105,7 +102,7 @@ export default function WorkoutCards({
             <div className="workouts-card-body">
                 {card.exercise_list.map((exercise, i) => (
                     <div className="workouts-card-exercise-container" key={i}>
-                        <div className="workouts-card-exercise">
+                        <div className="workouts-card-exercise body-workouts-card-overflow">
                             {exercise.exercise}
                         </div>
                         <div className="workouts-card-sets-reps">

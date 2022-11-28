@@ -4,65 +4,71 @@ export default function CalPoly() {
     return (
         <div className="CalPolyPage">
             <div className="CalPolyHeader">
-                <div className="section-header">Cal Poly Fitness</div>
+                <h2 className="section-header">Cal Poly Fitness</h2>
                 <img
                     className="RecImg"
                     src={require("../assets/img/CalPolyRec.jpeg")}
                     alt="cannot display"
                 ></img>
                 <div className="CalPolyAbout">
-                <div className="CalPolyInfoSection">
-                    <div className="sub-header">Rec Center Ammenities:</div>
-                    <div className="ammenities">
-                        -State-of-the-art equipment
+                    <div className="CalPolyInfoSection">
+                        <h2 className="sub-header">Rec Center Ammenities:</h2>
+                        <div className="ammenities">
+                            -State-of-the-art equipment
+                        </div>
+                        <div className="ammenities">
+                            -Complimentary group fitness classes
+                        </div>
+                        <div className="ammenities">
+                            -Multiple exercise rooms
+                        </div>
+                        <div className="ammenities">-Indoor track</div>
+                        <div className="ammenities">-Six gymnasium courts</div>
+                        <div className="ammenities">
+                            -Six racquetball courts
+                        </div>
+                        <div className="ammenities">
+                            -Equipment check out at The Pro Shop
+                        </div>
+                        <div className="ammenities">-Olympic-size lap pool</div>
+                        <div className="ammenities">-Leisure pool</div>
+                        <div className="ammenities">
+                            -Sand volleyball courts
+                        </div>
+                        <div className="ammenities">
+                            -ASI Poly Escapes Climbing Park
+                        </div>
                     </div>
-                    <div className="ammenities">
-                        -Complimentary group fitness classes
-                    </div>
-                    <div className="ammenities">-Multiple exercise rooms</div>
-                    <div className="ammenities">-Indoor track</div>
-                    <div className="ammenities">-Six gymnasium courts</div>
-                    <div className="ammenities">-Six racquetball courts</div>
-                    <div className="ammenities">
-                        -Equipment check out at The Pro Shop
-                    </div>
-                    <div className="ammenities">-Olympic-size lap pool</div>
-                    <div className="ammenities">-Leisure pool</div>
-                    <div className="ammenities">-Sand volleyball courts</div>
-                    <div className="ammenities">
-                        -ASI Poly Escapes Climbing Park
-                    </div>
-                </div>
-                <div className="CalPolyActSection">
-                    <div className="sub-header">Operational Hours:</div>
-                    <div className="ammenities">
-                        Monday - Friday: 6am - 12am
-                    </div>
-                    <div className="ammenities">
-                        Saturday - Sunday: 8am - 10pm
-                    </div>
+                    <div className="CalPolyActSection">
+                        <h2 className="sub-header">Operational Hours:</h2>
+                        <div className="ammenities">
+                            Monday - Friday: 6am - 12am
+                        </div>
+                        <div className="ammenities">
+                            Saturday - Sunday: 8am - 10pm
+                        </div>
 
-                    <a
-                        className="RecLink"
-                        href="https://www.asi.calpoly.edu/facilities/recreation-center/"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <img
-                            className="RecWebImg"
-                            src={require("../assets/img/RecWebsite.png")}
-                            alt="cannot display"
-                        ></img>
-                    </a>
+                        <a
+                            className="RecLink"
+                            href="https://www.asi.calpoly.edu/facilities/recreation-center/"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <img
+                                className="RecWebImg"
+                                src={require("../assets/img/RecWebsite.png")}
+                                alt="cannot display"
+                            ></img>
+                        </a>
+                    </div>
                 </div>
-            </div>
             </div>
             <div className="CalPolyCalendar">
                 <h2 className="section-header">
                     Cal Poly Rec Center Calendar: November
                 </h2>
             </div>
-            <h3 class="sub-header">Studio 1:</h3>
+            <h3 className="sub-header">Studio 1:</h3>
             <div className="workouts-calendar">
                 <div className="workouts-calendar-entry">
                     <div className="workouts-calendar-header">
@@ -242,8 +248,7 @@ export default function CalPoly() {
                 </div>
             </div>
 
-
-            <h3 class="sub-header">Studio 2:</h3>
+            <h3 className="sub-header">Studio 2:</h3>
             <div className="workouts-calendar">
                 <div className="workouts-calendar-entry">
                     <div className="workouts-calendar-header">
@@ -260,9 +265,7 @@ export default function CalPoly() {
                             </div>
                         </div>
                         <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                Barre
-                            </div>
+                            <div className="workouts-card-exercise">Barre</div>
                             <div className="workouts-card-sets-reps">
                                 10:10-10:55am
                             </div>
@@ -292,9 +295,7 @@ export default function CalPoly() {
                             </div>
                         </div>
                         <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                Salsa
-                            </div>
+                            <div className="workouts-card-exercise">Salsa</div>
                             <div className="workouts-card-sets-reps">
                                 6:30-7:30pm
                             </div>
@@ -388,9 +389,7 @@ export default function CalPoly() {
                             </div>
                         </div>
                         <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                Salsa
-                            </div>
+                            <div className="workouts-card-exercise">Salsa</div>
                             <div className="workouts-card-sets-reps">
                                 6:30-7:30pm
                             </div>
@@ -444,9 +443,7 @@ export default function CalPoly() {
                             </div>
                         </div>
                         <div className="workouts-card-exercise-container">
-                            <div className="workouts-card-exercise">
-                                Barre
-                            </div>
+                            <div className="workouts-card-exercise">Barre</div>
                             <div className="workouts-card-sets-reps">
                                 10:10-10:55am
                             </div>
@@ -503,8 +500,7 @@ export default function CalPoly() {
                 </div>
             </div>
 
-
-            <h3 class="sub-header">Studio 3:</h3>
+            <h3 className="sub-header">Studio 3:</h3>
             <div className="workouts-calendar">
                 <div className="workouts-calendar-entry">
                     <div className="workouts-calendar-header">
