@@ -1,48 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import StatForm from "./StatForm";
 
 function StatsBody(props) {
-    const [editing, setEditing] = useState(false)
+    const [editing, setEditing] = useState(false);
 
-    const rows = props.statsData.map((row) => {
-        let statrows = [];
-        for (const x of row.records) {
-            statrows.push(
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>
-                                <td>{x.name}:</td>
-                            </th>
-                            <th>
-                                <td>{x.pr} lbs</td>
-                            </th>
-                            <th>
-                                {editing && <button
-                                    class="delete-stat-button"
-                                    onClick={() =>
-                                        props.updateStats([
-                                            row._id,
-                                            row.records.filter(
-                                                (current) => x !== current
-                                            ),
-                                        ])
-                                    }
-                                >
-                                    Delete
-                                </button>}
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-            );
-        }
-        return <div>{statrows}</div>;
-    });
+    const records = props.statsData.records.map((row, i) => (
+        <div className="stats-row" key={i}>
+            <div>{row.name}:</div>
+            <div>{row.pr} </div>
+            <button
+                className="delete-stat-button"
+                style={!editing ? { visibility: "hidden" } : null}
+                onClick={() =>
+                    props.updateStats([
+                        props.statsData._id,
+                        props.statsData.records.filter(
+                            (current) => row !== current
+                        ),
+                    ])
+                }
+            >
+                Delete
+            </button>
+        </div>
+    ));
     return (
-        <div>
-            <table>{rows}</table>
-            <button ClassName="edit-stats-button" onClick={() => setEditing(prev => !prev)}>
+        <div class="stats-table-container">
+            <div class="stats-records">{records}</div>
+            <button
+                className="edit-stats-button"
+                onClick={() => setEditing((prev) => !prev)}
+            >
                 Edit
             </button>
         </div>
@@ -50,52 +38,42 @@ function StatsBody(props) {
 }
 
 function DietBody(props) {
-    let diet = props.statsData.map((row) => {
-        return (
+    return (
+        <div className="diet-container">
             <div>
-                <table>
-                    <thead>
-                        <th>
-                            <tr>Weight: </tr>
-                            <tr>Height:</tr>
-                            <tr>Calories:</tr>
-                            <tr>Plan:</tr>
-                        </th>
-                        <th>
-                            <tr>{row.weight} lbs</tr>
-                            <tr>{row.height} inches</tr>
-                            <tr>{row.calories}</tr>
-                            <tr>{row.plan}</tr>
-                        </th>
-                    </thead>
-                </table>
+                <div>Weight: </div>
+                <div>Height:</div>
+                <div>Calories:</div>
+                <div>Plan:</div>
             </div>
-        );
-    });
-    return <table>{diet}</table>;
+            <div>
+                <div>{props.statsData.weight} lbs</div>
+                <div>{props.statsData.height} inches</div>
+                <div>{props.statsData.calories}</div>
+                <div>{props.statsData.plan}</div>
+            </div>
+        </div>
+    );
 }
 
 function StatTables(props) {
     return (
         <div className="stats-main-container">
-            <h2 className="section-header">
-                {" "}
-                Welcome User, Lets Get This Bread{" "}
-            </h2>
-
+            <h3 className="section-header" 
+                style={{width: '800px', 'font-size': '50px'}}>
+                Edit your stats
+            </h3>
             <div className="stats-container-left">
                 <div className="stats-pr-table">
-                    <div>Stats</div>
-                    <table>
-                        <StatsBody
-                            statsData={props.statsData}
-                            updateStats={props.updateStats}
-                        />
-                    </table>
+                    <h3 class="sub-header" style={{'font-size': '35px'}}>Stats</h3>
+                    <StatsBody
+                        statsData={props.statsData}
+                        updateStats={props.updateStats}
+                    />
                 </div>
 
                 <div className="stats-update-form">
-                    <h3 class="sub-header">Update Stats</h3>
+                    <h3 className="sub-header" style={{'font-size': '35px'}}>Update Stats</h3>
                     <StatForm
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -105,51 +83,59 @@ function StatTables(props) {
 
             <div className="stats-conatiner-right">
                 <div className="stats-diet-table">
-                    <div>Diet</div>
-                    <table>
-                        <DietBody statsData={props.statsData} />
-                    </table>
+                    <h3 class="sub-header" style={{'font-size': '35px'}}>Diet</h3>
+                    <DietBody statsData={props.statsData} />
                 </div>
 
                 <div className="stats-bmi-calculator">
-                    <h3 class="sub-header">BMI Calculator</h3>
-                    <div class="BMI calculator">
-                        <div class="weight-bmi">
-                            <div class="bold-header">Weight:</div>
+                    <h3 className="sub-header" style={{'font-size': '35px'}}>BMI Calculator</h3>
+                    <div className="BMI calculator">
+                        <div className="weight-bmi">
+                            <div className="bold-header">Weight:</div>
                             <input
                                 id="weight-input-id"
                                 type="text"
-                                class="weight-lbs"
+                                className="weight-lbs"
                             ></input>
-                            <label for="weight-input-id">lbs</label>
+                            <label htmlFor="weight-input-id">lbs</label>
                         </div>
-                        <div class="height-bmi">
-                            <div class="bold-header">Height:</div>
+                        <div className="height-bmi">
+                            <div className="bold-header">Height:</div>
                             <input
                                 id="height-input-ft"
                                 type="text"
-                                class="height-ft"
+                                className="height-ft"
                             ></input>
-                            <label for="height-input-ft" class="label-ft">
+                            <label
+                                htmlFor="height-input-ft"
+                                className="label-ft"
+                            >
                                 ft
                             </label>
                             <input
                                 id="height-input-in"
                                 type="text"
-                                class="height-in"
+                                className="height-in"
                             ></input>
-                            <label for="height-input-in">in</label>
+                            <label htmlFor="height-input-in">in</label>
                         </div>
-                        <div class="bottom-bmi">
-                            <div class="bold-header">BMI:</div>
-                            <input class="BMI-result" id="BMI-result"></input>
-                            <label
-                                id="BMI-health-label"
-                                for="BMIresult"
-                            ></label>
-                            <button class="BMI-submit" onClick={calculateBMI}>
+                        <div className="bottom-bmi">
+                            <button
+                                className="BMI-submit"
+                                style={{'margin-top': '30px'}}
+                                onClick={calculateBMI}
+                            >
                                 Submit
                             </button>
+                            <div className="bold-header">BMI:</div>
+                            <input
+                                className="BMI-result"
+                                id="BMI-result"
+                            ></input>
+                            <label
+                                id="BMI-health-label"
+                                htmlFor="BMI-result"
+                            ></label>
                         </div>
                     </div>
                 </div>

@@ -2,43 +2,45 @@ import React from "react";
 import {
     AiOutlineCloseCircle,
     AiOutlineCheckCircle,
+    AiOutlinePlusCircle,
     AiOutlineEdit,
 } from "react-icons/ai";
-import { IconContext } from "react-icons";
-import { v4 as uuid } from "uuid";
+import { FiTrash2 } from "react-icons/fi";
 
-export default function WorkoutModal({ toggle, updateWorkout, workout }) {
+export default function WorkoutModal({
+    toggle,
+    updateWorkout,
+    workout,
+    createNewWorkout,
+}) {
     const [editing, setEditing] = React.useState(workout ? false : true);
-    const [id] = React.useState(workout ? workout._id : "");
     const [name, setName] = React.useState(workout ? workout.name : "");
     const [exercise_list, setExercise_list] = React.useState(
         workout ? workout.exercise_list : []
     );
-    const [currExercise, setCurrExercise] = React.useState({
-        exercise: "",
-        sets: "",
-        reps: "",
-    });
 
-    function handleModeToggle() {
-        if (editing && workout) {
+    async function handleSave() {
+        const cleanedExercises = exercise_list.filter(
+            (ex) => ex.exercise && ex.sets && ex.reps
+        );
+        if (!name) return;
+        else if (workout) {
             updateWorkout({
-                _id: id,
+                ...workout,
                 name: name,
-                exercise_list: exercise_list,
+                exercise_list: cleanedExercises,
+            }).then((res) => {
+                setExercise_list(res.exercise_list);
             });
             setEditing(false);
             return;
-        }
-        if (!editing) {
-            setEditing(true);
-            return;
-        }
-        if (!name) {
-            return;
-        }
-        if (!workout) {
-            updateWorkout({ name: name, exercise_list: exercise_list });
+        } else if (!workout) {
+            createNewWorkout({
+                name: name,
+                exercise_list: cleanedExercises,
+            }).then((res) => {
+                setExercise_list(res.exercise_list);
+            });
             setEditing(false);
             return;
         }
@@ -48,29 +50,30 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
         setName(event.target.value);
     }
 
-    function handleExerciseChange(event) {
-        let { name, value } = event.target;
+    function handleFormChange(index, e) {
+        let { name, value } = e.target;
         if (name === "sets" || name === "reps") {
             if (Number(value) <= 0) value = "";
             else if (Number(value) > 999) value = "999";
         }
-        if (!currExercise.id) {
-            setCurrExercise((prev) => ({ ...prev, id: uuid() }));
-        }
-        setCurrExercise((prev) => ({ ...prev, [name]: value }));
+        let prev = [...exercise_list];
+        prev[index][name] = value;
+        setExercise_list(prev);
     }
 
-    function handleExerciseSubmission() {
-        setExercise_list((prev) => [...prev, currExercise]);
-        setCurrExercise({
-            exercise: "",
-            sets: "",
-            reps: "",
-        });
+    function addNewExercise() {
+        setExercise_list((prev) => [
+            ...prev,
+            { exercise: "", sets: "", reps: "" },
+        ]);
     }
-    console.log(exercise_list);
-    const exerciseCards = exercise_list.map((card) => (
-        <div className="workout-modal-exercise-card" key={card.id}>
+
+    function removeExercise(index) {
+        setExercise_list((old) => old.filter((val, i) => i !== index));
+    }
+
+    const exerciseCards = exercise_list.map((card, i) => (
+        <div className="workout-modal-exercise-row" key={i}>
             <div className="workout-modal-exercise-header">{card.exercise}</div>
             <div className="workout-modal-exercise-body">
                 {card.sets} sets x {card.reps} reps
@@ -78,14 +81,58 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
         </div>
     ));
 
+    const inputCards = exercise_list.map((card, i) => (
+        <div className="workout-modal-exercise-row" key={i}>
+            <input
+                className="workout-modal-input modal-exercise"
+                name="exercise"
+                value={card.exercise}
+                onChange={(e) => handleFormChange(i, e)}
+                placeholder="Exercise Name"
+                maxLength={30}
+            />
+            <div className="workout-modal-exercise-body">
+                <div className="workout-modal-set-rep">
+                    <input
+                        className="workout-modal-input modal-set"
+                        name="sets"
+                        type="number"
+                        value={card.sets}
+                        onChange={(e) => handleFormChange(i, e)}
+                        placeholder="# of sets"
+                        min="1"
+                        max="999"
+                    />
+                    <span> x </span>
+                    <input
+                        className="workout-modal-input modal-rep"
+                        name="reps"
+                        type="number"
+                        value={card.reps}
+                        onChange={(e) => handleFormChange(i, e)}
+                        placeholder="# of reps"
+                        min="1"
+                        max="999"
+                    />
+                </div>
+                <FiTrash2
+                    visibility={editing ? "visible" : "hidden"}
+                    style={{ cursor: "pointer" }}
+                    size={24}
+                    onClick={() => removeExercise(i)}
+                />
+            </div>
+        </div>
+    ));
+
     return (
         <div className="modal-screen">
             <div className="modal-header">
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div className="modal-left-button" onClick={() => toggle()}>
-                        <AiOutlineCloseCircle />
-                    </div>
-                </IconContext.Provider>
+                <AiOutlineCloseCircle
+                    className="modal-left-button"
+                    size={35}
+                    onClick={() => toggle()}
+                />
                 {editing ? (
                     <input
                         className="workout-modal-title-input"
@@ -98,59 +145,33 @@ export default function WorkoutModal({ toggle, updateWorkout, workout }) {
                 ) : (
                     <div className="modal-center-title">{name}</div>
                 )}
-                <IconContext.Provider value={{ color: "white", size: "35px" }}>
-                    <div
+                {editing ? (
+                    <AiOutlineCheckCircle
                         className="modal-right-button"
-                        onClick={handleModeToggle}
-                    >
-                        {editing ? <AiOutlineCheckCircle /> : <AiOutlineEdit />}
-                    </div>
-                </IconContext.Provider>
-            </div>
-            <div className="workout-modal-container">
-                {exerciseCards}
-                {editing && (
-                    <div className="workout-modal-exercise-card">
-                        <input
-                            className="workout-modal-exercise-input"
-                            name="exercise"
-                            value={currExercise.exercise}
-                            onChange={handleExerciseChange}
-                            placeholder="Exercise Name"
-                            maxLength={20}
-                        />
-                        <div className="workout-modal-set-rep">
-                            <input
-                                className="workout-modal-set-rep-input"
-                                name="sets"
-                                type="number"
-                                value={currExercise.sets}
-                                onChange={handleExerciseChange}
-                                placeholder="# of sets"
-                                min="1"
-                                max="999"
-                            />
-                            <span> x </span>
-                            <input
-                                className="workout-modal-set-rep-input"
-                                name="reps"
-                                type="number"
-                                value={currExercise.reps}
-                                onChange={handleExerciseChange}
-                                placeholder="# of reps"
-                                min="1"
-                                max="999"
-                            />
-                        </div>
-                    </div>
+                        size={35}
+                        onClick={handleSave}
+                    />
+                ) : (
+                    <AiOutlineEdit
+                        className="modal-right-button"
+                        size={35}
+                        onClick={() => setEditing(true)}
+                    />
                 )}
+            </div>
+            <div className="modal-container">
+                {editing ? inputCards : exerciseCards}
                 {editing && (
-                    <button
-                        style={{ marginLeft: 10 }}
-                        onClick={handleExerciseSubmission}
+                    <div
+                        className="workout-container-button workout-modal-new-button"
+                        onClick={addNewExercise}
                     >
-                        Add New Exercise
-                    </button>
+                        <AiOutlinePlusCircle
+                            className="button-icon"
+                            size={20}
+                        />
+                        <div>Add New Exercise</div>
+                    </div>
                 )}
             </div>
         </div>

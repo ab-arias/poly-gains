@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function WorkoutCalendar({
     preview,
@@ -6,7 +6,7 @@ export default function WorkoutCalendar({
     calendar,
     addToDay,
     handleOpenWorkout,
-    user,
+    otherName,
 }) {
     const currentDate = new Date();
     const monthName = new Intl.DateTimeFormat("en-US", {
@@ -20,10 +20,10 @@ export default function WorkoutCalendar({
         if (plan) {
             return plan;
         }
-        console.log(plan);
     }
 
     const content = Object.entries(calendar).map(([day, planId], i) => {
+        const miniCard = getActiveWorkout(planId);
         let dayOfWeek = new Date();
         dayOfWeek.setDate(lastMon.getDate() + i);
         return (
@@ -32,7 +32,7 @@ export default function WorkoutCalendar({
                 style={day === "Sunday" ? { borderRightWidth: "0" } : null}
                 onDragOver={!preview ? (e) => e.preventDefault() : null}
                 onDrop={!preview ? (e) => addToDay(e, day) : null}
-                key={i}
+                key={day}
             >
                 <div className="workouts-calendar-header">
                     <h3 className="workouts-calendar-date">
@@ -49,34 +49,47 @@ export default function WorkoutCalendar({
                 >
                     <div
                         className="mini-workouts-card"
-                        onClick={
+                        style={otherName ? { cursor: "default" } : null}
+                        draggable
+                        onDragStart={
                             !preview
-                                ? () =>
-                                      handleOpenWorkout(
-                                          getActiveWorkout(planId)
-                                      )
+                                ? (e) => {
+                                      let val = JSON.stringify({
+                                          id: planId,
+                                          day: day,
+                                      });
+                                      e.dataTransfer.setData("card", val);
+                                  }
+                                : null
+                        }
+                        onClick={
+                            !preview && planId !== "637012e5c8e5bba98b4d3903"
+                                ? () => handleOpenWorkout(miniCard)
                                 : null
                         }
                     >
                         <div className="workouts-card-header">
-                            {getActiveWorkout(planId)?.name}
+                            <div className="workouts-card-overflow">
+                                {miniCard?.name}
+                            </div>
                         </div>
                         <div className="workouts-card-body">
-                            {getActiveWorkout(planId)?.exercise_list.map(
-                                (exercise) => (
-                                    <div className="workouts-card-exercise-container">
-                                        <div className="workouts-card-exercise">
-                                            {exercise.exercise}
-                                        </div>
-                                        <div className="workouts-card-sets-reps">
-                                            {exercise.sets}
-                                            <span> sets x </span>
-                                            {exercise.reps}
-                                            <span> reps</span>
-                                        </div>
+                            {miniCard?.exercise_list.map((exercise, i) => (
+                                <div
+                                    className="workouts-card-exercise-container"
+                                    key={i}
+                                >
+                                    <div className="workouts-card-exercise body-workouts-card-overflow">
+                                        {exercise.exercise}
                                     </div>
-                                )
-                            )}
+                                    <div className="workouts-card-sets-reps">
+                                        {exercise.sets}
+                                        <span> sets x </span>
+                                        {exercise.reps}
+                                        <span> reps</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -86,7 +99,11 @@ export default function WorkoutCalendar({
 
     return (
         <div className="workouts-calendar-container">
-            {preview && <h2 className="section-header">My Workouts</h2>}
+            {preview && (
+                <h2 className="section-header">
+                    {otherName ? `${otherName}'s` : "My"} Workouts
+                </h2>
+            )}
             <h2 className="calendar-month">{monthName}</h2>
             <div className="workouts-calendar">{content}</div>
         </div>
