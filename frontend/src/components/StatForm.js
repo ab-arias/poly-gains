@@ -36,7 +36,7 @@ function StatForm(props) {
 
     return (
         <form className="update-stats-form">
-            <div class="form-row">
+            <div className="form-row">
                 <label htmlFor="name">Workout:</label>
                 <input
                     value={record.name}
@@ -47,7 +47,7 @@ function StatForm(props) {
                     onChange={handleChange}
                 />
             </div>
-            <div class="form-row">
+            <div className="form-row">
                 <label htmlFor="pr">New Pr:</label>
                 <input
                     value={record.pr}
@@ -58,7 +58,7 @@ function StatForm(props) {
                     onChange={handleChange}
                 />
             </div>
-            <div class="form-row">
+            <div className="form-row">
                 <label htmlFor="pr">Goal:</label>
                 <input
                     value={record.goal}
@@ -70,7 +70,7 @@ function StatForm(props) {
                 />
             </div>
             
-            <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
+            <input type="button" value="Submit" className="BMI-submit" onClick={submitForm} style={{width: '250px', marginLeft: '25px'}}/>
         </form>
     );
 }

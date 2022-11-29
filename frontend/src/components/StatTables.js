@@ -5,10 +5,8 @@ import {
 } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 
-function StatsBody(props) {
-    const [editing, setEditing] = useState(false);
-
-    const records = props.statsData.records.map((row, i) => (
+function StatsBody({statsData, updateStats, editing}) {
+    const records = statsData.records.map((row, i) => (
         <div className="stats-row" key={i}>
             <div>{row.name}:</div>
             <div>{row.pr} </div>
@@ -16,9 +14,9 @@ function StatsBody(props) {
                 className="delete-stat-button"
                 style={!editing ? { visibility: "hidden" } : null}
                 onClick={() =>
-                    props.updateStats([
-                        props.statsData._id,
-                        props.statsData.records.filter(
+                    updateStats([
+                        statsData._id,
+                        statsData.records.filter(
                             (current) => row !== current
                         ),
                     ])
@@ -29,14 +27,8 @@ function StatsBody(props) {
         </div>
     ));
     return (
-        <div class="stats-table-container">
-            <div class="stats-records">{records}</div>
-            <AiOutlineEdit
-                className="edit-stats-button"
-                onClick={() => setEditing((prev) => !prev)}
-            >
-                Edit
-            </AiOutlineEdit>
+        <div className="stats-table-container">
+            <div className="stats-records">{records}</div>
         </div>
     );
 }
@@ -61,23 +53,33 @@ function DietBody(props) {
 }
 
 function StatTables(props) {
+    const [editing, setEditing] = useState(false);
+
     return (
         <div className="stats-main-container">
             <h3 className="section-header" 
-                style={{width: '800px', 'font-size': '50px'}}>
+                style={{width: '800px', fontSize: '50px'}}>
                 Edit your stats
             </h3>
             <div className="stats-container-left">
                 <div className="stats-pr-table">
-                    <h3 class="sub-header" style={{'font-size': '35px'}}>Stats</h3>
+                    <div className="stats-header-row">
+                        <h3 className="sub-header stats-header-text">Stats</h3>
+                        <AiOutlineEdit
+                            className="edit-stats-button"
+                            size={40}
+                            onClick={() => setEditing((prev) => !prev)}
+                        />
+                    </div>
                     <StatsBody
                         statsData={props.statsData}
                         updateStats={props.updateStats}
+                        editing={editing}
                     />
                 </div>
 
                 <div className="stats-update-form">
-                    <h3 className="sub-header" style={{'font-size': '35px'}}>Update Stats</h3>
+                    <h3 className="sub-header stats-header-text">Update Stats</h3>
                     <StatForm
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -87,12 +89,12 @@ function StatTables(props) {
 
             <div className="stats-conatiner-right">
                 <div className="stats-diet-table">
-                    <h3 class="sub-header" style={{'font-size': '35px'}}>Diet</h3>
+                    <h3 className="sub-header stats-header-text">Diet</h3>
                     <DietBody statsData={props.statsData} />
                 </div>
 
                 <div className="stats-bmi-calculator">
-                    <h3 className="sub-header" style={{'font-size': '35px'}}>BMI Calculator</h3>
+                    <h3 className="sub-header stats-header-text">BMI Calculator</h3>
                     <div className="BMI calculator">
                         <div className="weight-bmi">
                             <div className="bold-header">Weight:</div>
@@ -126,7 +128,7 @@ function StatTables(props) {
                         <div className="bottom-bmi">
                             <button
                                 className="BMI-submit"
-                                style={{'margin-top': '30px'}}
+                                style={{marginTop: '30px'}}
                                 onClick={calculateBMI}
                             >
                                 Submit

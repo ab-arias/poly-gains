@@ -194,10 +194,10 @@ export default function Profile({ userToken }) {
                                 ></img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Grant Jonhson
                             <a 
-                                classname="RecLink"
+                                className="RecLink"
                                 href="#/"
                                 target="_blank"
                                 rel="noreferrer">
@@ -208,10 +208,10 @@ export default function Profile({ userToken }) {
                                 </img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Nicholas Micali
                             <a 
-                                classname="RecLink"
+                                className="RecLink"
                                 href="https://www.linkedin.com/in/nicholas-micali-a83b29181"
                                 target="_blank"
                                 rel="noreferrer">
@@ -222,10 +222,10 @@ export default function Profile({ userToken }) {
                                 </img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Marco Araiza
                             <a 
-                                classname="RecLink"
+                                className="RecLink"
                                 href="#/"
                                 target="_blank"
                                 rel="noreferrer">
@@ -236,10 +236,10 @@ export default function Profile({ userToken }) {
                                 </img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Abraham Arais
                             <a 
-                                classname="RecLink"
+                                className="RecLink"
                                 href="#/"
                                 target="_blank"
                                 rel="noreferrer">

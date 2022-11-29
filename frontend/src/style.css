@@ -34,10 +34,12 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 input[type="number"] {
     -moz-appearance: textfield;
+    appearance: none;
 }
 /*
 Header CSS:
@@ -1008,6 +1010,16 @@ Stats css
     font-weight: 500;
 }
 
+.stats-header-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+
+.stats-header-text {
+    font-size: 35px;
+}
+
 .update-stats-form {
     font-weight: 500;
     padding: 5px;
@@ -1080,12 +1092,7 @@ Stats css
 }
 
 .edit-stats-button {
-    width: 40px;
-    height: 40px;
-    margin-top: 10px;
-    margin-left: 240px;
-    margin-bottom: 10px;
-    background-color: white;
+    margin-top: 8px;
     transition: 0.2s;
 }
 .edit-stats-button:hover{
@@ -1093,9 +1100,7 @@ Stats css
     transition: 0.2s;
     transform: scale(1.2);
 }
-.edit-stats-button:active{
-    background-color: white;
-}
+
 .stats-bmi-calculator {
     border: 2px solid forestgreen;
     border-radius: 10px;
