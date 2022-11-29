@@ -427,27 +427,36 @@ Profile CSS:
     flex-direction: column;
 }
 
-.profile-progress-container h2 {
-    margin-top: 0;
-    font-size: 40px;
-    border-bottom: 1px solid rgba(143, 127, 127, 0.77);
-    color: rgb(27, 104, 27);
-}
-
-.profile-progress-container table {
+.profile-progress-table {
+    display: flex;
     border: 2px solid forestgreen;
     border-radius: 10px;
     width: 500px;
     height: 200px;
 }
 
-.profile-progress-container th {
-    font-size: 28px;
+.content-container {
+    display: flex;
+    overflow-x: scroll;
 }
 
-.profile-progress-container td {
-    text-align: center;
+.record-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0px 26px;
+    min-width: fit-content;
+}
+
+.record-header {
     font-size: 28px;
+    font-weight: 700;
+}
+
+.record-body {
+    font-size: 28px;
+    font-weight: 400;
 }
 
 .dashboard-buttons-container {
