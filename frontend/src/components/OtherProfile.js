@@ -281,11 +281,34 @@ export default function OtherProfile({ userToken }) {
                 <h4>@{otherUser.username}</h4>
                 {renderButton()}
 
-                <div className="center-dashboard">
-                    <ProgressTable
-                        statsData={stats}
-                        otherName={otherUser.name}
-                    />
+                <div className="other-center-dashboard">
+                    <h2 className="section-header">{otherUser.name}'s Stats</h2>
+                    <div className="other-center-container">
+                        <ProgressTable
+                            statsData={stats}
+                            otherName={otherUser.name}
+                        />
+                        <div className="other-stats-container">
+                            <div className="other-stats-labels">
+                                <div style={{ marginBottom: 5 }}>Weight:</div>
+                                <div style={{ marginBottom: 5 }}>Height:</div>
+                                <div style={{ marginBottom: 5 }}>Calories:</div>
+                                <div>Plan:</div>
+                            </div>
+                            <div>
+                                <div style={{ marginBottom: 5 }}>
+                                    {stats.weight} lbs
+                                </div>
+                                <div style={{ marginBottom: 5 }}>
+                                    {stats.height} inches
+                                </div>
+                                <div style={{ marginBottom: 5 }}>
+                                    {stats.calories}
+                                </div>
+                                <div>{stats.plan}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <WorkoutCalendar
                     preview={true}

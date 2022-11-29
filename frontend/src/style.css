@@ -34,10 +34,12 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 input[type="number"] {
     -moz-appearance: textfield;
+    appearance: none;
 }
 /*
 Header CSS:
@@ -425,27 +427,36 @@ Profile CSS:
     flex-direction: column;
 }
 
-.profile-progress-container h2 {
-    margin-top: 0;
-    font-size: 40px;
-    border-bottom: 1px solid rgba(143, 127, 127, 0.77);
-    color: rgb(27, 104, 27);
-}
-
-.profile-progress-container table {
+.profile-progress-table {
+    display: flex;
     border: 2px solid forestgreen;
     border-radius: 10px;
     width: 500px;
     height: 200px;
 }
 
-.profile-progress-container th {
-    font-size: 28px;
+.content-container {
+    display: flex;
+    overflow-x: scroll;
 }
 
-.profile-progress-container td {
-    text-align: center;
+.record-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0px 26px;
+    min-width: fit-content;
+}
+
+.record-header {
     font-size: 28px;
+    font-weight: 700;
+}
+
+.record-body {
+    font-size: 28px;
+    font-weight: 400;
 }
 
 .dashboard-buttons-container {
@@ -591,6 +602,33 @@ Profile CSS:
 .article-icon:hover {
     transition: 0.2s;
     transform: scale(1.2);
+}
+
+.other-center-dashboard {
+    margin-bottom: 40px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.other-center-container {
+    display: flex;
+}
+
+.other-stats-container {
+    border: 2px solid forestgreen;
+    border-radius: 10px;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    font-size: 24px;
+    margin-left: 50px;
+    padding: 10px;
+}
+
+.other-stats-labels {
+    font-weight: 500;
+    margin-right: 15px;
 }
 
 /*
@@ -923,6 +961,41 @@ ProfilePicModal CSS:
 }
 
 /*
+Edit Body Stats CSS
+*/
+
+.body-stats-main {
+    display: flex;
+    flex-direction: column;
+    padding-left: 275px;
+    justify-content: left;
+    align-items: left;
+}
+
+.calories-in {
+    width: 75px;
+}
+
+.body-stats-input {
+    display: flex;
+    height: 29px;
+    width: 130px;
+    padding: 0;
+    border: hidden;
+    border-bottom: 1px groove rgba(143, 127, 127, 0.77);
+}
+.body-stats-input:focus {
+    outline: none;
+}
+.mini-input {
+    width: 30px;
+    margin-right: 5px;
+}
+
+.body-stats-row {
+    display: flex;
+}
+/*
 Cal Poly CSS
 */
 
@@ -973,7 +1046,7 @@ Cal Poly CSS
     width: 150px;
 }
 /*
-Stats css
+Stats CSS:
 */
 
 .stats-main-conatiner {
@@ -982,12 +1055,11 @@ Stats css
     justify-content: space-evenly;
 }
 
-.stats-main-container *{
+.stats-main-container * {
     font-size: 20px;
 }
 
 .stats-container-left {
-    /* width: 40%; */
     display: flex;
     flex-direction: column;
     margin-right: 150px;
@@ -1002,11 +1074,20 @@ Stats css
 
 .stats-row {
     display: flex;
-    padding: 5px;
+    padding: 5px 12px;
     justify-content: space-between;
-    flex-direction: row;
-    align-content: center;
+    align-items: center;
     font-weight: 500;
+}
+
+.stats-header-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+
+.stats-header-text {
+    font-size: 35px;
 }
 
 .update-stats-form {
@@ -1022,7 +1103,6 @@ Stats css
 }
 
 .stats-container-right {
-    /* width: 40%; */
     display: flex;
     flex-direction: column;
     margin-left: 140px;
@@ -1047,11 +1127,13 @@ Stats css
 
 .diet-container {
     display: flex;
-    width: 60%;
     font-weight: 500;
     font-size: 18px;
-    justify-content: space-between;
     padding: 10px;
+}
+
+.diet-nums {
+    margin-left: 50px;
 }
 
 .stats-update-form {
@@ -1060,6 +1142,8 @@ Stats css
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
+    align-items: left;
+    justify-content: left;
 }
 
 .form-row {
@@ -1071,13 +1155,13 @@ Stats css
     transition: 0.2s;
 }
 
-.delete-stat-button:hover{
+.delete-stat-button:hover {
     cursor: pointer;
     transform: scale(1.2);
     transition: 0.2s;
 }
 
-.delete-stat-button:active{
+.delete-stat-button:active {
     background-color: lightcoral;
 }
 
@@ -1090,14 +1174,12 @@ Stats css
     background-color: rgba(255, 255, 255, 0);
     transition: 0.2s;
 }
-.edit-stats-button:hover{
+.edit-stats-button:hover {
     cursor: pointer;
     transition: 0.2s;
     transform: scale(1.2);
 }
-.edit-stats-button:active{
-    background-color: white;
-}
+
 .stats-bmi-calculator {
     border: 2px solid forestgreen;
     border-radius: 10px;
@@ -1132,6 +1214,7 @@ Stats css
 }
 .label-ft {
     margin-right: 10px;
+    margin-left: 4px;
 }
 .bottom-bmi {
     margin-left: 7px;
@@ -1182,4 +1265,3 @@ Stats css
 .bottom-bmi {
     margin-left: 7px;
 }
-

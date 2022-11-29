@@ -42,17 +42,17 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
     }
 
     async function updateUser() {
-        const id = user._id;
+        const userId = user._id;
         try {
-            const response = await axios.post(
-                window.$BACKEND_URI + "user/" + id,
+            const userResponse = await axios.post(
+                window.$BACKEND_URI + "user/" + userId,
                 {
                     name: name,
                     avatar: croppedImg,
                 }
             );
-            const result = response.data;
-            setUser(result);
+            const userResult = userResponse.data;
+            setUser(userResult);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -72,7 +72,10 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                 <AiOutlineCheckCircle
                     className="modal-right-button"
                     size={35}
-                    onClick={updateUser}
+                    onClick={() => {
+                        updateUser();
+                        closeModal();
+                    }}
                 />
             </div>
             <div className="modal-container">

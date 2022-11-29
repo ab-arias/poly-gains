@@ -103,8 +103,10 @@ function StatTables(props) {
 
     return (
         <div className="stats-main-container">
-            <h3 className="section-header" 
-                style={{width: '800px', 'font-size': '50px'}}>
+            <h3
+                className="section-header"
+                style={{ width: "800px", fontSize: "50px" }}
+            >
                 Edit your stats
             </h3>
             <div className="stats-container-right">
@@ -144,60 +146,60 @@ function StatTables(props) {
 
             <div className="stats-conatiner-left">
                 <div className="stats-diet-table">
-                    <h3 class="sub-header" style={{'font-size': '35px'}}>Diet</h3>
-                    <DietBody statsData={props.statsData} />
+                    <DietBody
+                        statsData={props.statsData}
+                        updateStats={props.updateStats}
+                    />
                 </div>
+            </div>
 
-                <div className="stats-bmi-calculator">
-                    <h3 className="sub-header" style={{'font-size': '35px'}}>BMI Calculator</h3>
-                    <div className="BMI calculator">
-                        <div className="weight-bmi">
-                            <div className="bold-header">Weight:</div>
-                            <input
-                                id="weight-input-id"
-                                type="text"
-                                className="weight-lbs"
-                            ></input>
-                            <label htmlFor="weight-input-id">lbs</label>
-                        </div>
-                        <div className="height-bmi">
-                            <div className="bold-header">Height:</div>
-                            <input
-                                id="height-input-ft"
-                                type="text"
-                                className="height-ft"
-                            ></input>
-                            <label
-                                htmlFor="height-input-ft"
-                                className="label-ft"
-                            >
-                                ft
-                            </label>
-                            <input
-                                id="height-input-in"
-                                type="text"
-                                className="height-in"
-                            ></input>
-                            <label htmlFor="height-input-in">in</label>
-                        </div>
-                        <div className="bottom-bmi">
-                            <button
-                                className="BMI-submit"
-                                style={{'margin-top': '30px'}}
-                                onClick={calculateBMI}
-                            >
-                                Submit
-                            </button>
-                            <div className="bold-header">BMI:</div>
-                            <input
-                                className="BMI-result"
-                                id="BMI-result"
-                            ></input>
-                            <label
-                                id="BMI-health-label"
-                                htmlFor="BMI-result"
-                            ></label>
-                        </div>
+            <div className="stats-bmi-calculator">
+                <div className="stats-header-row">
+                    <h3 className="sub-header stats-header-text">
+                        BMI Calculator
+                    </h3>
+                </div>
+                <div className="BMI calculator">
+                    <div className="weight-bmi">
+                        <div className="bold-header">Weight:</div>
+                        <input
+                            id="weight-input-id"
+                            type="text"
+                            className="weight-lbs"
+                        ></input>
+                        <label htmlFor="weight-input-id"> lbs</label>
+                    </div>
+                    <div className="height-bmi">
+                        <div className="bold-header">Height:</div>
+                        <input
+                            id="height-input-ft"
+                            type="text"
+                            className="height-ft"
+                        ></input>
+                        <label htmlFor="height-input-ft" className="label-ft">
+                            ft
+                        </label>
+                        <input
+                            id="height-input-in"
+                            type="text"
+                            className="height-in"
+                        ></input>
+                        <label htmlFor="height-input-in"> in</label>
+                    </div>
+                    <div className="bottom-bmi">
+                        <button
+                            className="BMI-submit"
+                            style={{ marginTop: "30px" }}
+                            onClick={calculateBMI}
+                        >
+                            Submit
+                        </button>
+                        <div className="bold-header">BMI:</div>
+                        <input className="BMI-result" id="BMI-result"></input>
+                        <label
+                            id="BMI-health-label"
+                            htmlFor="BMI-result"
+                        ></label>
                     </div>
                 </div>
             </div>

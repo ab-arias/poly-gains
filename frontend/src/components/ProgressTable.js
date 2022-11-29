@@ -1,54 +1,25 @@
 import React from "react";
 
-function ProgressHeader(props) {
-    let header = props.statsData.records.map((record, i) => (
-        <th key={i}>{record.name}</th>
-    ));
-    return (
-        <tr>
-            <th />
-            {header}
-        </tr>
-    );
-}
-
-function PrBody(props) {
-    const body = props.statsData.records.map((record, i) => (
-        <td key={i}>{record.pr}</td>
-    ));
-    return (
-        <tr>
-            <th>PR</th>
-            {body}
-        </tr>
-    );
-}
-
-function GoalBody(props) {
-    const body = props.statsData.records.map((record, i) => (
-        <td key={i}>{record.goal}</td>
-    ));
-    return (
-        <tr>
-            <th>Goal</th>
-            {body}
-        </tr>
-    );
-}
-
 function ProgressTable({ statsData, otherName }) {
+    const content = statsData.records.map((rec, i) => (
+        <div className="record-column" key={i}>
+            <div className="record-header">{rec.name}</div>
+            <div className="record-body">{rec.goal}</div>
+            <div className="record-body">{rec.pr}</div>
+        </div>
+    ));
+
     return (
         <div className="profile-progress-container">
-            <h2 className="section-header">
-                {otherName ? `${otherName}'s` : "My"} Progress
-            </h2>
-            <table>
-                <tbody>
-                    <ProgressHeader statsData={statsData} />
-                    <PrBody statsData={statsData} />
-                    <GoalBody statsData={statsData} />
-                </tbody>
-            </table>
+            {otherName ? null : <h2 className="section-header">My Progress</h2>}
+            <div className="profile-progress-table">
+                <div className="record-column">
+                    <div style={{ height: 39 }}></div>
+                    <div className="record-header">PR</div>
+                    <div className="record-header">Goal</div>
+                </div>
+                <div className="content-container">{content}</div>
+            </div>
         </div>
     );
 }

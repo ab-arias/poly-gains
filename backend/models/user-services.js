@@ -233,7 +233,7 @@ async function deleteWorkout(id) {
     }
 }
 
-// // STATS
+// STATS
 
 async function getStatsById(id) {
     const statsModel = getDbConnection().model("Stats", StatsSchema);
@@ -241,14 +241,10 @@ async function getStatsById(id) {
     return result;
 }
 
-async function updateStats(id, newRec) {
+async function updateStats(id, newStats) {
     const statsModel = getDbConnection().model("Stats", StatsSchema);
     try {
-        return await statsModel.findByIdAndUpdate(
-            id,
-            { records: newRec },
-            { new: true }
-        );
+        return await statsModel.findByIdAndUpdate(id, newStats, { new: true });
     } catch (error) {
         return undefined;
     }

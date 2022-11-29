@@ -90,6 +90,8 @@ export default function Profile({ userToken }) {
                         closeModal={toggleModalView}
                         user={user}
                         setUser={setUser}
+                        stats={stats}
+                        setStats={setStats}
                     />
                 )}
                 <img
@@ -149,7 +151,7 @@ export default function Profile({ userToken }) {
                 </Link>
                 <div className="space"></div>
                 <div className="shape"></div>
-                <h3 className="section-header">Resources:</h3>
+                <h3 className="section-header">Resources</h3>
                 <div className="resources">
                     <div className="left-res">
                         <div className="Res-Link">
@@ -194,60 +196,64 @@ export default function Profile({ userToken }) {
                                 ></img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Grant Jonhson
-                            <a 
-                                classname="RecLink"
-                                href="#/"
+                            <a
+                                className="RecLink"
+                                href="https://www.linkedin.com/in/grant-johnson-a725721b8"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Nicholas Micali
-                            <a 
-                                classname="RecLink"
+                            <a
+                                className="RecLink"
                                 href="https://www.linkedin.com/in/nicholas-micali-a83b29181"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Marco Araiza
-                            <a 
-                                classname="RecLink"
+                            <a
+                                className="RecLink"
                                 href="#/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
-                        <div class="LI-Link">
+                        <div className="LI-Link">
                             Abraham Arais
-                            <a 
-                                classname="RecLink"
-                                href="#/"
+                            <a
+                                className="RecLink"
+                                href="https://www.linkedin.com/in/abraham-arias/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                     </div>

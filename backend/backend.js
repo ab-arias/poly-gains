@@ -58,11 +58,10 @@ app.post("/user/:id", async (req, res) => {
 
 app.post("/stats/:id", async (req, res) => {
     const id = req.params["id"];
-    const newRec = req.body;
-    const updatedStat = await userServices.updateStats(id, newRec);
-    const stats = updatedStat;
+    const newStats = req.body;
+    const updatedStat = await userServices.updateStats(id, newStats);
     if (updatedStat) {
-        res.status(201).send({ stats_list: stats }).end();
+        res.status(201).send(updatedStat).end();
     } else {
         res.status(404).end();
     }
