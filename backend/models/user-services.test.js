@@ -496,20 +496,28 @@ test("Successfully get stats", async () => {
     expect(result).toBeDefined();
 });
 
-test("Update records in stats", async () => {
+test("Update stats", async () => {
     let id = "6362cfa7c8e5bba98bd31324";
-    let newRec = [
-        { name: "Bench", pr: "315", goal: "355" },
-        { name: "Squat", pr: "295", goal: "405" },
-        { name: "Deadlift", pr: "365", goal: "465" },
-        { name: "Snatch", pr: "155", goal: "225" },
-        { name: "C&J", pr: "205", goal: "295" },
-        { name: "newWork", pr: "555", goal: "100" },
-        { name: "another", pr: "100", goal: "101" },
-    ];
-    const stats = await userServices.updateStats(id, newRec);
+    let newStats = {
+        records: [
+            { name: "Bench", pr: "315", goal: "355" },
+            { name: "Squat", pr: "295", goal: "405" },
+            { name: "Deadlift", pr: "365", goal: "465" },
+            { name: "Snatch", pr: "155", goal: "225" },
+            { name: "C&J", pr: "205", goal: "295" },
+            { name: "newWork", pr: "555", goal: "100" },
+            { name: "another", pr: "100", goal: "101" },
+        ],
+        height: 69,
+        weight: 168,
+        mile: "5:30",
+        calories: 2300,
+        plan: "Maintenance",
+    };
+    const stats = await userServices.updateStats(id, newStats);
     expect(stats).toBeDefined();
     expect(stats.records[0].pr).toBe("315");
+    expect(stats.calories).toBe(2300);
 });
 
 test("Fail to update records in stats", async () => {

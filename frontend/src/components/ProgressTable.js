@@ -39,9 +39,7 @@ function GoalBody(props) {
 function ProgressTable({ statsData, otherName }) {
     return (
         <div className="profile-progress-container">
-            <h2 className="section-header">
-                {otherName ? `${otherName}'s` : "My"} Progress
-            </h2>
+            {otherName ? null : <h2 className="section-header">My Progress</h2>}
             <table>
                 <tbody>
                     <ProgressHeader statsData={statsData} />

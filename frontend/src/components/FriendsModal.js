@@ -148,6 +148,7 @@ export default function FriendsModal({ userToken, closeFriends }) {
                 <Link
                     className="friend-link"
                     to={"/profile/" + result.username}
+                    onClick={() => closeFriends()}
                 >
                     <img
                         className="friend-avatar"

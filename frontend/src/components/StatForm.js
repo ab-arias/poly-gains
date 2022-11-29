@@ -30,7 +30,8 @@ function StatForm(props) {
         } else {
             newRec[idx] = record;
         }
-        props.updateStats([props.statsData._id, newRec]);
+        const newStats = { ...props.statsData, records: newRec };
+        props.updateStats(newStats);
         setRecord({ name: "", pr: "", goal: "" });
     }
 
@@ -69,8 +70,14 @@ function StatForm(props) {
                     onChange={handleChange}
                 />
             </div>
-            
-            <input type="button" value="Submit" className="BMI-submit" onClick={submitForm} style={{width: '250px', marginLeft: '25px'}}/>
+
+            <input
+                type="button"
+                value="Submit"
+                className="BMI-submit"
+                onClick={submitForm}
+                style={{ width: "250px", marginLeft: "25px" }}
+            />
         </form>
     );
 }

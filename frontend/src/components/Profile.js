@@ -151,7 +151,7 @@ export default function Profile({ userToken }) {
                 </Link>
                 <div className="space"></div>
                 <div className="shape"></div>
-                <h3 className="section-header">Resources:</h3>
+                <h3 className="section-header">Resources</h3>
                 <div className="resources">
                     <div className="left-res">
                         <div className="Res-Link">
@@ -198,9 +198,9 @@ export default function Profile({ userToken }) {
                         </div>
                         <div className="LI-Link">
                             Grant Jonhson
-                            <a 
+                            <a
                                 className="RecLink"
-                                href="#/"
+                                href="https://www.linkedin.com/in/grant-johnson-a725721b8"
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -213,7 +213,7 @@ export default function Profile({ userToken }) {
                         </div>
                         <div className="LI-Link">
                             Nicholas Micali
-                            <a 
+                            <a
                                 className="RecLink"
                                 href="https://www.linkedin.com/in/nicholas-micali-a83b29181"
                                 target="_blank"
@@ -228,7 +228,7 @@ export default function Profile({ userToken }) {
                         </div>
                         <div className="LI-Link">
                             Marco Araiza
-                            <a 
+                            <a
                                 className="RecLink"
                                 href="#/"
                                 target="_blank"
