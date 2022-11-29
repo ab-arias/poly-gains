@@ -90,6 +90,8 @@ export default function Profile({ userToken }) {
                         closeModal={toggleModalView}
                         user={user}
                         setUser={setUser}
+                        stats={stats}
+                        setStats={setStats}
                     />
                 )}
                 <img
@@ -200,12 +202,13 @@ export default function Profile({ userToken }) {
                                 className="RecLink"
                                 href="#/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                         <div className="LI-Link">
@@ -214,12 +217,13 @@ export default function Profile({ userToken }) {
                                 className="RecLink"
                                 href="https://www.linkedin.com/in/nicholas-micali-a83b29181"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                         <div className="LI-Link">
@@ -228,26 +232,28 @@ export default function Profile({ userToken }) {
                                 className="RecLink"
                                 href="#/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                         <div className="LI-Link">
                             Abraham Arais
-                            <a 
+                            <a
                                 className="RecLink"
-                                href="#/"
+                                href="https://www.linkedin.com/in/abraham-arias/"
                                 target="_blank"
-                                rel="noreferrer">
-                                <img 
+                                rel="noreferrer"
+                            >
+                                <img
                                     className="article-icon"
                                     src={require("../assets/img/linkedin-logo.png")}
-                                    alt="cannot display">
-                                </img>
+                                    alt="cannot display"
+                                ></img>
                             </a>
                         </div>
                     </div>

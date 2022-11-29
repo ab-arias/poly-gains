@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import StatForm from "./StatForm";
-import {
-    AiOutlineEdit,
-} from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 
 function StatsBody({statsData, updateStats, editing}) {
