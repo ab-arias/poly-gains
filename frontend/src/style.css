@@ -928,18 +928,10 @@ Edit Body Stats CSS
 
 .body-stats-main {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.body-stats-table {
-    border: 2px solid forestgreen;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
     flex-direction: column;
-    width: 300px;
-    padding-left: 10px;
+    padding-left: 275px;
+    justify-content: left;
+    align-items: left;
 }
 
 .body-stats-submit {

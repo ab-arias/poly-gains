@@ -254,6 +254,21 @@ async function updateStats(id, newRec) {
     }
 }
 
+async function updateBodyStats(id, newVal) {
+    const statsModel = getDbConnection().model("Stats", StatsSchema);
+
+    try {
+        return await statsModel.findByIdAndUpdate(id, {
+            height: newVal.height,
+            weight: newVal.weight,
+            calories: newVal.calories,
+            plan: newVal.plan,
+        });
+    } catch (error) {
+        return undefined;
+    }
+}
+
 async function deleteStat(id, name) {
     const statsModel = getDbConnection().model("Stats", StatsSchema);
     try {
@@ -286,6 +301,7 @@ module.exports = {
     deleteWorkout,
     getStatsById,
     updateStats,
+    updateBodyStats,
     deleteStat,
     setConnection,
     getDbConnection,

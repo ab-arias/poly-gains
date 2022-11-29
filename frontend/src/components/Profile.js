@@ -90,6 +90,8 @@ export default function Profile({ userToken }) {
                         closeModal={toggleModalView}
                         user={user}
                         setUser={setUser}
+                        stats={stats}
+                        setStats={setStats}
                     />
                 )}
                 <img
