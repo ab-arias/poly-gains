@@ -68,6 +68,17 @@ app.post("/stats/:id", async (req, res) => {
     }
 });
 
+app.post("/bodyStats/:bodyId", async (req, res) => {
+    const id = req.params["bodyId"];
+    const newVal = req.body;
+    const updatedStat = await userServices.updateBodyStats(id, newVal);
+    if (updatedStat) {
+        res.status(201).send(updatedStat).end();
+    } else {
+        res.status(404).end();
+    }
+});
+
 app.delete("/stats/:id", async (req, res) => {
     const id = req.params["id"];
     const delRec = req.body["thisName"];

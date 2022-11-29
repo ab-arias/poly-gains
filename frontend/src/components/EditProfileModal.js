@@ -5,7 +5,13 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 
-export default function EditProfileModal({ closeModal, user, setUser }) {
+export default function EditProfileModal({
+    closeModal,
+    user,
+    setUser,
+    stats,
+    setStats,
+}) {
     const [srcImg, setSrcImg] = useState();
     const cropperRef = useRef(null);
     const inputFile = useRef(null);
@@ -14,6 +20,11 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
     );
     const [showFileSelector, setShowFileSelector] = useState(false);
     const [name, setName] = useState(user.name);
+    const [weight, setWeight] = useState(stats.weight);
+    const [calories, setCalories] = useState(stats.calories);
+    const [plan, setPlan] = useState(stats.plan);
+    const [feet, setFeet] = useState(Math.floor(stats.height / 12));
+    const [inches, setInches] = useState(stats.height % 12);
 
     const onCrop = () => {
         const imageElement = cropperRef?.current;
@@ -41,18 +52,52 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
         setCroppedImg("");
     }
 
+    function handleFeetChange(event) {
+        setFeet(event.target.value);
+        console.log(feet);
+    }
+
+    function handleInchesChange(event) {
+        setInches(event.target.value);
+        console.log(feet);
+    }
+
+    function handleWeightChange(event) {
+        setWeight(event.target.value);
+    }
+
+    function handleCaloriesChange(event) {
+        setCalories(event.target.value);
+    }
+
+    function handlePlanChange(event) {
+        setPlan(event.target.value);
+    }
+
     async function updateUser() {
-        const id = user._id;
+        const userId = user._id;
+        const statsId = stats._id;
         try {
-            const response = await axios.post(
-                window.$BACKEND_URI + "user/" + id,
+            const userResponse = await axios.post(
+                window.$BACKEND_URI + "user/" + userId,
                 {
                     name: name,
                     avatar: croppedImg,
                 }
             );
-            const result = response.data;
-            setUser(result);
+            const bodyResponse = await axios.post(
+                window.$BACKEND_URI + "bodyStats/" + statsId,
+                {
+                    height: parseInt(feet) * 12 + parseInt(inches),
+                    weight: weight,
+                    calories: calories,
+                    plan: plan,
+                }
+            );
+            const userResult = userResponse.data;
+            const bodyResult = bodyResponse.data;
+            setUser(userResult);
+            setStats(bodyResult);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
             console.log(error);
@@ -72,7 +117,10 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                 <AiOutlineCheckCircle
                     className="modal-right-button"
                     size={35}
-                    onClick={updateUser}
+                    onClick={() => {
+                        updateUser();
+                        closeModal();
+                    }}
                 />
             </div>
             <div className="modal-container">
@@ -145,63 +193,53 @@ export default function EditProfileModal({ closeModal, user, setUser }) {
                 )}
 
                 <div className="body-stats-main">
-                    <div className="body-stats-table">
-                        <h3
-                            className="sub-header"
-                            style={{ "font-size": "20px" }}
-                        >
-                            Body Stats
-                        </h3>
-                        <div className="body-stats-height">
-                            <div className="bold-header">Height:</div>
-                            <input
-                                id="height-input-ft"
-                                type="text"
-                                className="height-ft"
-                            ></input>
-                            <label
-                                htmlFor="height-input-ft"
-                                className="label-ft"
-                            >
-                                ft
-                            </label>
-                            <input
-                                id="height-input-in"
-                                type="text"
-                                className="height-in"
-                            ></input>
-                            <label htmlFor="height-input-in">in</label>
-                        </div>
-                        <div>
-                            <div className="bold-header">Weight:</div>
-                            <input
-                                id="weight-input-id"
-                                type="text"
-                                className="weight-lbs"
-                            ></input>
-                            <label htmlFor="weight-input-id">lbs</label>
-                        </div>
-                        <div>
-                            <div className="bold-header">Calories:</div>
-                            <input
-                                id="calorie-input-in"
-                                type="text"
-                                clasName="calories-in"
-                            ></input>
-                            <label htmlFor="calorie-input-in">cal</label>
-                        </div>
+                    <div className="body-stats-height">
+                        <div className="bold-header">Height:</div>
+                        <input
+                            id="height-input-ft"
+                            type="text"
+                            className="height-ft"
+                            value={feet}
+                            onChange={handleFeetChange}
+                        ></input>
+                        <label htmlFor="height-input-ft" className="label-ft">
+                            ft
+                        </label>
+                        <input
+                            id="height-input-in"
+                            type="text"
+                            className="height-in"
+                            value={inches}
+                            onChange={handleInchesChange}
+                        ></input>
+                        <label htmlFor="height-input-in">in</label>
+                    </div>
+                    <div>
+                        <div className="bold-header">Weight:</div>
+                        <input
+                            id="weight-input-id"
+                            type="text"
+                            className="weight-lbs"
+                            value={weight}
+                            onChange={handleWeightChange}
+                        ></input>
+                        <label htmlFor="weight-input-id">lbs</label>
+                    </div>
+                    <div>
+                        <div className="bold-header">Calories:</div>
+                        <input
+                            id="calorie-input-in"
+                            type="text"
+                            clasName="calories-in"
+                            value={calories}
+                            onChange={handleCaloriesChange}
+                        ></input>
+                        <label htmlFor="calorie-input-in">cal</label>
+                    </div>
 
-                        <div>
-                            <div className="bold-header">Plan</div>
-                            <input></input>
-                        </div>
-
-                        <button
-                            className="body-stats-submit"
-                            style={{ "margin-top": "30px" }}
-                        >
-                            Submit
-                        </button>
+                    <div>
+                        <div className="bold-header">Plan</div>
+                        <input value={plan} onChange={handlePlanChange}></input>
                     </div>
                 </div>
             </div>
