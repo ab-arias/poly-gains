@@ -997,6 +997,7 @@ Stats css
 .stats-table-container {
     display: flex;
     flex-direction: column;
+    margin-right: 10px;
 }
 
 .stats-row {
@@ -1024,6 +1025,7 @@ Stats css
     /* width: 40%; */
     display: flex;
     flex-direction: column;
+    margin-left: 140px;
     float: right;
 }
 
@@ -1085,7 +1087,7 @@ Stats css
     margin-top: 10px;
     margin-left: 240px;
     margin-bottom: 10px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     transition: 0.2s;
 }
 .edit-stats-button:hover{
@@ -1100,8 +1102,18 @@ Stats css
     border: 2px solid forestgreen;
     border-radius: 10px;
     margin-bottom: 50px;
+    margin-right: 430px;
     display: flex;
     flex-direction: column;
+}
+.edit-stat-name {
+    margin: 5px;
+}
+.edit-stat-pr {
+    margin: 5px;
+}
+.edit-stat-goal {
+    margin: 5px;
 }
 .weight-bmi {
     margin-left: 7px;

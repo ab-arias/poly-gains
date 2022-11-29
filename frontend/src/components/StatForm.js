@@ -32,45 +32,46 @@ function StatForm(props) {
         }
         props.updateStats([props.statsData._id, newRec]);
         setRecord({ name: "", pr: "", goal: "" });
+        props.setAddWorkout(false);
     }
 
     return (
         <form className="update-stats-form">
-            <div class="form-row">
-                <label htmlFor="name">Workout:</label>
+                {/* <label htmlFor="name">Workout:</label> */}
                 <input
                     value={record.name}
                     type="text"
                     name="name"
                     id="name"
+                    placeholder="name"
                     style={{width: '200px'}}
                     onChange={handleChange}
                 />
-            </div>
-            <div class="form-row">
-                <label htmlFor="pr">New Pr:</label>
+
+                {/* <label htmlFor="pr">New Pr:</label> */}
                 <input
                     value={record.pr}
                     type="text"
                     name="pr"
                     id="pr"
+                    placeholder="PR"
                     style={{width: '100px'}}
                     onChange={handleChange}
                 />
-            </div>
-            <div class="form-row">
-                <label htmlFor="pr">Goal:</label>
+
+                {/* <label htmlFor="pr">Goal:</label> */}
                 <input
                     value={record.goal}
                     type="text"
                     name="goal"
                     id="goal"
+                    placeholder="Goal"
                     style={{width: '100px'}}
                     onChange={handleChange}
                 />
-            </div>
-            
-            <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
+                <div class="form-row">
+                    <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
+                </div>
         </form>
     );
 }
