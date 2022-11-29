@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import StatForm from "./StatForm";
-import {
-    AiOutlineEdit,
-} from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 
 function StatsBody(props) {
@@ -63,13 +61,17 @@ function DietBody(props) {
 function StatTables(props) {
     return (
         <div className="stats-main-container">
-            <h3 className="section-header" 
-                style={{width: '800px', 'font-size': '50px'}}>
+            <h3
+                className="section-header"
+                style={{ width: "800px", "font-size": "50px" }}
+            >
                 Edit your stats
             </h3>
             <div className="stats-container-left">
                 <div className="stats-pr-table">
-                    <h3 class="sub-header" style={{'font-size': '35px'}}>Stats</h3>
+                    <h3 class="sub-header" style={{ "font-size": "35px" }}>
+                        Stats
+                    </h3>
                     <StatsBody
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -77,7 +79,9 @@ function StatTables(props) {
                 </div>
 
                 <div className="stats-update-form">
-                    <h3 className="sub-header" style={{'font-size': '35px'}}>Update Stats</h3>
+                    <h3 className="sub-header" style={{ "font-size": "35px" }}>
+                        Update Stats
+                    </h3>
                     <StatForm
                         statsData={props.statsData}
                         updateStats={props.updateStats}
@@ -87,12 +91,16 @@ function StatTables(props) {
 
             <div className="stats-conatiner-right">
                 <div className="stats-diet-table">
-                    <h3 class="sub-header" style={{'font-size': '35px'}}>Diet</h3>
+                    <h3 class="sub-header" style={{ "font-size": "35px" }}>
+                        Diet
+                    </h3>
                     <DietBody statsData={props.statsData} />
                 </div>
 
                 <div className="stats-bmi-calculator">
-                    <h3 className="sub-header" style={{'font-size': '35px'}}>BMI Calculator</h3>
+                    <h3 className="sub-header" style={{ "font-size": "35px" }}>
+                        BMI Calculator
+                    </h3>
                     <div className="BMI calculator">
                         <div className="weight-bmi">
                             <div className="bold-header">Weight:</div>
@@ -126,7 +134,7 @@ function StatTables(props) {
                         <div className="bottom-bmi">
                             <button
                                 className="BMI-submit"
-                                style={{'margin-top': '30px'}}
+                                style={{ "margin-top": "30px" }}
                                 onClick={calculateBMI}
                             >
                                 Submit

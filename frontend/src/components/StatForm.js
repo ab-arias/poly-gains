@@ -43,7 +43,7 @@ function StatForm(props) {
                     type="text"
                     name="name"
                     id="name"
-                    style={{width: '200px'}}
+                    style={{ width: "200px" }}
                     onChange={handleChange}
                 />
             </div>
@@ -54,7 +54,7 @@ function StatForm(props) {
                     type="text"
                     name="pr"
                     id="pr"
-                    style={{width: '100px'}}
+                    style={{ width: "100px" }}
                     onChange={handleChange}
                 />
             </div>
@@ -65,12 +65,18 @@ function StatForm(props) {
                     type="text"
                     name="goal"
                     id="goal"
-                    style={{width: '100px'}}
+                    style={{ width: "100px" }}
                     onChange={handleChange}
                 />
             </div>
-            
-            <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
+
+            <input
+                type="button"
+                value="Submit"
+                class="BMI-submit"
+                onClick={submitForm}
+                style={{ width: "250px", "margin-left": "25px" }}
+            />
         </form>
     );
 }
