@@ -54,4 +54,4 @@ jobs:
                   app-name: "poly-gains"
                   slot-name: "Production"
                   publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_71325317E18A4BB39C205E55AD781FD6 }}
-                  package: .
+                  package: ./backend
