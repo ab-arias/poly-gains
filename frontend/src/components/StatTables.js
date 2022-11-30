@@ -151,20 +151,13 @@ function StatTables(props) {
     const [editing, setEditing] = useState(false);
     const [addStat, setAddStat] = useState(false);
 
-    function handleNameChange(event, idx) {
-        props.statsData.records[idx].name = event.target.value;
-        props.setRecordsData(props.statsData.records);
-    }
-
-    function handlePrChange(event, idx) {
-        props.statsData.records[idx].pr = event.target.value;
-        props.setRecordsData(props.statsData.records);
-    }
-
-    function handleGoalChange(event, idx) {
-        props.statsData.records[idx].goal = event.target.value
-        props.setRecordsData(props.statsData.records);
-        setUpdate(event.target.value);
+    function handleRecordChange(event, idx) {
+        const { name, value } = event.target;
+        props.statsData.records[idx][name] = event.target.value
+        const newRec = props.recordsData.map((rec, i) => {
+            return i === idx ? {...rec, [name]: value } : rec
+        })
+        props.setRecordsData(newRec);
     }
 
     function handleEditSave() {
@@ -197,25 +190,25 @@ function StatTables(props) {
                 className="edit-stat-name"
                 name="name"
                 value={row.name}
-                onChange={(event) => handleNameChange(event, i)}
+                onChange={event => handleRecordChange(event, i) }
                 placeholder="Name"
-                maxLength={10}
+                maxLength={20}
                 />
             <input
                 className="edit-stat-pr"
                 name="pr"
                 value={row.pr}
-                onChange={(event) => handlePrChange(event, i)}
+                onChange={event => handleRecordChange(event, i)}
                 placeholder="PR"
-                maxLength={10}
+                maxLength={20}
                 />
             <input
                 className="edit-stat-goal"
                 name="goal"
                 value={row.goal}
-                onChange={event => handleGoalChange(event, i)}
+                onChange={event => handleRecordChange(event, i)}
                 placeholder="Goal"
-                maxLength={10}
+                maxLength={20}
             />
             <FiTrash2
                 className="delete-stat-button"
