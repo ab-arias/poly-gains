@@ -45,7 +45,8 @@ function StatTables(props) {
     }
 
     function handleEditSave() {
-        props.updateStats([props.statsData._id, props.recordsData]);
+        props.statsData.records = props.recordsData
+        props.updateStats([props.statsData._id, props.statsData]);
         setEditing((prev) => !prev);
         setAddStat(false);
     }
@@ -62,6 +63,13 @@ function StatTables(props) {
         setAddStat(true);
     }
 
+
+    function removeRecord(stat, row) {
+        stat.records = stat.records.filter(
+            (current) => row !== current
+        )
+        return stat
+    }
 
     const editRecords = props.recordsData.map((row, i) => (
         <div className="stats-row" key={i}>
@@ -90,9 +98,7 @@ function StatTables(props) {
                 onClick={() =>
                     props.updateStats([
                         props.statsData._id,
-                        props.recordsData.filter(
-                            (current) => row !== current
-                        ),
+                        removeRecord(props.statsData, row),
                     ])
                 }
             >
