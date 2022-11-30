@@ -147,7 +147,6 @@ function DietBody({ statsData, updateStats }) {
 }
 
 function StatTables(props) {
-    const [update, setUpdate] = useState();
     // const [rec, setRec] = useState(props.statsData.records);
     const [editing, setEditing] = useState(false);
     const [addStat, setAddStat] = useState(false);
@@ -155,13 +154,11 @@ function StatTables(props) {
     function handleNameChange(event, idx) {
         props.statsData.records[idx].name = event.target.value;
         props.setRecordsData(props.statsData.records);
-        setUpdate(event.target.value);
     }
 
     function handlePrChange(event, idx) {
         props.statsData.records[idx].pr = event.target.value;
         props.setRecordsData(props.statsData.records);
-        setUpdate(event.target.value);
     }
 
     function handleEditSave() {
@@ -231,11 +228,11 @@ function StatTables(props) {
             </h3>
             <div className="stats-container-right">
                 <div className="stats-pr-table">
-                    <h3 class="sub-header" style={{ "font-size": "35px" }}>
+                    <h3 className="sub-header" style={{ fontSize: "35px" }}>
                         Stats
                     </h3>
-                    <div class="stats-table-container">
-                        <div class="stats-records">
+                    <div className="stats-table-container">
+                        <div className="stats-records">
                             {!editing ? records : editRecords}
                             {editing && !addStat && (
                                 <div
