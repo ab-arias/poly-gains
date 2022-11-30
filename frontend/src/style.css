@@ -1189,12 +1189,15 @@ Stats CSS:
     flex-direction: column;
 }
 .edit-stat-name {
+    width: 130px;
     margin: 5px;
 }
 .edit-stat-pr {
+    width: 55px;
     margin: 5px;
 }
 .edit-stat-goal {
+    width: 55px;
     margin: 5px;
 }
 .weight-bmi {
