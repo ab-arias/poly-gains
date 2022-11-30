@@ -1,5 +1,5 @@
 
-![status](https://github.com/ab-arias/poly-gains/actions/workflows/node.js.yml/badge.svg)
+![status](https://github.com/ab-arias/poly-gains/actions/workflows/node.js.yml/badge.svg)![status](https://github.com/ab-arias/poly-gains/actions/workflows/azure-static-web-apps-lemon-bush-06fd6661e.yml/badge.svg)![status](https://github.com/ab-arias/poly-gains/actions/workflows/main_poly-gains.yml/badge.svg)
 # PolyGains
 
 PolyGains is a site for Cal Poly students to log their
@@ -44,5 +44,8 @@ to see if your code adheres to our style requirements.
 ## Diagrams
 #### UML Class Diagram
 ![UML](https://drive.google.com/uc?export=view&id=1Wwq01bdhlJxrROS7tGdfQIhjcgY3i7lb)  
+Last Updated: November 29, 2022  
+#### Register Sequence Diagram
+![Sequence](https://drive.google.com/uc?export=view&id=1vqZS9DSPRKaK38CoanDKLhickobu6GOv)  
 Last Updated: November 29, 2022
 ## Coverage Report

@@ -3,10 +3,9 @@ import StatForm from "./StatForm";
 import {
     AiOutlinePlusCircle,
     AiOutlineEdit,
-    AiOutlineCheckCircle
+    AiOutlineCheckCircle,
 } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
-
 
 function DietForm({ dietForm, handleDietFormChange }) {
     return (
@@ -60,10 +59,6 @@ function DietForm({ dietForm, handleDietFormChange }) {
         </div>
     );
 }
-
-
-
-
 
 function DietBody({ statsData, updateStats }) {
     const [editingDiet, setEditingDiet] = useState(false);
@@ -151,8 +146,6 @@ function DietBody({ statsData, updateStats }) {
     );
 }
 
-
-
 function StatTables(props) {
     // const [rec, setRec] = useState(props.statsData.records);
     const [editing, setEditing] = useState(false);
@@ -168,7 +161,7 @@ function StatTables(props) {
     }
 
     function handleEditSave() {
-        props.statsData.records = props.recordsData
+        props.statsData.records = props.recordsData;
         props.updateStats(props.statsData);
         setEditing((prev) => !prev);
         setAddStat(false);
@@ -186,12 +179,9 @@ function StatTables(props) {
         setAddStat(true);
     }
 
-
     function removeRecord(stat, row) {
-        stat.records = stat.records.filter(
-            (current) => row !== current
-        )
-        return stat
+        stat.records = stat.records.filter((current) => row !== current);
+        return stat;
     }
 
     const editRecords = props.recordsData.map((row, i) => (
@@ -224,9 +214,7 @@ function StatTables(props) {
                 className="delete-stat-button"
                 style={!editing ? { visibility: "hidden" } : null}
                 onClick={() =>
-                    props.updateStats(
-                        removeRecord(props.statsData, row),
-                    )
+                    props.updateStats(removeRecord(props.statsData, row))
                 }
             >
                 Delete
@@ -244,36 +232,39 @@ function StatTables(props) {
             </h3>
             <div className="stats-container-right">
                 <div className="stats-pr-table">
-                    <h3 class="sub-header" style={{'font-size': '35px'}}>Stats</h3>
-                    <div class="stats-table-container">
-                    <div class="stats-records">
-                        {!editing ? records : editRecords} 
-                        {(editing && !addStat) && (
-                            <div
-                                className="workout-container-button workout-modal-new-button"
-                                onClick={newStat}>
-                                <AiOutlinePlusCircle
-                                    className="button-icon"
-                                    size={20}
+                    <h3 className="sub-header" style={{ fontSize: "35px" }}>
+                        Stats
+                    </h3>
+                    <div className="stats-table-container">
+                        <div className="stats-records">
+                            {!editing ? records : editRecords}
+                            {editing && !addStat && (
+                                <div
+                                    className="workout-container-button workout-modal-new-button"
+                                    onClick={newStat}
+                                >
+                                    <AiOutlinePlusCircle
+                                        className="button-icon"
+                                        size={20}
+                                    />
+                                    <div>Add New Stat</div>
+                                </div>
+                            )}
+                            {editing && addStat && (
+                                <StatForm
+                                    statsData={props.statsData}
+                                    updateStats={props.updateStats}
+                                    setAddWorkout={setAddStat}
                                 />
-                                <div>Add New Stat</div>
-                            </div>
-                        )}
-                        {(editing && addStat) && (
-                            <StatForm
-                            statsData={props.statsData}
-                            updateStats={props.updateStats}
-                            setAddWorkout={setAddStat}
-                            />
-                        )}
-                    </div>
+                            )}
+                        </div>
                         <AiOutlineEdit
                             className="edit-stats-button"
                             onClick={handleEditSave}
                         >
                             Edit
                         </AiOutlineEdit>
-                        </div>
+                    </div>
                 </div>
             </div>
 
