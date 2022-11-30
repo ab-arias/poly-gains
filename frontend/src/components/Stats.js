@@ -47,16 +47,12 @@ export default function Stats({ userToken }) {
     }
 
     async function updateStats(newStats) {
-        console.log(newStats)
-        const id = newStats[0]; 
-        const newStat = newStats[1];
         try {
             const response = await axios.post(
-                window.$BACKEND_URI + "stats/" + id,
-                newStat
+                window.$BACKEND_URI + "stats/" + newStats._id,
+                newStats
             );
             const result = response.data;
-            console.log(result)
             setRecords(result.records)
             setStats(result);
         } catch (error) {

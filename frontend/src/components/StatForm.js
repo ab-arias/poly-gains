@@ -31,7 +31,7 @@ function StatForm(props) {
             newRec[idx] = record;
         }
         const newStats = { ...props.statsData, records: newRec };
-        props.updateStats( [newStats._id, newStats] );
+        props.updateStats(newStats);
         setRecord({ name: "", pr: "", goal: "" });
         props.setAddWorkout(false);
     }

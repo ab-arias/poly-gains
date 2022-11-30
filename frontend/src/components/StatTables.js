@@ -3,28 +3,155 @@ import StatForm from "./StatForm";
 import {
     AiOutlinePlusCircle,
     AiOutlineEdit,
+    AiOutlineCheckCircle
 } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 
 
-function DietBody(props) {
+function DietForm({ dietForm, handleDietFormChange }) {
     return (
-        <div className="diet-container">
-            <div>
-                <div>Weight: </div>
-                <div>Height:</div>
-                <div>Calories:</div>
-                <div>Diet Plan:</div>
+        <div className="diet-nums">
+            <div className="body-stats-row">
+                <input
+                    name="weight"
+                    type="number"
+                    className="body-stats-input mini-input"
+                    value={dietForm.weight}
+                    onChange={handleDietFormChange}
+                />
+                <label>lbs</label>
+            </div>
+            <div className="body-stats-row">
+                <input
+                    name="feet"
+                    type="number"
+                    className="body-stats-input mini-input"
+                    value={dietForm.feet}
+                    onChange={handleDietFormChange}
+                />
+                <label className="label-ft">ft</label>
+                <input
+                    name="inches"
+                    type="number"
+                    className="body-stats-input mini-input"
+                    value={dietForm.inches}
+                    onChange={handleDietFormChange}
+                />
+                <label>in</label>
             </div>
             <div>
-                <div>{props.statsData.weight} lbs</div>
-                <div>{props.statsData.height} inches</div>
-                <div>{props.statsData.calories}</div>
-                <div>{props.statsData.plan}</div>
+                <input
+                    name="calories"
+                    type="number"
+                    className="body-stats-input"
+                    value={dietForm.calories}
+                    onChange={handleDietFormChange}
+                />
+            </div>
+            <div>
+                <input
+                    name="plan"
+                    className="body-stats-input"
+                    value={dietForm.plan}
+                    onChange={handleDietFormChange}
+                    maxLength={15}
+                />
             </div>
         </div>
     );
 }
+
+
+
+
+
+function DietBody({ statsData, updateStats }) {
+    const [editingDiet, setEditingDiet] = useState(false);
+    const [dietForm, setDietForm] = useState({
+        weight: statsData.weight,
+        feet: Math.floor(statsData.height / 12),
+        inches: statsData.height % 12,
+        calories: statsData.calories,
+        plan: statsData.plan,
+    });
+
+    function handleDietFormChange(e) {
+        let { name, value } = e.target;
+        if (name === "weight") {
+            if (Number(value) <= 0) value = "";
+            else if (Number(value) > 999) value = "999";
+        } else if (name === "feet") {
+            if (Number(value) <= 0) value = "0";
+            else if (Number(value) > 9) value = "9";
+        } else if (name === "inches") {
+            if (Number(value) <= 0) value = "0";
+            else if (Number(value) > 11) value = "11";
+        } else if (name === "calories") {
+            if (Number(value) <= 0) value = "0";
+            else if (Number(value) > 10000) value = "10000";
+        }
+        setDietForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    }
+
+    async function submitStats() {
+        const newStats = {
+            ...statsData,
+            height: parseInt(dietForm.feet) * 12 + parseInt(dietForm.inches),
+            weight: dietForm.weight,
+            calories: dietForm.calories,
+            plan: dietForm.plan,
+        };
+        await updateStats(newStats);
+        setEditingDiet(false);
+    }
+
+    return (
+        <div>
+            <div className="stats-header-row">
+                <h3 className="sub-header stats-header-text">Diet</h3>
+                {editingDiet ? (
+                    <AiOutlineCheckCircle
+                        className="edit-stats-button"
+                        size={40}
+                        onClick={submitStats}
+                    />
+                ) : (
+                    <AiOutlineEdit
+                        className="edit-stats-button"
+                        size={40}
+                        onClick={() => setEditingDiet(true)}
+                    />
+                )}
+            </div>
+            <div className="diet-container">
+                <div>
+                    <div>Weight: </div>
+                    <div>Height:</div>
+                    <div>Calories:</div>
+                    <div>Plan:</div>
+                </div>
+                {editingDiet ? (
+                    <DietForm
+                        dietForm={dietForm}
+                        handleDietFormChange={handleDietFormChange}
+                    />
+                ) : (
+                    <div className="diet-nums">
+                        <div>{statsData.weight} lbs</div>
+                        <div>{statsData.height} inches</div>
+                        <div>{statsData.calories}</div>
+                        <div>{statsData.plan}</div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+
 
 function StatTables(props) {
     const [update, setUpdate] = useState()
@@ -46,7 +173,7 @@ function StatTables(props) {
 
     function handleEditSave() {
         props.statsData.records = props.recordsData
-        props.updateStats([props.statsData._id, props.statsData]);
+        props.updateStats(props.statsData);
         setEditing((prev) => !prev);
         setAddStat(false);
     }
@@ -96,10 +223,9 @@ function StatTables(props) {
                 className="delete-stat-button"
                 style={!editing ? { visibility: "hidden" } : null}
                 onClick={() =>
-                    props.updateStats([
-                        props.statsData._id,
+                    props.updateStats(
                         removeRecord(props.statsData, row),
-                    ])
+                    )
                 }
             >
                 Delete
