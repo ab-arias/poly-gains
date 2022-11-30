@@ -33,51 +33,46 @@ function StatForm(props) {
         const newStats = { ...props.statsData, records: newRec };
         props.updateStats(newStats);
         setRecord({ name: "", pr: "", goal: "" });
+        props.setAddWorkout(false);
     }
 
     return (
         <form className="update-stats-form">
-            <div className="form-row">
-                <label htmlFor="name">Workout:</label>
+                {/* <label htmlFor="name">Workout:</label> */}
                 <input
                     value={record.name}
                     type="text"
                     name="name"
                     id="name"
-                    style={{ width: "200px" }}
+                    placeholder="name"
+                    style={{width: '200px'}}
                     onChange={handleChange}
                 />
-            </div>
-            <div className="form-row">
-                <label htmlFor="pr">New Pr:</label>
+
+                {/* <label htmlFor="pr">New Pr:</label> */}
                 <input
                     value={record.pr}
                     type="text"
                     name="pr"
                     id="pr"
-                    style={{ width: "100px" }}
+                    placeholder="PR"
+                    style={{width: '100px'}}
                     onChange={handleChange}
                 />
-            </div>
-            <div className="form-row">
-                <label htmlFor="pr">Goal:</label>
+
+                {/* <label htmlFor="pr">Goal:</label> */}
                 <input
                     value={record.goal}
                     type="text"
                     name="goal"
                     id="goal"
-                    style={{ width: "100px" }}
+                    placeholder="Goal"
+                    style={{width: '100px'}}
                     onChange={handleChange}
                 />
-            </div>
-
-            <input
-                type="button"
-                value="Submit"
-                className="BMI-submit"
-                onClick={submitForm}
-                style={{ width: "250px", marginLeft: "25px" }}
-            />
+                <div class="form-row">
+                    <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
+                </div>
         </form>
     );
 }

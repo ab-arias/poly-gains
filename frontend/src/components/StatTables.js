@@ -1,33 +1,12 @@
 import React, { useState } from "react";
 import StatForm from "./StatForm";
-import { AiOutlineEdit, AiOutlineCheckCircle } from "react-icons/ai";
+import {
+    AiOutlinePlusCircle,
+    AiOutlineEdit,
+    AiOutlineCheckCircle
+} from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 
-function StatsBody({ statsData, updateStats, editing }) {
-    async function deleteStat(row) {
-        const newRecs = statsData.records.filter((current) => row !== current);
-        await updateStats({ ...statsData, records: newRecs });
-    }
-
-    const records = statsData.records.map((row, i) => (
-        <div className="stats-row" key={i}>
-            <div>{row.name}:</div>
-            <div>{row.pr} </div>
-            <FiTrash2
-                className="delete-stat-button"
-                style={!editing ? { visibility: "hidden" } : null}
-                onClick={() => deleteStat(row)}
-            >
-                Delete
-            </FiTrash2>
-        </div>
-    ));
-    return (
-        <div className="stats-table-container">
-            <div className="stats-records">{records}</div>
-        </div>
-    );
-}
 
 function DietForm({ dietForm, handleDietFormChange }) {
     return (
@@ -81,6 +60,10 @@ function DietForm({ dietForm, handleDietFormChange }) {
         </div>
     );
 }
+
+
+
+
 
 function DietBody({ statsData, updateStats }) {
     const [editingDiet, setEditingDiet] = useState(false);
@@ -168,8 +151,87 @@ function DietBody({ statsData, updateStats }) {
     );
 }
 
+
+
 function StatTables(props) {
+    const [update, setUpdate] = useState()
+    // const [rec, setRec] = useState(props.statsData.records);
     const [editing, setEditing] = useState(false);
+    const [addStat, setAddStat] = useState(false);
+
+    function handleNameChange(event, idx) {
+        props.statsData.records[idx].name = event.target.value
+        props.setRecordsData(props.statsData.records);
+        setUpdate(event.target.value);
+    }
+
+    function handlePrChange(event, idx) {
+        props.statsData.records[idx].pr = event.target.value
+        props.setRecordsData(props.statsData.records);
+        setUpdate(event.target.value);
+    }
+
+    function handleEditSave() {
+        props.statsData.records = props.recordsData
+        props.updateStats(props.statsData);
+        setEditing((prev) => !prev);
+        setAddStat(false);
+    }
+
+    const records = props.recordsData.map((row, i) => (
+        <div className="stats-row" key={i}>
+            <div>{row.name}:</div>
+            <div>{row.pr} </div>
+            {/* <div>{row.goal}</div> */}
+        </div>
+    ));
+
+    function newStat() {
+        setAddStat(true);
+    }
+
+
+    function removeRecord(stat, row) {
+        stat.records = stat.records.filter(
+            (current) => row !== current
+        )
+        return stat
+    }
+
+    const editRecords = props.recordsData.map((row, i) => (
+        <div className="stats-row" key={i}>
+            <input
+                className="edit-stat-name"
+                name="name"
+                value={row.name}
+                onChange={event => handleNameChange(event, i) }
+                placeholder="Name"
+                maxLength={20}
+                />
+            {/* <div>{row.name}:</div> */}
+            <input
+                className="edit-stat-pr"
+                name="pr"
+                value={row.pr}
+                onChange={event => handlePrChange(event, i)}
+                placeholder="PR"
+                maxLength={20}
+                />
+            {/* <div>{row.pr} </div> */}
+            {/* <div>{row.goal}</div> */}
+            <FiTrash2
+                className="delete-stat-button"
+                style={!editing ? { visibility: "hidden" } : null}
+                onClick={() =>
+                    props.updateStats(
+                        removeRecord(props.statsData, row),
+                    )
+                }
+            >
+                Delete
+            </FiTrash2>
+        </div>
+    ));
 
     return (
         <div className="stats-main-container">
@@ -179,37 +241,42 @@ function StatTables(props) {
             >
                 Edit your stats
             </h3>
-            <div className="stats-container-left">
+            <div className="stats-container-right">
                 <div className="stats-pr-table">
-                    <div className="stats-header-row">
-                        <h3 className="sub-header stats-header-text">Stats</h3>
+                    <h3 class="sub-header" style={{'font-size': '35px'}}>Stats</h3>
+                    <div class="stats-table-container">
+                    <div class="stats-records">
+                        {!editing ? records : editRecords} 
+                        {(editing && !addStat) && (
+                            <div
+                                className="workout-container-button workout-modal-new-button"
+                                onClick={newStat}>
+                                <AiOutlinePlusCircle
+                                    className="button-icon"
+                                    size={20}
+                                />
+                                <div>Add New Stat</div>
+                            </div>
+                        )}
+                        {(editing && addStat) && (
+                            <StatForm
+                            statsData={props.statsData}
+                            updateStats={props.updateStats}
+                            setAddWorkout={setAddStat}
+                            />
+                        )}
+                    </div>
                         <AiOutlineEdit
                             className="edit-stats-button"
-                            size={40}
-                            onClick={() => setEditing((prev) => !prev)}
-                        />
-                    </div>
-                    <StatsBody
-                        statsData={props.statsData}
-                        updateStats={props.updateStats}
-                        editing={editing}
-                    />
-                </div>
-
-                <div className="stats-update-form">
-                    <div className="stats-header-row">
-                        <h3 className="sub-header stats-header-text">
-                            Update Stats
-                        </h3>
-                    </div>
-                    <StatForm
-                        statsData={props.statsData}
-                        updateStats={props.updateStats}
-                    />
+                            onClick={handleEditSave}
+                        >
+                            Edit
+                        </AiOutlineEdit>
+                        </div>
                 </div>
             </div>
 
-            <div className="stats-conatiner-right">
+            <div className="stats-conatiner-left">
                 <div className="stats-diet-table">
                     <DietBody
                         statsData={props.statsData}
