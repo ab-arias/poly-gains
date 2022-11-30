@@ -161,6 +161,12 @@ function StatTables(props) {
         props.setRecordsData(props.statsData.records);
     }
 
+    function handleGoalChange(event, idx) {
+        props.statsData.records[idx].goal = event.target.value
+        props.setRecordsData(props.statsData.records);
+        setUpdate(event.target.value);
+    }
+
     function handleEditSave() {
         props.statsData.records = props.recordsData;
         props.updateStats(props.statsData);
@@ -193,19 +199,24 @@ function StatTables(props) {
                 value={row.name}
                 onChange={(event) => handleNameChange(event, i)}
                 placeholder="Name"
-                maxLength={20}
-            />
-            {/* <div>{row.name}:</div> */}
+                maxLength={10}
+                />
             <input
                 className="edit-stat-pr"
                 name="pr"
                 value={row.pr}
                 onChange={(event) => handlePrChange(event, i)}
                 placeholder="PR"
-                maxLength={20}
+                maxLength={10}
+                />
+            <input
+                className="edit-stat-goal"
+                name="goal"
+                value={row.goal}
+                onChange={event => handleGoalChange(event, i)}
+                placeholder="Goal"
+                maxLength={10}
             />
-            {/* <div>{row.pr} </div> */}
-            {/* <div>{row.goal}</div> */}
             <FiTrash2
                 className="delete-stat-button"
                 style={!editing ? { visibility: "hidden" } : null}
