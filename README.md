@@ -1,5 +1,5 @@
 
-![status](https://github.com/ab-arias/poly-gains/actions/workflows/node.js.yml/badge.svg)
+![status](https://github.com/ab-arias/poly-gains/actions/workflows/node.js.yml/badge.svg)![status](https://github.com/ab-arias/poly-gains/actions/workflows/azure-static-web-apps-lemon-bush-06fd6661e.yml/badge.svg)![status](https://github.com/ab-arias/poly-gains/actions/workflows/main_poly-gains.yml/badge.svg)
 # PolyGains
 
 PolyGains is a site for Cal Poly students to log their
