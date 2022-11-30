@@ -24,7 +24,7 @@ export default function Stats({ userToken }) {
             if (result) {
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
-                        setRecords(result1.records)
+                        setRecords(result1.records);
                         setStats(result1);
                     }
                 });
@@ -53,7 +53,7 @@ export default function Stats({ userToken }) {
                 newStats
             );
             const result = response.data;
-            setRecords(result.records)
+            setRecords(result.records);
             setStats(result);
         } catch (error) {
             //We're not handling errors. Just logging into the console.
@@ -63,10 +63,15 @@ export default function Stats({ userToken }) {
     }
 
     return (
-        (stats && records) && (
+        stats &&
+        records && (
             <div className="container">
-                <StatTables statsData={stats} updateStats={updateStats} 
-                recordsData={records} setRecordsData={setRecords}/>
+                <StatTables
+                    statsData={stats}
+                    updateStats={updateStats}
+                    recordsData={records}
+                    setRecordsData={setRecords}
+                />
             </div>
         )
     );

@@ -38,41 +38,47 @@ function StatForm(props) {
 
     return (
         <form className="update-stats-form">
-                {/* <label htmlFor="name">Workout:</label> */}
-                <input
-                    value={record.name}
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="name"
-                    style={{width: '200px'}}
-                    onChange={handleChange}
-                />
+            {/* <label htmlFor="name">Workout:</label> */}
+            <input
+                value={record.name}
+                type="text"
+                name="name"
+                id="name"
+                placeholder="name"
+                style={{ width: "200px" }}
+                onChange={handleChange}
+            />
 
-                {/* <label htmlFor="pr">New Pr:</label> */}
-                <input
-                    value={record.pr}
-                    type="text"
-                    name="pr"
-                    id="pr"
-                    placeholder="PR"
-                    style={{width: '100px'}}
-                    onChange={handleChange}
-                />
+            {/* <label htmlFor="pr">New Pr:</label> */}
+            <input
+                value={record.pr}
+                type="text"
+                name="pr"
+                id="pr"
+                placeholder="PR"
+                style={{ width: "100px" }}
+                onChange={handleChange}
+            />
 
-                {/* <label htmlFor="pr">Goal:</label> */}
+            {/* <label htmlFor="pr">Goal:</label> */}
+            <input
+                value={record.goal}
+                type="text"
+                name="goal"
+                id="goal"
+                placeholder="Goal"
+                style={{ width: "100px" }}
+                onChange={handleChange}
+            />
+            <div class="form-row">
                 <input
-                    value={record.goal}
-                    type="text"
-                    name="goal"
-                    id="goal"
-                    placeholder="Goal"
-                    style={{width: '100px'}}
-                    onChange={handleChange}
+                    type="button"
+                    value="Submit"
+                    class="BMI-submit"
+                    onClick={submitForm}
+                    style={{ width: "250px", "margin-left": "25px" }}
                 />
-                <div class="form-row">
-                    <input type="button" value="Submit" class="BMI-submit" onClick={submitForm} style={{width: '250px', 'margin-left': '25px'}}/>
-                </div>
+            </div>
         </form>
     );
 }
