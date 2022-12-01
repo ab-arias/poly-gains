@@ -24,7 +24,7 @@ export default function WorkoutCalendar({
 
     const content = Object.entries(calendar).map(([day, planId], i) => {
         const miniCard = getActiveWorkout(planId);
-        let dayOfWeek = new Date();
+        let dayOfWeek = new Date(lastMon);
         dayOfWeek.setDate(lastMon.getDate() + i);
         return (
             <div

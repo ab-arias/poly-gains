@@ -31,12 +31,6 @@ export default function App() {
         localStorage.clear();
     }
 
-    function closeFriends() {
-        if (window.location.pathname.indexOf("/profile/") === 0) {
-            window.location.reload().then(setShowFriendsModal(false));
-        } else setShowFriendsModal(false);
-    }
-
     return (
         <BrowserRouter>
             {userToken ? (
@@ -50,7 +44,7 @@ export default function App() {
                         {showFriendsModal && (
                             <FriendsModal
                                 userToken={userToken}
-                                closeFriends={closeFriends}
+                                setShowFriendsModal={setShowFriendsModal}
                             />
                         )}
                         <Routes>
@@ -72,7 +66,12 @@ export default function App() {
                             />
                             <Route
                                 path={"/profile/:username"}
-                                element={<OtherProfile userToken={userToken} />}
+                                element={
+                                    <OtherProfile
+                                        userToken={userToken}
+                                        showFriendsModal={showFriendsModal}
+                                    />
+                                }
                             />
                         </Routes>
                     </div>
