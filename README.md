@@ -50,4 +50,7 @@ Last Updated: November 29, 2022
 #### Register Sequence Diagram
 ![Sequence](https://drive.google.com/uc?export=view&id=1vqZS9DSPRKaK38CoanDKLhickobu6GOv)  
 Last Updated: November 29, 2022
-## Coverage Report
+## Coverage Report  
+![Coverage](https://drive.google.com/uc?export=view&id=1ZGwZhcfaOucwFIyb_mheAl422nPZQb2S)  
+Coverage From: December 1, 2022 1:57 PM  
+(Uncovered lines cannot be tested as they access the real database)
