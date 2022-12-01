@@ -13,8 +13,6 @@ export default function Stats({ userToken }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -40,8 +38,6 @@ export default function Stats({ userToken }) {
             );
             return response.data.stats_list;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -56,8 +52,6 @@ export default function Stats({ userToken }) {
             setRecords(result.records);
             setStats(result);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }

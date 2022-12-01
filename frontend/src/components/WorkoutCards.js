@@ -45,8 +45,6 @@ export default function WorkoutCards({
             addNewWorkout(result);
             return result;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -57,8 +55,6 @@ export default function WorkoutCards({
             await axios.delete(window.$BACKEND_URI + "workouts/" + id);
             removeOldWorkout(id);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }

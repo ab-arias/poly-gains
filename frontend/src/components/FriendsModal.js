@@ -17,8 +17,6 @@ export default function FriendsModal({ userToken, setShowFriendsModal }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -39,7 +37,6 @@ export default function FriendsModal({ userToken, setShowFriendsModal }) {
             );
             return response.data;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
@@ -112,7 +109,6 @@ export default function FriendsModal({ userToken, setShowFriendsModal }) {
             setUser(newUser.data);
             return true;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
