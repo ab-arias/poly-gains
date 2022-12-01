@@ -39,7 +39,6 @@ function StatForm(props) {
 
     return (
         <form className="stats-row">
-            {/* <label htmlFor="name">Workout:</label> */}
             <input
                 className="edit-stat-name"
                 value={record.name}
@@ -49,8 +48,6 @@ function StatForm(props) {
                 placeholder="Exercise"
                 onChange={handleChange}
             />
-
-            {/* <label htmlFor="pr">New Pr:</label> */}
             <input
                 className="edit-stat-pr"
                 value={record.pr}
@@ -60,8 +57,6 @@ function StatForm(props) {
                 placeholder="PR"
                 onChange={handleChange}
             />
-
-            {/* <label htmlFor="pr">Goal:</label> */}
             <input
                 className="edit-stat-goal"
                 value={record.goal}

@@ -14,8 +14,6 @@ export default function Workouts({ userToken }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -37,7 +35,6 @@ export default function Workouts({ userToken }) {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
@@ -67,8 +64,6 @@ export default function Workouts({ userToken }) {
             setUser(response.data);
             setCalendar(response.data.activeWorkouts);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -87,8 +82,6 @@ export default function Workouts({ userToken }) {
             );
             setUser(response.data);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -96,7 +89,6 @@ export default function Workouts({ userToken }) {
     async function removeOldWorkout(oldWorkout) {
         try {
             const restId = "637012e5c8e5bba98b4d3903";
-            console.log(oldWorkout);
             const newWorkouts = user.workouts.filter(
                 (workout) => workout !== oldWorkout
             );
@@ -117,8 +109,6 @@ export default function Workouts({ userToken }) {
             setUser(response.data);
             setCalendar(response.data.activeWorkouts);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -136,8 +126,6 @@ export default function Workouts({ userToken }) {
             setWorkouts(newWorkouts);
             return result;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -158,8 +146,6 @@ export default function Workouts({ userToken }) {
             setUser(response.data);
             setCalendar(response.data.activeWorkouts);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }

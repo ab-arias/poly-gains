@@ -22,8 +22,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -35,8 +33,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -72,7 +68,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
@@ -95,8 +90,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             );
             return response.data.stats_list;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -153,7 +146,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             setOtherUser(newOther.data);
             return true;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
@@ -172,8 +164,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             );
             setUser(response.data);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -191,8 +181,6 @@ export default function OtherProfile({ userToken, showFriendsModal }) {
             const result = response.data;
             addNewWorkout(result._id);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
