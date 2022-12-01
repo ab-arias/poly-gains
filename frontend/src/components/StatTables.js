@@ -9,12 +9,12 @@ import { FiTrash2 } from "react-icons/fi";
 
 function DietForm({ dietForm, handleDietFormChange }) {
     return (
-        <div className="diet-nums">
+        <div className="diet-nums diet-rows">
             <div className="body-stats-row">
                 <input
                     name="weight"
                     type="number"
-                    className="body-stats-input mini-input"
+                    className="body-stats-input weight-input"
                     value={dietForm.weight}
                     onChange={handleDietFormChange}
                 />
@@ -24,7 +24,7 @@ function DietForm({ dietForm, handleDietFormChange }) {
                 <input
                     name="feet"
                     type="number"
-                    className="body-stats-input mini-input"
+                    className="body-stats-input feet-input"
                     value={dietForm.feet}
                     onChange={handleDietFormChange}
                 />
@@ -32,7 +32,7 @@ function DietForm({ dietForm, handleDietFormChange }) {
                 <input
                     name="inches"
                     type="number"
-                    className="body-stats-input mini-input"
+                    className="body-stats-input inches-input"
                     value={dietForm.inches}
                     onChange={handleDietFormChange}
                 />
@@ -76,13 +76,13 @@ function DietBody({ statsData, updateStats }) {
             if (Number(value) <= 0) value = "";
             else if (Number(value) > 999) value = "999";
         } else if (name === "feet") {
-            if (Number(value) <= 0) value = "0";
+            if (Number(value) <= 0) value = "";
             else if (Number(value) > 9) value = "9";
         } else if (name === "inches") {
-            if (Number(value) <= 0) value = "0";
+            if (Number(value) <= 0) value = "";
             else if (Number(value) > 11) value = "11";
         } else if (name === "calories") {
-            if (Number(value) <= 0) value = "0";
+            if (Number(value) <= 0) value = "";
             else if (Number(value) > 10000) value = "10000";
         }
         setDietForm((prev) => ({
@@ -92,12 +92,17 @@ function DietBody({ statsData, updateStats }) {
     }
 
     async function submitStats() {
+        const weight = dietForm.weight !== "" ? dietForm.weight : "0";
+        const feet = dietForm.feet !== "" ? dietForm.feet : "0";
+        const inches = dietForm.inches !== "" ? dietForm.inches : "0";
+        const calories = dietForm.calories !== "" ? dietForm.calories : "0";
+        const plan = dietForm.weight !== "" ? dietForm.plan : "N/A";
         const newStats = {
             ...statsData,
-            height: parseInt(dietForm.feet) * 12 + parseInt(dietForm.inches),
-            weight: dietForm.weight,
-            calories: dietForm.calories,
-            plan: dietForm.plan,
+            height: parseInt(feet) * 12 + parseInt(inches),
+            weight: weight,
+            calories: calories,
+            plan: plan,
         };
         await updateStats(newStats);
         setEditingDiet(false);
@@ -122,7 +127,7 @@ function DietBody({ statsData, updateStats }) {
                 )}
             </div>
             <div className="diet-container">
-                <div>
+                <div className="diet-rows">
                     <div>Weight: </div>
                     <div>Height:</div>
                     <div>Calories:</div>
@@ -134,7 +139,7 @@ function DietBody({ statsData, updateStats }) {
                         handleDietFormChange={handleDietFormChange}
                     />
                 ) : (
-                    <div className="diet-nums">
+                    <div className="diet-nums diet-rows">
                         <div>{statsData.weight} lbs</div>
                         <div>{statsData.height} inches</div>
                         <div>{statsData.calories}</div>
@@ -147,16 +152,15 @@ function DietBody({ statsData, updateStats }) {
 }
 
 function StatTables(props) {
-    // const [rec, setRec] = useState(props.statsData.records);
     const [editing, setEditing] = useState(false);
     const [addStat, setAddStat] = useState(false);
 
     function handleRecordChange(event, idx) {
         const { name, value } = event.target;
-        props.statsData.records[idx][name] = event.target.value
+        props.statsData.records[idx][name] = event.target.value;
         const newRec = props.recordsData.map((rec, i) => {
-            return i === idx ? {...rec, [name]: value } : rec
-        })
+            return i === idx ? { ...rec, [name]: value } : rec;
+        });
         props.setRecordsData(newRec);
     }
 
@@ -169,9 +173,9 @@ function StatTables(props) {
 
     const records = props.recordsData.map((row, i) => (
         <div className="stats-row" key={i}>
-            <div>{row.name}:</div>
-            <div>{row.pr} </div>
-            {/* <div>{row.goal}</div> */}
+            <div className="stats-row-left">{row.name}:</div>
+            <div className="stats-row-center">{row.pr} </div>
+            <div className="stats-row-right">{row.goal}</div>
         </div>
     ));
 
@@ -190,23 +194,23 @@ function StatTables(props) {
                 className="edit-stat-name"
                 name="name"
                 value={row.name}
-                onChange={event => handleRecordChange(event, i) }
+                onChange={(event) => handleRecordChange(event, i)}
                 placeholder="Name"
                 maxLength={20}
-                />
+            />
             <input
                 className="edit-stat-pr"
                 name="pr"
                 value={row.pr}
-                onChange={event => handleRecordChange(event, i)}
+                onChange={(event) => handleRecordChange(event, i)}
                 placeholder="PR"
                 maxLength={20}
-                />
+            />
             <input
                 className="edit-stat-goal"
                 name="goal"
                 value={row.goal}
-                onChange={event => handleRecordChange(event, i)}
+                onChange={(event) => handleRecordChange(event, i)}
                 placeholder="Goal"
                 maxLength={20}
             />
@@ -224,106 +228,136 @@ function StatTables(props) {
 
     return (
         <div className="stats-main-container">
-            <h3
-                className="section-header"
-                style={{ width: "800px", fontSize: "50px" }}
-            >
+            <h3 className="section-header" style={{ fontSize: "50px" }}>
                 Edit your stats
             </h3>
-            <div className="stats-container-right">
-                <div className="stats-pr-table">
-                    <h3 className="sub-header" style={{ fontSize: "35px" }}>
-                        Stats
-                    </h3>
-                    <div className="stats-table-container">
-                        <div className="stats-records">
-                            {!editing ? records : editRecords}
-                            {editing && !addStat && (
-                                <div
-                                    className="workout-container-button workout-modal-new-button"
-                                    onClick={newStat}
+
+            <div className="stats-body-container">
+                <div className="stats-container-left">
+                    <div className="stats-diet-table">
+                        <DietBody
+                            statsData={props.statsData}
+                            updateStats={props.updateStats}
+                        />
+                    </div>
+
+                    <div className="stats-bmi-calculator">
+                        <div className="stats-header-row">
+                            <h3 className="sub-header stats-header-text">
+                                BMI Calculator
+                            </h3>
+                        </div>
+                        <div className="BMI calculator">
+                            <div className="weight-bmi">
+                                <div className="bold-header">Weight:</div>
+                                <input
+                                    id="weight-input-id"
+                                    type="text"
+                                    className="weight-lbs"
+                                ></input>
+                                <label htmlFor="weight-input-id"> lbs</label>
+                            </div>
+                            <div className="height-bmi">
+                                <div className="bold-header">Height:</div>
+                                <input
+                                    id="height-input-ft"
+                                    type="text"
+                                    className="height-ft"
+                                ></input>
+                                <label
+                                    htmlFor="height-input-ft"
+                                    className="label-ft"
                                 >
-                                    <AiOutlinePlusCircle
-                                        className="button-icon"
-                                        size={20}
-                                    />
-                                    <div>Add New Stat</div>
-                                </div>
-                            )}
-                            {editing && addStat && (
-                                <StatForm
-                                    statsData={props.statsData}
-                                    updateStats={props.updateStats}
-                                    setAddWorkout={setAddStat}
+                                    ft
+                                </label>
+                                <input
+                                    id="height-input-in"
+                                    type="text"
+                                    className="height-in"
+                                ></input>
+                                <label htmlFor="height-input-in"> in</label>
+                            </div>
+                            <div className="bottom-bmi">
+                                <button
+                                    className="BMI-submit"
+                                    style={{ marginTop: "30px" }}
+                                    onClick={calculateBMI}
+                                >
+                                    Submit
+                                </button>
+                                <div className="bold-header">BMI:</div>
+                                <input
+                                    className="BMI-result"
+                                    id="BMI-result"
+                                ></input>
+                                <label
+                                    id="BMI-health-label"
+                                    htmlFor="BMI-result"
+                                ></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="stats-container-right">
+                    <div className="stats-pr-table">
+                        <div className="stats-header-row">
+                            <h3 className="sub-header stats-header-text">
+                                Stats
+                            </h3>
+                            {editing ? (
+                                <AiOutlineCheckCircle
+                                    className="edit-stats-button"
+                                    size={40}
+                                    onClick={handleEditSave}
+                                />
+                            ) : (
+                                <AiOutlineEdit
+                                    className="edit-stats-button"
+                                    size={40}
+                                    onClick={() => setEditing(true)}
                                 />
                             )}
                         </div>
-                        <AiOutlineEdit
-                            className="edit-stats-button"
-                            onClick={handleEditSave}
-                        >
-                            Edit
-                        </AiOutlineEdit>
-                    </div>
-                </div>
-            </div>
-
-            <div className="stats-conatiner-left">
-                <div className="stats-diet-table">
-                    <DietBody
-                        statsData={props.statsData}
-                        updateStats={props.updateStats}
-                    />
-                </div>
-            </div>
-
-            <div className="stats-bmi-calculator">
-                <div className="stats-header-row">
-                    <h3 className="sub-header stats-header-text">
-                        BMI Calculator
-                    </h3>
-                </div>
-                <div className="BMI calculator">
-                    <div className="weight-bmi">
-                        <div className="bold-header">Weight:</div>
-                        <input
-                            id="weight-input-id"
-                            type="text"
-                            className="weight-lbs"
-                        ></input>
-                        <label htmlFor="weight-input-id"> lbs</label>
-                    </div>
-                    <div className="height-bmi">
-                        <div className="bold-header">Height:</div>
-                        <input
-                            id="height-input-ft"
-                            type="text"
-                            className="height-ft"
-                        ></input>
-                        <label htmlFor="height-input-ft" className="label-ft">
-                            ft
-                        </label>
-                        <input
-                            id="height-input-in"
-                            type="text"
-                            className="height-in"
-                        ></input>
-                        <label htmlFor="height-input-in"> in</label>
-                    </div>
-                    <div className="bottom-bmi">
-                        <button
-                            className="BMI-submit"
-                            style={{ marginTop: "30px" }}
-                            onClick={calculateBMI}
-                        >
-                            Submit
-                        </button>
-                        <div className="bold-header">BMI:</div>
-                        <input className="BMI-result" id="BMI-result"></input>
-                        <label
-                            id="BMI-health-label"
-                            htmlFor="BMI-result"
-                        ></label>
+                        <div className="stats-table-container">
+                            <div className="stats-records">
+                                {!editing ? (
+                                    <div>
+                                        <div className="stats-row stats-row-header">
+                                            <div className="stats-row-left"></div>
+                                            <div className="stats-row-center">
+                                                PR
+                                            </div>
+                                            <div className="stats-row-right">
+                                                Goal
+                                            </div>
+                                        </div>
+                                        {records}
+                                    </div>
+                                ) : (
+                                    editRecords
+                                )}
+                                {editing && !addStat && (
+                                    <div
+                                        className="workout-container-button workout-modal-new-button"
+                                        onClick={newStat}
+                                    >
+                                        <AiOutlinePlusCircle
+                                            className="button-icon"
+                                            size={20}
+                                        />
+                                        <div>Add New Stat</div>
+                                    </div>
+                                )}
+                                {editing && addStat && (
+                                    <StatForm
+                                        statsData={props.statsData}
+                                        updateStats={props.updateStats}
+                                        setAddWorkout={setAddStat}
+                                    />
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

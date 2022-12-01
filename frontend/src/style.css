@@ -440,12 +440,19 @@ Profile CSS:
     overflow-x: scroll;
 }
 
+.record-line {
+    position: absolute;
+    margin-top: 65px;
+    width: inherit;
+    border-bottom: 2px solid forestgreen;
+}
+
 .record-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    margin: 0px 26px;
+    padding: 0px 28px;
     min-width: fit-content;
 }
 
@@ -987,14 +994,27 @@ Edit Body Stats CSS
 .body-stats-input:focus {
     outline: none;
 }
-.mini-input {
+.weight-input {
     width: 30px;
     margin-right: 5px;
 }
-
+.feet-input {
+    width: 18px;
+    text-align: center;
+    margin-right: 5px;
+}
+.inches-input {
+    width: 25px;
+    text-align: center;
+    margin-right: 5px;
+}
+.diet-rows > div {
+    margin-bottom: 5px;
+}
 .body-stats-row {
     display: flex;
 }
+
 /*
 Cal Poly CSS
 */
@@ -1049,27 +1069,30 @@ Cal Poly CSS
 Stats CSS:
 */
 
-.stats-main-conatiner {
+.stats-main-container {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-evenly;
+    flex-direction: column;
+    width: 800px;
 }
 
 .stats-main-container * {
     font-size: 20px;
 }
 
+.stats-body-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 .stats-container-left {
     display: flex;
     flex-direction: column;
-    margin-right: 150px;
-    float: left;
+    width: 280px;
 }
 
 .stats-table-container {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
 }
 
 .stats-row {
@@ -1077,6 +1100,22 @@ Stats CSS:
     padding: 5px 12px;
     justify-content: space-between;
     align-items: center;
+    font-weight: 500;
+}
+.stats-row-left {
+    width: 50%;
+}
+.stats-row-center {
+    width: 35%;
+    text-align: center;
+    font-weight: 400;
+}
+.stats-row-right {
+    width: 35%;
+    text-align: center;
+    font-weight: 400;
+}
+.stats-row-header > div {
     font-weight: 500;
 }
 
@@ -1105,14 +1144,13 @@ Stats CSS:
 .stats-container-right {
     display: flex;
     flex-direction: column;
-    margin-left: 140px;
-    float: right;
+    width: 400px;
 }
 
 .stats-pr-table {
     border: 2px solid forestgreen;
     border-radius: 10px;
-    margin-bottom: 50px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: column;
 }
@@ -1134,6 +1172,7 @@ Stats CSS:
 
 .diet-nums {
     margin-left: 50px;
+    font-weight: 400;
 }
 
 .stats-update-form {
@@ -1166,12 +1205,7 @@ Stats CSS:
 }
 
 .edit-stats-button {
-    width: 40px;
-    height: 40px;
     margin-top: 10px;
-    margin-left: 240px;
-    margin-bottom: 10px;
-    background-color: rgba(255, 255, 255, 0);
     transition: 0.2s;
 }
 .edit-stats-button:hover {
@@ -1184,7 +1218,6 @@ Stats CSS:
     border: 2px solid forestgreen;
     border-radius: 10px;
     margin-bottom: 50px;
-    margin-right: 430px;
     display: flex;
     flex-direction: column;
 }
