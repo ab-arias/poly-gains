@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function StatForm(props) {
     const [record, setRecord] = useState({
@@ -37,48 +38,43 @@ function StatForm(props) {
     }
 
     return (
-        <form className="update-stats-form">
+        <form className="stats-row">
             {/* <label htmlFor="name">Workout:</label> */}
             <input
+                className="edit-stat-name"
                 value={record.name}
                 type="text"
                 name="name"
                 id="name"
-                placeholder="name"
-                style={{ width: "200px" }}
+                placeholder="Exercise"
                 onChange={handleChange}
             />
 
             {/* <label htmlFor="pr">New Pr:</label> */}
             <input
+                className="edit-stat-pr"
                 value={record.pr}
                 type="text"
                 name="pr"
                 id="pr"
                 placeholder="PR"
-                style={{ width: "100px" }}
                 onChange={handleChange}
             />
 
             {/* <label htmlFor="pr">Goal:</label> */}
             <input
+                className="edit-stat-goal"
                 value={record.goal}
                 type="text"
                 name="goal"
                 id="goal"
                 placeholder="Goal"
-                style={{ width: "100px" }}
                 onChange={handleChange}
             />
-            <div class="form-row">
-                <input
-                    type="button"
-                    value="Submit"
-                    class="BMI-submit"
-                    onClick={submitForm}
-                    style={{ width: "250px", "margin-left": "25px" }}
-                />
-            </div>
+            <AiOutlinePlusCircle
+                className="delete-stat-button"
+                onClick={submitForm}
+            />
         </form>
     );
 }

@@ -4,8 +4,8 @@ function ProgressTable({ statsData, otherName }) {
     const content = statsData.records.map((rec, i) => (
         <div className="record-column" key={i}>
             <div className="record-header">{rec.name}</div>
-            <div className="record-body">{rec.goal}</div>
             <div className="record-body">{rec.pr}</div>
+            <div className="record-body">{rec.goal}</div>
         </div>
     ));
 

@@ -65,14 +65,12 @@ export default function Stats({ userToken }) {
     return (
         stats &&
         records && (
-            <div className="container">
-                <StatTables
-                    statsData={stats}
-                    updateStats={updateStats}
-                    recordsData={records}
-                    setRecordsData={setRecords}
-                />
-            </div>
+            <StatTables
+                statsData={stats}
+                updateStats={updateStats}
+                recordsData={records}
+                setRecordsData={setRecords}
+            />
         )
     );
 }
