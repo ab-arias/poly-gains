@@ -7,12 +7,11 @@ import { FiSend } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
 import axios from "axios";
 
-export default function OtherProfile({ userToken }) {
+export default function OtherProfile({ userToken, showFriendsModal }) {
     const params = useParams();
     const [stats, setStats] = useState();
     const [user, setUser] = useState();
     const [otherUser, setOtherUser] = useState();
-    const [calendar, setCalendar] = useState();
     const [workouts, setWorkouts] = useState([]);
     const [friendStatus, setFriendStatus] = useState();
 
@@ -46,7 +45,6 @@ export default function OtherProfile({ userToken }) {
         fetchOtherUser().then((result) => {
             if (result) {
                 setOtherUser(result);
-                setCalendar(result.activeWorkouts);
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
                         setStats(result1);
@@ -65,7 +63,7 @@ export default function OtherProfile({ userToken }) {
             }
         });
         // eslint-disable-next-line
-    }, [params.username]);
+    }, [params.username, showFriendsModal]);
 
     async function fetchWorkouts() {
         try {
@@ -313,7 +311,7 @@ export default function OtherProfile({ userToken }) {
                 <WorkoutCalendar
                     preview={true}
                     workouts={workouts}
-                    calendar={calendar}
+                    calendar={otherUser.activeWorkouts}
                     otherName={otherUser.name}
                 />
                 <div className="workouts-cards-container">{displayCards}</div>

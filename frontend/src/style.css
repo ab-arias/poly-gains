@@ -98,11 +98,15 @@ Header CSS:
     width: 200px;
     margin-right: 12px;
 }
+.search-bar:focus {
+    outline: none;
+}
 .search-results {
     border: 2px solid forestgreen;
     border-top: none;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    margin-right: 12px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -612,8 +616,8 @@ Profile CSS:
 }
 
 .other-center-dashboard {
-    margin-bottom: 40px;
-    margin-top: 20px;
+    margin-bottom: 60px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
 }

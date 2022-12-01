@@ -5,7 +5,7 @@ import { FiSend } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
 import axios from "axios";
 
-export default function FriendsModal({ userToken, closeFriends }) {
+export default function FriendsModal({ userToken, setShowFriendsModal }) {
     const [user, setUser] = useState();
     const [currentFriends, setCurrentFriends] = useState([]);
     const [pendingFriends, setPendingFriends] = useState([]);
@@ -148,7 +148,7 @@ export default function FriendsModal({ userToken, closeFriends }) {
                 <Link
                     className="friend-link"
                     to={"/profile/" + result.username}
-                    onClick={() => closeFriends()}
+                    onClick={() => setShowFriendsModal(false)}
                 >
                     <img
                         className="friend-avatar"
@@ -170,28 +170,35 @@ export default function FriendsModal({ userToken, closeFriends }) {
     const current = renderFriends(currentFriends);
 
     return (
-        <div className="modal-screen">
-            <div className="modal-header">
-                <AiOutlineCloseCircle
-                    className="modal-left-button"
-                    size={35}
-                    onClick={closeFriends}
-                />
-                <div className="modal-center-title">My Friends</div>
-                <div className="modal-right-button" style={{ width: 35 }}></div>
+        user && (
+            <div className="modal-screen">
+                <div className="modal-header">
+                    <AiOutlineCloseCircle
+                        className="modal-left-button"
+                        size={35}
+                        onClick={() => setShowFriendsModal(false)}
+                    />
+                    <div className="modal-center-title">My Friends</div>
+                    <div
+                        className="modal-right-button"
+                        style={{ width: 35 }}
+                    ></div>
+                </div>
+                <div className="modal-container">
+                    {pending.length > 0 && (
+                        <div className="friends-block-header">
+                            Pending Requests
+                        </div>
+                    )}
+                    {pending}
+                    <div className="friends-block-header">Friends</div>
+                    {current.length > 0 ? (
+                        current
+                    ) : (
+                        <div className="no-friends">No Friends Yet</div>
+                    )}
+                </div>
             </div>
-            <div className="modal-container">
-                {pending.length > 0 && (
-                    <div className="friends-block-header">Pending Requests</div>
-                )}
-                {pending}
-                <div className="friends-block-header">Friends</div>
-                {current.length > 0 ? (
-                    current
-                ) : (
-                    <div className="no-friends">No Friends Yet</div>
-                )}
-            </div>
-        </div>
+        )
     );
 }
