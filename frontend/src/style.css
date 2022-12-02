@@ -606,7 +606,8 @@ Profile CSS:
     color: aliceblue;
 }
 .article-icon {
-    width: 30px;
+    color: white;
+    width: 35px;
     margin-left: 20px;
     transition: 0.2s;
 }

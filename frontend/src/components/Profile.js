@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 import WorkoutCalendar from "./WorkoutCalendar";
+import {AiOutlineFile, AiOutlineMail} from "react-icons/ai";
 
 export default function Profile({ userToken }) {
     const [stats, setStats] = useState();
@@ -157,11 +158,9 @@ export default function Profile({ userToken }) {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <img
+                                <AiOutlineFile
                                     className="article-icon"
-                                    src={require("../assets/img/Article-Icon.png")}
-                                    alt="cannot display"
-                                ></img>
+                                ></AiOutlineFile>
                             </a>
                         </div>
                         <div className="Res-Link">
@@ -172,11 +171,9 @@ export default function Profile({ userToken }) {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <img
+                                <AiOutlineFile
                                     className="article-icon"
-                                    src={require("../assets/img/Article-Icon.png")}
-                                    alt="cannot display"
-                                ></img>
+                                ></AiOutlineFile>
                             </a>
                         </div>
                     </div>
@@ -184,11 +181,10 @@ export default function Profile({ userToken }) {
                         <div className="contact-head">
                             Contact Us:
                             <a href="mailto:polygains@gmail.com">
-                                <img
+
+                                <AiOutlineMail
                                     className="article-icon"
-                                    src={require("../assets/img/mail-icon.png")}
-                                    alt="cannot display"
-                                ></img>
+                                ></AiOutlineMail>
                             </a>
                         </div>
                         <div className="LI-Link">
