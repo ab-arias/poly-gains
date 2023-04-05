@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function StatForm(props) {
     const [record, setRecord] = useState({
@@ -30,43 +31,45 @@ function StatForm(props) {
         } else {
             newRec[idx] = record;
         }
-        props.updateStats([props.statsData._id, newRec]);
+        const newStats = { ...props.statsData, records: newRec };
+        props.updateStats(newStats);
         setRecord({ name: "", pr: "", goal: "" });
+        props.setAddWorkout(false);
     }
 
     return (
-        <form className="update-stats-form">
-            <div>
-                <label htmlFor="name">Workout:</label>
-                <input
-                    value={record.name}
-                    type="text"
-                    name="name"
-                    id="name"
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="pr">New Pr:</label>
-                <input
-                    value={record.pr}
-                    type="text"
-                    name="pr"
-                    id="pr"
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="pr">Goal:</label>
-                <input
-                    value={record.goal}
-                    type="text"
-                    name="goal"
-                    id="goal"
-                    onChange={handleChange}
-                />
-            </div>
-            <input type="button" value="Submit" onClick={submitForm} />
+        <form className="stats-row">
+            <input
+                className="edit-stat-name"
+                value={record.name}
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Exercise"
+                onChange={handleChange}
+            />
+            <input
+                className="edit-stat-pr"
+                value={record.pr}
+                type="text"
+                name="pr"
+                id="pr"
+                placeholder="PR"
+                onChange={handleChange}
+            />
+            <input
+                className="edit-stat-goal"
+                value={record.goal}
+                type="text"
+                name="goal"
+                id="goal"
+                placeholder="Goal"
+                onChange={handleChange}
+            />
+            <AiOutlinePlusCircle
+                className="delete-stat-button"
+                onClick={submitForm}
+            />
         </form>
     );
 }

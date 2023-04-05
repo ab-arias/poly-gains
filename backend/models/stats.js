@@ -21,11 +21,6 @@ const StatsSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        mile: {
-            type: String,
-            required: true,
-            trim: true,
-        },
         calories: {
             type: Number,
             required: true,

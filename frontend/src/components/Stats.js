@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function Stats({ userToken }) {
     const [stats, setStats] = useState();
+    const [records, setRecords] = useState();
 
     async function fetchUser() {
         try {
@@ -12,8 +13,6 @@ export default function Stats({ userToken }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -23,6 +22,7 @@ export default function Stats({ userToken }) {
             if (result) {
                 fetchStats(result.stats).then((result1) => {
                     if (result1) {
+                        setRecords(result1.records);
                         setStats(result1);
                     }
                 });
@@ -38,34 +38,33 @@ export default function Stats({ userToken }) {
             );
             return response.data.stats_list;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
 
-    async function updateStats(stats) {
-        const id = stats[0];
-        const records = stats[1];
+    async function updateStats(newStats) {
         try {
             const response = await axios.post(
-                window.$BACKEND_URI + "stats/" + id,
-                records
+                window.$BACKEND_URI + "stats/" + newStats._id,
+                newStats
             );
-            const result = response.data.stats_list;
+            const result = response.data;
+            setRecords(result.records);
             setStats(result);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
 
     return (
-        stats && (
-            <div className="container">
-                <StatTables statsData={stats} updateStats={updateStats} />
-            </div>
+        stats &&
+        records && (
+            <StatTables
+                statsData={stats}
+                updateStats={updateStats}
+                recordsData={records}
+                setRecordsData={setRecords}
+            />
         )
     );
 }

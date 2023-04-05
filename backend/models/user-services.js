@@ -105,7 +105,14 @@ async function getUserByUsername(username) {
     return result;
 }
 
-async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
+async function updateUser(
+    id,
+    newName,
+    newPic,
+    newActWorkouts,
+    newWorkouts,
+    newFriends
+) {
     const userModel = getDbConnection().model("User", UserSchema);
     try {
         return await userModel.findByIdAndUpdate(
@@ -115,6 +122,7 @@ async function updateUser(id, newName, newPic, newActWorkouts, newWorkouts) {
                 avatar: newPic,
                 activeWorkouts: newActWorkouts,
                 workouts: newWorkouts,
+                friends: newFriends,
             },
             { new: true }
         );
@@ -140,9 +148,7 @@ async function searchUsers(username) {
                     },
                 },
             },
-            {
-                $limit: 5,
-            },
+            { $limit: 5 },
             {
                 $project: {
                     name: 0,
@@ -152,6 +158,22 @@ async function searchUsers(username) {
                 },
             },
         ]);
+    } catch (error) {
+        return undefined;
+    }
+}
+
+async function getFriends(id) {
+    const userModel = getDbConnection().model("User", UserSchema);
+    try {
+        const user = await userModel.findById(id).populate({
+            path: "friends",
+            populate: {
+                path: "friend",
+                select: { _id: 1, username: 1, avatar: 1 },
+            },
+        });
+        return user.friends;
     } catch (error) {
         return undefined;
     }
@@ -211,7 +233,7 @@ async function deleteWorkout(id) {
     }
 }
 
-// // STATS
+// STATS
 
 async function getStatsById(id) {
     const statsModel = getDbConnection().model("Stats", StatsSchema);
@@ -219,16 +241,11 @@ async function getStatsById(id) {
     return result;
 }
 
-async function updateStats(id, newRec) {
+async function updateStats(id, newStats) {
     const statsModel = getDbConnection().model("Stats", StatsSchema);
     try {
-        return await statsModel.findByIdAndUpdate(
-            id,
-            { records: newRec },
-            { new: true }
-        );
+        return await statsModel.findByIdAndUpdate(id, newStats, { new: true });
     } catch (error) {
-        console.log(error);
         return undefined;
     }
 }
@@ -257,6 +274,7 @@ module.exports = {
     getUserByUsername,
     updateUser,
     searchUsers,
+    getFriends,
     getUserWorkouts,
     updateWorkout,
     findWorkoutById,

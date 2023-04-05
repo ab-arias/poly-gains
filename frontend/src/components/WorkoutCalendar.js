@@ -24,7 +24,7 @@ export default function WorkoutCalendar({
 
     const content = Object.entries(calendar).map(([day, planId], i) => {
         const miniCard = getActiveWorkout(planId);
-        let dayOfWeek = new Date();
+        let dayOfWeek = new Date(lastMon);
         dayOfWeek.setDate(lastMon.getDate() + i);
         return (
             <div
@@ -49,6 +49,7 @@ export default function WorkoutCalendar({
                 >
                     <div
                         className="mini-workouts-card"
+                        style={otherName ? { cursor: "default" } : null}
                         draggable
                         onDragStart={
                             !preview
@@ -78,7 +79,7 @@ export default function WorkoutCalendar({
                                     className="workouts-card-exercise-container"
                                     key={i}
                                 >
-                                    <div className="workouts-card-exercise">
+                                    <div className="workouts-card-exercise body-workouts-card-overflow">
                                         {exercise.exercise}
                                     </div>
                                     <div className="workouts-card-sets-reps">

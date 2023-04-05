@@ -14,8 +14,6 @@ export default function Workouts({ userToken }) {
             );
             return response.data.user;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -37,7 +35,6 @@ export default function Workouts({ userToken }) {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
@@ -67,8 +64,6 @@ export default function Workouts({ userToken }) {
             setUser(response.data);
             setCalendar(response.data.activeWorkouts);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -87,8 +82,6 @@ export default function Workouts({ userToken }) {
             );
             setUser(response.data);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -97,14 +90,12 @@ export default function Workouts({ userToken }) {
         try {
             const restId = "637012e5c8e5bba98b4d3903";
             const newWorkouts = user.workouts.filter(
-                (workout) => workout._id !== oldWorkout
+                (workout) => workout !== oldWorkout
             );
-            const newActiveWorkouts = Object.entries(user.activeWorkouts).map(
-                ([day, planID]) => {
-                    return planID === oldWorkout
-                        ? { day: restId }
-                        : { day: planID };
-                }
+            const newActiveWorkouts = Object.fromEntries(
+                Object.entries(user.activeWorkouts).map(([day, id]) =>
+                    id === oldWorkout ? [day, restId] : [day, id]
+                )
             );
             const response = await axios.post(
                 window.$BACKEND_URI + "user/" + user._id,
@@ -118,8 +109,6 @@ export default function Workouts({ userToken }) {
             setUser(response.data);
             setCalendar(response.data.activeWorkouts);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -137,8 +126,6 @@ export default function Workouts({ userToken }) {
             setWorkouts(newWorkouts);
             return result;
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }
@@ -159,8 +146,6 @@ export default function Workouts({ userToken }) {
             setUser(response.data);
             setCalendar(response.data.activeWorkouts);
         } catch (error) {
-            //We're not handling errors. Just logging into the console.
-            console.log(error);
             return false;
         }
     }

@@ -19,7 +19,7 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     };
-    realcon = await userServices.getDbConnection();
+
     conn = await mongoose.createConnection(uri, mongooseOpts);
 
     UserModel = conn.model("User", UserSchema);
@@ -30,7 +30,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await realcon.close();
     await conn.dropDatabase();
     await conn.close();
     await mongoServer.stop();
@@ -55,8 +54,32 @@ beforeEach(async () => {
             Sunday: "637012e5c8e5bba98b4d3903",
         },
         stats: "6362cfa7c8e5bba98bd31324",
+        friends: [{ friend: "637012e5c8e5bba72b4d3234", status: "friend" }],
     };
     let result = new UserModel(dummyUser);
+    await result.save();
+
+    dummyUser = {
+        _id: "637012e5c8e5bba72b4d3234",
+        name: "dummy User2",
+        username: "dumbUsername452",
+        email: "dumb2@stupidemail.com",
+        password: "stupidPassword42",
+        avatar: "",
+        workouts: ["637012e5c8e5bba98b4d3903"],
+        activeWorkouts: {
+            Monday: "637012e5c8e5bba98b4d3903",
+            Tuesday: "637012e5c8e5bba98b4d3903",
+            Wednesday: "637012e5c8e5bba98b4d3903",
+            Thursday: "637012e5c8e5bba98b4d3903",
+            Friday: "637012e5c8e5bba98b4d3903",
+            Saturday: "637012e5c8e5bba98b4d3903",
+            Sunday: "637012e5c8e5bba98b4d3903",
+        },
+        stats: "6362cfa7c8e5bba98bd31324",
+        friends: [{ friend: "637012e5c8e5bba72b4d3956", status: "friend" }],
+    };
+    result = new UserModel(dummyUser);
     await result.save();
 
     let dummyWorkout = {
@@ -175,15 +198,6 @@ afterEach(async () => {
     await UserModel.deleteMany();
     await WorkoutModel.deleteMany();
     await StatsModel.deleteMany();
-});
-
-test("Unsuccessful db connection", async () => {
-    let temp = conn;
-    await userServices.setConnection(null);
-    const newConn = await userServices.getDbConnection();
-    expect(newConn).toBeDefined();
-    await newConn.close();
-    await userServices.setConnection(temp);
 });
 
 // REGISTRATION
@@ -348,23 +362,16 @@ test("Fail to update user", async () => {
     expect(result).toBeUndefined();
 });
 
-test("Successful user search", async () => {
-    let temp = conn;
-    await userServices.setConnection(realcon);
-    const input = "testact";
-    const users = await userServices.searchUsers(input);
-    expect(users).toBeDefined();
-    await userServices.setConnection(temp);
+test("Successfully find friends", async () => {
+    const id = "637012e5c8e5bba72b4d3956";
+    const result = await userServices.getFriends(id);
+    expect(result.length).toBe(1);
 });
 
-test("Unsuccessful user search", async () => {
-    let temp = conn;
-    await userServices.setConnection(realcon);
-    const input = "";
-    const result = await userServices.searchUsers(input);
+test("Fail to find friends", async () => {
+    const id = "637012e5c8e5bba72b4d3953";
+    const result = await userServices.getFriends(id);
     expect(result).toBeUndefined();
-    await realcon.close();
-    await userServices.setConnection(temp);
 });
 
 // WORKOUTS
@@ -460,20 +467,28 @@ test("Successfully get stats", async () => {
     expect(result).toBeDefined();
 });
 
-test("Update records in stats", async () => {
+test("Update stats", async () => {
     let id = "6362cfa7c8e5bba98bd31324";
-    let newRec = [
-        { name: "Bench", pr: "315", goal: "355" },
-        { name: "Squat", pr: "295", goal: "405" },
-        { name: "Deadlift", pr: "365", goal: "465" },
-        { name: "Snatch", pr: "155", goal: "225" },
-        { name: "C&J", pr: "205", goal: "295" },
-        { name: "newWork", pr: "555", goal: "100" },
-        { name: "another", pr: "100", goal: "101" },
-    ];
-    const stats = await userServices.updateStats(id, newRec);
+    let newStats = {
+        records: [
+            { name: "Bench", pr: "315", goal: "355" },
+            { name: "Squat", pr: "295", goal: "405" },
+            { name: "Deadlift", pr: "365", goal: "465" },
+            { name: "Snatch", pr: "155", goal: "225" },
+            { name: "C&J", pr: "205", goal: "295" },
+            { name: "newWork", pr: "555", goal: "100" },
+            { name: "another", pr: "100", goal: "101" },
+        ],
+        height: 69,
+        weight: 168,
+        mile: "5:30",
+        calories: 2300,
+        plan: "Maintenance",
+    };
+    const stats = await userServices.updateStats(id, newStats);
     expect(stats).toBeDefined();
     expect(stats.records[0].pr).toBe("315");
+    expect(stats.calories).toBe(2300);
 });
 
 test("Fail to update records in stats", async () => {

@@ -40,13 +40,14 @@ app.get("/stats/:id", async (req, res) => {
 
 app.post("/user/:id", async (req, res) => {
     const id = req.params["id"];
-    const { name, avatar, activeWorkouts, workouts } = req.body;
+    const { name, avatar, activeWorkouts, workouts, friends } = req.body;
     const updatedUser = await userServices.updateUser(
         id,
         name,
         avatar,
         activeWorkouts,
-        workouts
+        workouts,
+        friends
     );
     if (updatedUser) {
         res.status(201).send(updatedUser).end();
@@ -57,11 +58,10 @@ app.post("/user/:id", async (req, res) => {
 
 app.post("/stats/:id", async (req, res) => {
     const id = req.params["id"];
-    const newRec = req.body;
-    const updatedStat = await userServices.updateStats(id, newRec);
-    const stats = updatedStat;
+    const newStats = req.body;
+    const updatedStat = await userServices.updateStats(id, newStats);
     if (updatedStat) {
-        res.status(201).send({ stats_list: stats }).end();
+        res.status(201).send(updatedStat).end();
     } else {
         res.status(404).end();
     }
@@ -154,6 +154,16 @@ app.get("/user/:id", async (req, res) => {
     }
 });
 
+app.get("/friends/:id", async (req, res) => {
+    const id = req.params["id"];
+    try {
+        let result = await userServices.getFriends(id);
+        res.send(result);
+    } catch (e) {
+        res.status(500).end();
+    }
+});
+
 app.get("/profile/:username", async (req, res) => {
     const username = req.params["username"];
     try {
@@ -178,7 +188,3 @@ app.get("/search/:username", async (req, res) => {
 app.listen(process.env.PORT || port, () => {
     console.log("REST API is listening.");
 });
-
-// app.listen(port, () => {
-//     console.log(`Example app listening at http://localhost:${port}`);
-// });
